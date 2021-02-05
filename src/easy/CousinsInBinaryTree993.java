@@ -17,13 +17,12 @@ public class CousinsInBinaryTree993 {
         int xParent = 0;
         int yParent = 0;
 
-        TreeNode xTree = root;
-        TreeNode yTree = root;
         int xDepth = 0;
         int yDepth = 0;
 
         Queue<TreeNode> parentQ = new LinkedList<TreeNode>();
         parentQ.add(root);
+        //can avoid second queue by adding a for loop within the while loop
         Queue<TreeNode> childrenQ = new LinkedList<TreeNode>();
 
         int currentD = 0;
