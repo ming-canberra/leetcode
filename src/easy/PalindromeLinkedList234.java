@@ -11,7 +11,85 @@ public class PalindromeLinkedList234 {
         System.out.println(df);
     }
     public boolean isPalindrome(ListNode head) {
-        
+
+        int length = 0;
+
+        ListNode tempHead = head;
+
+        while (tempHead != null){
+            tempHead = tempHead.next;
+            length++;
+        }
+
+        if (length % 2 == 0){
+            tempHead = head;
+
+            int currentIndex = 0;
+            ListNode currentNode = head;
+            while (currentIndex < length/2 - 1){
+                currentIndex++;
+                currentNode = currentNode.next;
+            }
+            ListNode secondHead = currentNode.next;
+            currentNode.next = null;
+
+            // revert secondHead
+            secondHead = revertListNode(secondHead);
+
+            // compare tempHead and secondHead
+            return compare(tempHead, secondHead);
+        }
+        else{
+            if (length == 1){
+                return true;
+            }
+            tempHead = head;
+
+            int currentIndex = 0;
+            ListNode currentNode = head;
+            while (currentIndex < length/2 - 1){
+                currentIndex++;
+                currentNode = currentNode.next;
+            }
+            ListNode secondHead = currentNode.next.next;
+            currentNode.next = null;
+
+            // revert secondHead
+            secondHead = revertListNode(secondHead);
+
+            // compare tempHead and secondHead
+            return compare(tempHead, secondHead);
+        }
+    }
+
+    private ListNode revertListNode(ListNode head){
+        ListNode reorderedHead = null;
+
+        while (head != null){
+
+            ListNode currentOne = head;
+
+            head = head.next;
+
+            currentOne.next = reorderedHead;
+            reorderedHead = currentOne;
+        }
+        return reorderedHead;
+    }
+    private boolean compare(ListNode first, ListNode second){
+        while (first !=null || second != null){
+            if (first == null && second != null){
+                return false;
+            }
+            else if (second == null && first != null){
+                return false;
+            }
+            else if (first.val != second.val){
+                return false;
+            }
+            first = first.next;
+            second = second.next;
+        }
         return true;
     }
 }
