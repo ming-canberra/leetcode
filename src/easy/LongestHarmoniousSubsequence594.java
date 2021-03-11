@@ -10,7 +10,7 @@ public class LongestHarmoniousSubsequence594 {
         int nums[] = {1,3,2,2,4,2,3,7};
 
         System.out.println(
-                thisClass.findLHS(nums)
+                thisClass.findLHS2(nums)
         );
     }
     public int findLHS(int[] nums) {
@@ -30,5 +30,19 @@ public class LongestHarmoniousSubsequence594 {
             }
         }
         return maxLength;
+    }
+
+    public int findLHS2(int[] nums) {
+        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+        for (int n : nums){
+            map.put(n, map.getOrDefault(n, 0) + 1);
+        }
+        int longest = Integer.MIN_VALUE;
+        for (Integer k : map.keySet()){
+            if (map.containsKey(k +1)) {
+                longest = Math.max(longest, map.get(k) + map.get(k+1));
+            }
+        }
+        return longest;
     }
 }
