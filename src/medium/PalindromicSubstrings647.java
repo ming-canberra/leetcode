@@ -10,7 +10,7 @@ public class PalindromicSubstrings647 {
         PalindromicSubstrings647 thisClass = new PalindromicSubstrings647();
         System.out.println (thisClass.countSubstrings(null));
     }
-    public int countSubstrings(String s) {
+    public int countSubstrings2(String s) {
         int toReturn = 0;
         for (int i = 0; i < s.length();i++){
             for (int j = i; j < s.length(); j++){
@@ -38,5 +38,35 @@ public class PalindromicSubstrings647 {
             j--;
         }
         return true;
+    }
+
+    private int _counter = 0;
+    public int countSubstrings(String s) {
+        char[] charArray = s.toCharArray();
+        for (int i = 0; i < charArray.length; i++){
+            // index i is in the center and palindrome is odd number
+            _counter++;
+            count(charArray, i, i);
+            // index i is at the center left and palindrome is even number
+            if ((i +1 < charArray.length) && charArray[i] == charArray[i+1] )
+            {
+                _counter++;
+                count(charArray, i, i+1);
+            }
+        }
+        return _counter;
+    }
+
+    private void count(char[] charArray, int a, int b){
+        int n = 1;
+        while (a-n >=0 && b+n< charArray.length){
+            if(charArray[a-n] == charArray[b+n]){
+                _counter++;
+            }
+            else{
+                break;
+            }
+            n++;
+        }
     }
 }
