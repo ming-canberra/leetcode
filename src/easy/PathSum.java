@@ -3,7 +3,7 @@ package easy;
 public class PathSum {
     public static void main(String[] args) {
         PathSum thisClass = new PathSum();
-        boolean result = thisClass.pathSum(null, 1);
+        boolean result = thisClass.hasPathSum(null, 1);
         System.out.println(result);
     }
 
