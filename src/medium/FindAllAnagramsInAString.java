@@ -1,20 +1,14 @@
 package medium;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class FindAllAnagramsInAString {
     public static void main(String[] args) {
         FindAllAnagramsInAString thisClass = new FindAllAnagramsInAString();
-
-        thisClass.findAnagrams("null", "");
+        thisClass.findAnagrams("axb", "ab");
     }
     public List<Integer> findAnagrams(String s, String p) {
 
-
-
-
-        List<Integer> result = new ArrayList<Integer>();
-        return result;
+        return null;
     }
 }
