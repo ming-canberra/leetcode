@@ -50,5 +50,6 @@ public class PathSumIII {
 
     private static int _counter = 0;
     public int pathSum(TreeNode root, int targetSum) {
+        return 1;
     }
 }
