@@ -26,7 +26,7 @@ public class PathSumII {
                 }
             }
             else{
-                pathSum(root.left, (ArrayList<Integer>)ancestorValues.clone(), targetSum - root.val);
+                pathSum(root.left, new ArrayList<Integer>(ancestorValues), targetSum - root.val);
                 pathSum(root.right, ancestorValues, targetSum - root.val);
             }
         }
