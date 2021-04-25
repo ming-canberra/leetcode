@@ -14,8 +14,6 @@ public class CombinationSum {
     }
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> result = new ArrayList<List<Integer>>();
-        Arrays.sort(candidates);
-        List<Integer> intList = new ArrayList<Integer>();
         sum(candidates, target, result, 0, new ArrayList<Integer>(), 0);
         return result;
     }
