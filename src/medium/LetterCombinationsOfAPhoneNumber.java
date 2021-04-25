@@ -11,7 +11,7 @@ public class LetterCombinationsOfAPhoneNumber {
     }
 
     public List<String> letterCombinations(String digits) {
-        List<String> result = new ArrayList<String>();
+        LinkedList<String> result = new LinkedList<String>();
         if (digits == null || digits.isEmpty()){
             return result;
         }
@@ -24,22 +24,18 @@ public class LetterCombinationsOfAPhoneNumber {
         map.put('7', new String[]{"p", "q", "r", "s"});
         map.put('8', new String[]{"t", "u", "v"});
         map.put('9', new String[]{"w", "x", "y", "z"});
-        Queue<String> queue = new LinkedList<String>();
         for (String s : map.get(digits.charAt(0))){
-            queue.add(s);
+            result.add(s);
         }
         for (int i = 1; i < digits.length(); i++){
             String[] mappedStringArray = map.get(digits.charAt(i));
-            int queueSize = queue.size();
-            for (int j = 0; j < queueSize; j++){
-                String top = queue.poll();
+            int resultSize = result.size();
+            for (int j = 0; j < resultSize; j++){
+                String top = result.poll();
                 for (String suffix : mappedStringArray){
-                    queue.add(top + suffix);
+                    result.add(top + suffix);
                 }
             }
-        }
-        while (!queue.isEmpty()){
-            result.add(queue.poll());
         }
         return result;
     }
