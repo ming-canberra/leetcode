@@ -32,6 +32,32 @@ public class PopulatingNextRightPointersInEachNode {
         }
     };
 
+    public Node connect2(Node root) {
+        if (root == null){
+            return null;
+        }
+        root.next = null;
+        recursiveFun(root);
+        return root;
+    }
+    private void recursiveFun(Node root){
+        if (root != null){
+            if (root.left != null){
+                root.left.next = root.right;
+                if (root.next == null){
+                    root.right.next = null;
+                }
+                else{
+                    root.right.next = root.next.left;
+                }
+                recursiveFun(root.left);
+                recursiveFun(root.right);
+            }
+        }
+    }
+
+
+
     public Node connect(Node root) {
         //BFS
         if (root == null){
