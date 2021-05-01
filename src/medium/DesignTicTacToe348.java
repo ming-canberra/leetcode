@@ -23,21 +23,26 @@ public class DesignTicTacToe348 {
          1: Player 1 wins.
          2: Player 2 wins. */
         public int move(int row, int col, int player) {
-            mem[row][player - 1]++;
-            mem[col + n][player - 1]++;
-            if (row == col){
-                mem[2 * n][player - 1]++;
-            }
-            if (row + col == n - 1){
-                mem[2 * n + 1][player - 1]++;
+
+            if (++mem[row][player - 1] == n) {
+                return player;
             }
 
-            for (int i = 0; i < mem.length; i++){
-                if (mem[i][player - 1] == n)
-                {
+            if (++mem[col + n][player - 1] == n) {
+                return player;
+            }
+
+            if (row == col) {
+                if (++mem[2 * n][player - 1] == n) {
                     return player;
                 }
             }
+            if (row + col == n - 1) {
+                if (++mem[2 * n + 1][player - 1] == n) {
+                    return player;
+                }
+            }
+
             return 0;
         }
 
