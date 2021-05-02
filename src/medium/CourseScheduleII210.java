@@ -13,13 +13,6 @@ public class CourseScheduleII210 {
     }
 
     public int[] findOrder(int numCourses, int[][] prerequisites) {
-        Arrays.sort(prerequisites, (a,b)->a[0] - b[0]);
-
-        Set<Integer> result = new HashSet<Integer>();
-        int pIndex = 0;
-        for (int i = 0; i < numCourses; i++){
-
-        }
 
 
         return null;
