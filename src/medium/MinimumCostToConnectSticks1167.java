@@ -1,13 +1,11 @@
 package medium;
 
 import java.util.Arrays;
+import java.util.PriorityQueue;
 
 public class MinimumCostToConnectSticks1167 {
-    private Object HashSet;
-
     public static void main(String[] args) {
         MinimumCostToConnectSticks1167 thisClass = new MinimumCostToConnectSticks1167();
-        System.out.println (thisClass.connectSticks(null));
     }
 
     public int connectSticks(int[] sticks) {
@@ -27,6 +25,24 @@ public class MinimumCostToConnectSticks1167 {
             Arrays.sort(sticks, i, n);
         }
 
+        return result;
+    }
+
+    public int connectSticks2(int[] sticks) {
+        PriorityQueue<Integer> queue = new PriorityQueue<>();
+
+        for (int i : sticks){
+            queue.add(i);
+        }
+
+        int result = 0;
+
+        while (queue.size() != 1){
+            Integer a = queue.poll();
+            Integer b = queue.poll();
+            result += (a + b);
+            queue.add(a + b);
+        }
         return result;
     }
 }
