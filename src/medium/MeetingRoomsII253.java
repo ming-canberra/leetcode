@@ -1,8 +1,6 @@
 package medium;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class MeetingRoomsII253 {
     public static void main(String[] args) {
@@ -10,6 +8,37 @@ public class MeetingRoomsII253 {
         int res = thisClass.minMeetingRooms(new int[][]{new int[]{1,2}});
         System.out.println(res);
     }
+
+    public int minMeetingRoomsHeap(int[][] intervals){
+        Arrays.sort(intervals, (a, b)-> a[1] - b[1]);
+        // this stores the conferences in session, order by ending time, the earliest is the head
+        PriorityQueue<int[]> heap = new PriorityQueue<int[]>(intervals.length, new MyCom());
+        heap.add(intervals[0]);
+        int result = 1;
+        for (int i = 1; i < intervals.length; i++)
+        {
+            int[] top = heap.peek();
+            if (intervals[i][0] < top[1]){
+                result++;
+            }
+            else{
+                heap.poll();
+            }
+            heap.add(intervals[i]);
+        }
+        return result;
+    }
+
+    private class MyCom implements Comparator<int[]>
+    {
+        @Override
+        public int compare(int[] a, int[] b) {
+            return Integer.compare(a[1], b[1]);
+        }
+    }
+
+
+
     public int minMeetingRooms(int[][] intervals) {
         // sort by end time
         Arrays.sort(intervals, (a, b)->Integer.compare(a[1], b[1]));
