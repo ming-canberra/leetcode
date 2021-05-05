@@ -1,8 +1,6 @@
 package easy;
 
-import java.util.HashSet;
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.util.*;
 
 public class RotateString796 {
     public static void main(String[] args) {
