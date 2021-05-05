@@ -12,7 +12,7 @@ public class MeetingRoomsII253 {
     public int minMeetingRoomsHeap(int[][] intervals){
         Arrays.sort(intervals, (a, b)-> a[1] - b[1]);
         // this stores the conferences in session, order by ending time, the earliest is the head
-        PriorityQueue<int[]> heap = new PriorityQueue<int[]>(intervals.length, new MyCom());
+        PriorityQueue<int[]> heap = new PriorityQueue<int[]>(new MyCom());
         heap.add(intervals[0]);
         int result = 1;
         for (int i = 1; i < intervals.length; i++)
