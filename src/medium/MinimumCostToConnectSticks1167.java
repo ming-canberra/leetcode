@@ -8,6 +8,33 @@ public class MinimumCostToConnectSticks1167 {
         MinimumCostToConnectSticks1167 thisClass = new MinimumCostToConnectSticks1167();
     }
 
+    /**
+     * do it again using heap
+     *
+    * */
+    public int connectSticksHeap(int[] sticks) {
+        if (sticks.length == 1){
+            return 0;
+        }
+
+        PriorityQueue<Integer> heap = new PriorityQueue<Integer>();
+
+        for (int i : sticks){
+            heap.add(i);
+        }
+        int result = 0;
+
+        while(heap.size() > 1){
+            int top1 = heap.poll();
+            int top2 = heap.poll();
+            result+=top1;
+            result+=top2;
+            heap.add(top1 + top2);
+        }
+
+        return result;
+    }
+
     public int connectSticks(int[] sticks) {
         if (sticks.length == 1){
             return 0;
@@ -25,24 +52,6 @@ public class MinimumCostToConnectSticks1167 {
             Arrays.sort(sticks, i, n);
         }
 
-        return result;
-    }
-
-    public int connectSticks2(int[] sticks) {
-        PriorityQueue<Integer> queue = new PriorityQueue<>();
-
-        for (int i : sticks){
-            queue.add(i);
-        }
-
-        int result = 0;
-
-        while (queue.size() != 1){
-            Integer a = queue.poll();
-            Integer b = queue.poll();
-            result += (a + b);
-            queue.add(a + b);
-        }
         return result;
     }
 }
