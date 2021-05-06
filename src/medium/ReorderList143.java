@@ -5,7 +5,66 @@ public class ReorderList143 {
         ReorderList143 thisClass = new ReorderList143();
 
     }
-    public void reorderList(ListNode head) {
+
+    public void reorderListSecondTime(ListNode head) {
+        if (head.next != null){
+            ListNode headSecond = splitAndReturnSecondHead(head);
+            headSecond = revert(headSecond);
+            merge(head, headSecond);
+        }
+    }
+    private ListNode splitAndReturnSecondHead(ListNode head){
+        ListNode slow = head;
+        ListNode fast = head;
+        ListNode slowPrev = slow;
+        while(fast != null && fast.next != null){
+            slowPrev = slow;
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        if (fast != null){
+            slowPrev = slow;
+            slow = slow.next;
+        }
+        // split
+        slowPrev.next = null;
+        return slow;
+    }
+    private ListNode revert(ListNode head){
+        ListNode curr = head;
+        ListNode next = head.next;
+        head.next = null;
+        while(next != null){
+            curr = next;
+            next = next.next;
+            curr.next = head;
+            head = curr;
+        }
+        return curr;
+    }
+    /*
+            1->2->3  6->5->4
+            1->2->3  5->4
+    */
+    private void merge(ListNode head, ListNode headSecond){
+        ListNode lFirst = head;
+        ListNode lSecond = headSecond;
+        ListNode currFirst;
+        ListNode currSecond;
+        while(lFirst != null){
+            currFirst = lFirst;
+            lFirst = lFirst.next;
+
+            currSecond = lSecond;
+            if (lSecond != null){
+                lSecond = lSecond.next;
+                currFirst.next = currSecond;
+                currSecond.next = lFirst;
+            }
+        }
+    }
+
+    public void reorderListFirstTime(ListNode head) {
 
         if (head.next == null){
             return;
