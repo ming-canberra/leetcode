@@ -31,4 +31,34 @@ public class PathSumII {
             }
         }
     }
+
+    class solution2
+    {
+        public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
+            List<List<Integer>> result = new ArrayList<List<Integer>>();
+            if (root == null){
+                return result;
+            }
+            List<Integer> currResult = new ArrayList<Integer>();
+            generatePath(root, targetSum, result, currResult, 0);
+            return result;
+        }
+        private void generatePath(TreeNode node, int targetSum, List<List<Integer>> result, List<Integer> currResult, int currSum){
+            if (node == null){
+                return;
+            }
+            if (node.left == null && node.right == null){
+                if (currSum + node.val == targetSum){
+                    currResult.add(node.val);
+                    result.add(new ArrayList<Integer>(currResult));
+                    currResult.remove(currResult.size() - 1);
+                }
+                return;
+            }
+            currResult.add(node.val);
+            generatePath(node.left, targetSum, result, currResult, currSum + node.val);
+            generatePath(node.right, targetSum, result, currResult, currSum + node.val);
+            currResult.remove(currResult.size() - 1);
+        }
+    }
 }
