@@ -8,7 +8,22 @@ public class SubarraySumEqualsK {
         SubarraySumEqualsK thisClass = new SubarraySumEqualsK();
         System.out.println (thisClass.subarraySum(new int[]{1,5,3,2,4}, 3));
     }
-    public int subarraySum(int[] nums, int k) {
+
+    public int subarraySum(int[] nums, int k){
+        int result = 0;
+        // stores sum and number of occurance
+        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+        int sum = 0;
+        for (int i = 0; i < nums.length; i++){
+            sum += nums[i];
+            result += map.getOrDefault(sum - k, 0);
+            map.put(sum, map.getOrDefault(sum, 0) + 1);
+        }
+        result += map.getOrDefault(k, 0);
+        return result;
+    }
+
+    public int subarraySum2(int[] nums, int k) {
         Map<Integer, Integer> map = new HashMap<Integer, Integer>();// stores counts of sums from 0 to leng-1
         int result = 0;
         int sum = nums[0];
