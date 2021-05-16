@@ -27,7 +27,7 @@ public class ConstructBinaryTreeFromPreorderAndPostorderTraversal889 {
             TreeNode root = new TreeNode(pre[rIndexPre]);
             rIndexPre++;
 
-            if (rIndexPre >= pre.length){
+            if (start + 1 == end){
                 return root;
             }
 
