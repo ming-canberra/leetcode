@@ -1,7 +1,6 @@
 package medium;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class BasicCalculatorII227 {
     public static void main(String[] args) {
