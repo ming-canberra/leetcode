@@ -1,6 +1,6 @@
 package easy;
 
-import java.util.Stack;
+import java.util.*;
 
 public class CountPrimes {
     public static void main(String[] args) {
