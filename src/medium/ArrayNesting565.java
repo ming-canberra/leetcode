@@ -1,6 +1,6 @@
 package medium;
 
-import java.util.HashSet;
+import java.util.*;
 
 public class ArrayNesting565 {
     public static void main(String[] args) {
