@@ -6,6 +6,23 @@ public class FirstBadVersion278 {
 
     }
 
+    private class Solution2 {
+        public int firstBadVersion(int n) {
+            int l = 1;
+            int r = n;
+            while (l < r){
+                int m = l + (r - l) / 2;
+                if (!isBadVersion(m)){
+                    l = m + 1;
+                }
+                else{
+                    r = m;
+                }
+            }
+            return r;
+        }
+    }
+
     public int firstBadVersion(int n) {
 
         return recursiveFun(1, n);
