@@ -49,4 +49,7 @@ public class FirstBadVersion278 {
             return recursiveFun(mid, end);
         }
     }
+    private boolean isBadVersion(int i){
+        return true;
+    }
 }
