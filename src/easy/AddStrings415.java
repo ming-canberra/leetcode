@@ -1,7 +1,6 @@
 package easy;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class AddStrings415 {
     public static void main(String[] args) {
