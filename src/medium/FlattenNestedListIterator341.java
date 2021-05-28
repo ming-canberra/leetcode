@@ -54,4 +54,45 @@ public class FlattenNestedListIterator341 {
             return index < list.size();
         }
     }
+
+    public class NestedIterator2 implements Iterator<Integer> {
+        Stack<NestedInteger> stack;// to be filled backwards when filling a list.
+        Integer nextInteger = null;
+        public NestedIterator2(List<NestedInteger> nestedList) {
+            stack = new Stack<>();
+            for (int i = nestedList.size() - 1; i >= 0; i--){
+                stack.push(nestedList.get(i));
+            }
+            nextInteger = nextInt();
+        }
+
+        @Override
+        public Integer next() {
+            int tmp = nextInteger;
+            nextInteger = nextInt();
+            return tmp;
+        }
+
+        private Integer nextInt(){
+            if (stack.isEmpty()){
+                return null;
+            }
+            NestedInteger top = stack.pop();
+            if (top.isInteger()){
+                return top.getInteger();
+            }
+            else{
+                List<NestedInteger> nestedList = top.getList();
+                for (int i = nestedList.size() - 1; i >= 0; i--){
+                    stack.push(nestedList.get(i));
+                }
+                return nextInt();
+            }
+        }
+
+        @Override
+        public boolean hasNext() {
+            return nextInteger != null;
+        }
+    }
 }
