@@ -43,4 +43,39 @@ public class FindTheMostCompetitiveSubsequence1673 {
             }
         }
     }
+
+    /**
+     * monotonic increasing stack
+     * O(N)
+     * O(k)
+     * */
+    class Solution2 {
+        public int[] mostCompetitive(int[] nums, int k) {
+            Stack<Integer> stack = new Stack<>();
+            int n = nums.length;
+            for (int i = 0; i < n; i++){
+                if (stack.isEmpty() || stack.size() <= i + k - n ){
+                    stack.push(nums[i]);
+                }
+                else{
+                    while(!stack.isEmpty() && stack.peek() > nums[i]){
+                        if ( stack.size() <= (i + k - n)){
+                            break;
+                        }
+                        else{
+                            stack.pop();
+                        }
+                    }
+                    if (stack.size() < k){
+                        stack.push(nums[i]);
+                    }
+                }
+            }
+            int[] result = new int[k];
+            for (int i = k - 1; i >= 0; i--){
+                result[i] = stack.pop();
+            }
+            return result;
+        }
+    }
 }
