@@ -71,4 +71,26 @@ public class MeetingRoomsII253 {
 
         return list.size();
     }
+
+    /**
+     * this is the third time doing this, within 25 mins
+     * */
+    class Solution {
+        public int minMeetingRooms(int[][] intervals) {
+            Arrays.sort(intervals, (a, b)->a[0] - b[0]);
+            PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+            for (int[] a : intervals){
+                if (minHeap.size() == 0){
+                    minHeap.add(a[1]);
+                }
+                else{
+                    if (minHeap.peek() <= a[0]){
+                        minHeap.poll();
+                    }
+                    minHeap.add(a[1]);
+                }
+            }
+            return minHeap.size();
+        }
+    }
 }
