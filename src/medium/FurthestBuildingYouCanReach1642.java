@@ -62,4 +62,38 @@ public class FurthestBuildingYouCanReach1642 {
             return true;
         }
     }
+
+    /**
+     *
+     * this could be further simplified
+     * */
+    class Solution2 {
+        public int furthestBuilding(int[] heights, int bricks, int ladders) {
+            List<int[]> barrierList = new ArrayList<>();
+            for (int i = 1; i < heights.length; i++){
+                if (heights[i] > heights[i - 1]){
+                    barrierList.add(new int[]{i, heights[i] - heights[i - 1]});
+                }
+            }
+            PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+
+            if (barrierList.size() > ladders){
+                for (int i = 0; i < ladders; i++){
+                    minHeap.add(barrierList.get(i)[1]);
+                }
+                for (int i = ladders; i < barrierList.size(); i++){
+                    minHeap.add(barrierList.get(i)[1]);
+                    int top = minHeap.poll();
+                    if (bricks < top){
+                        return barrierList.get(i)[0] - 1;
+                    }
+                    else{
+                        bricks -= top;
+                    }
+                }
+            }
+
+            return heights.length - 1;
+        }
+    }
 }
