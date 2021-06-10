@@ -69,4 +69,38 @@ public class NumberOfConnectedComponentsInAnUndirectedGraph323 {
             }
         }
     }
+
+    /**
+     * union-find
+     *
+     * O(N + E*log(N))
+     *
+     * */
+    class Solution {
+        public int countComponents(int n, int[][] edges) {
+            int count = n;
+            int[] roots = new int[n];
+            for (int i = 0; i < roots.length; i++){
+                roots[i] = i;
+            }
+            for (int i = 0; i < edges.length; i++){
+                int rootX = findRoot(edges[i][0], roots);
+                int rootY = findRoot(edges[i][1], roots);
+                // union,
+                if (rootX != rootY){
+                    roots[rootY] = rootX;
+                    count--;
+                }
+            }
+            return count;
+        }
+        private int findRoot(int x, int[] roots){
+            while( x != roots[x]){
+                // path compression
+                roots[x] = roots[roots[x]];
+                x = roots[x];
+            }
+            return x;
+        }
+    }
 }

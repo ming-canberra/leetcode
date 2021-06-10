@@ -4,8 +4,7 @@ import java.util.*;
 
 public class ConnectingCitiesWithMinimumCost1135 {
     /**
-     *
-     *O(E*log(E) + E) E is the number of connections
+     *O(N + E*log(E) + E*log(N)) E is the number of connections
      * */
     class Solution {
         int count = 0;// n - 1 is the ending condition
