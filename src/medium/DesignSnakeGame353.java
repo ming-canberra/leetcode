@@ -12,7 +12,7 @@ public class DesignSnakeGame353 {
          E.g food = [[1,1], [1,0]] means the first food is positioned at [1,1], the second is at [1,0]. */
 
         Queue<int[]> snake = new LinkedList<int[]>();
-        HashSet<String> snakePositions = new HashSet<>();
+        HashSet<Integer> snakePositions = new HashSet<>();
         int[][] food;
         int[] head;
         int width;
@@ -22,7 +22,7 @@ public class DesignSnakeGame353 {
             this.food = food;
             this.width = width;
             this.height = height;
-            snakePositions.add(0 + "," + 0);
+            snakePositions.add(0 * width + 0);
             snake.add(new int[] {0, 0});
             head = new int[] {0, 0};
         }
@@ -57,21 +57,21 @@ public class DesignSnakeGame353 {
             if (curFood != null){
                 if (head[0] == curFood[0] && head[1] == curFood[1]){
                     snake.add(new int[]{head[0], head[1]});
-                    snakePositions.add(head[0] + "," + head[1]);
+                    snakePositions.add(head[0] * width + head[1]);
                     foodIndex++;
                     return foodIndex;
                 }
             }
             int[] top = snake.poll();
-            snakePositions.remove(top[0] + "," + top[1]);
+            snakePositions.remove(top[0] * width + top[1]);
             // hit herself
-            if (snakePositions.contains(head[0] + "," + head[1])){
+            if (snakePositions.contains(head[0] * width + head[1])){
                 return -1;
             }
             else{
                 // keep moving
                 snake.add(new int[]{head[0], head[1]});
-                snakePositions.add(head[0] + "," + head[1]);
+                snakePositions.add(head[0] * width + head[1]);
                 return foodIndex;
             }
         }
