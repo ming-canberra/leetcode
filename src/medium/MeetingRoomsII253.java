@@ -93,4 +93,21 @@ public class MeetingRoomsII253 {
             return minHeap.size();
         }
     }
+
+    /**
+     * O(NlogN)
+     */
+    public int minMeetingRooms4(int[][] intervals) {
+        Arrays.sort(intervals, (a, b)-> a[0] - b[0]);
+        PriorityQueue<int[]> heap = new PriorityQueue<>( (a, b)->a[1] - b[1]);
+        heap.add(intervals[0]);
+        for (int i = 1; i < intervals.length; i++){
+            // new meeting starting time is before first meeting that could end
+            if (intervals[i][0] >= heap.peek()[1]){
+                heap.poll();
+            }
+            heap.add(intervals[i]);
+        }
+        return heap.size();
+    }
 }
