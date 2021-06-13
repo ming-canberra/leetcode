@@ -1,13 +1,8 @@
 package medium;
 
-import java.util.Stack;
+import java.util.*;
 
 public class NextGreaterElementII503 {
-    public static void main(String[] args) {
-        NextGreaterElementII503 thisClass = new NextGreaterElementII503();
-
-        thisClass.nextGreaterElements(null);
-    }
     public int[] nextGreaterElements(int[] nums) {
         int[] toReturn = new int[nums.length];
         int max = Integer.MIN_VALUE;
@@ -45,5 +40,38 @@ public class NextGreaterElementII503 {
 
 
         return toReturn;
+    }
+
+    class Solution {
+        public int[] nextGreaterElements(int[] nums) {
+            int[] eNums = new int[nums.length * 2];
+
+            for (int i = 0; i < nums.length; i++){
+                eNums[i] = nums[i];
+                eNums[i + nums.length] = nums[i];
+            }
+
+            int[] result = new int[nums.length];
+
+            Stack<Integer> stack = new Stack<>();
+
+            for (int i = eNums.length - 1; i >= 0; i--){
+                while(!stack.isEmpty() && eNums[i] >= stack.peek()){
+                    stack.pop();
+                }
+                if (i < result.length){
+                    if (stack.isEmpty()){
+                        result[i] = -1;
+                    }
+                    else{
+                        result[i] = stack.peek();
+                    }
+                }
+
+                stack.add(eNums[i]);
+            }
+
+            return result;
+        }
     }
 }
