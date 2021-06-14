@@ -1,13 +1,8 @@
 package medium;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Subsets78 {
-    public static void main(String[] args) {
-        Subsets78 thisClass = new Subsets78();
-        System.out.println (thisClass.subsets(null));
-    }
 
     public List<List<Integer>> subsets(int[] nums) {
         List<List<Integer>> result = new ArrayList<List<Integer>>();
@@ -24,4 +19,28 @@ public class Subsets78 {
             tResult.remove(tResult.size() - 1);
         }
     }
+
+    class Solution {
+        public List<List<Integer>> subsets(int[] nums) {
+            List<List<Integer>> result = new ArrayList<>();
+            result.add(Arrays.asList(new Integer[]{nums[0]}));
+            result.add(new ArrayList<Integer>());
+            bfs(result, nums, 1);
+            return result;
+        }
+        private void bfs(List<List<Integer>> result, int[] nums, int index){
+            if (index < nums.length){
+                int size = result.size();
+                for (int i = 0; i < size; i++){
+                    List<Integer> newList = new ArrayList<Integer>();
+                    newList.addAll(result.get(i));
+                    newList.add(nums[index]);
+                    result.add(newList);
+                }
+                index++;
+                bfs(result, nums, index);
+            }
+        }
+    }
+
 }
