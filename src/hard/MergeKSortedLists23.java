@@ -3,10 +3,6 @@ package hard;
 import java.util.*;
 
 public class MergeKSortedLists23 {
-    public static void main(String[] args) {
-        MergeKSortedLists23 thisClass = new MergeKSortedLists23();
-    }
-
     public ListNode mergeKLists(ListNode[] lists) {
         if (lists == null || lists.length == 0){
             return null;
@@ -34,6 +30,32 @@ public class MergeKSortedLists23 {
         @Override
         public int compare(ListNode a, ListNode b){
             return Integer.compare(a.val, b.val);
+        }
+    }
+
+    class Solution {
+        public ListNode mergeKLists(ListNode[] lists) {
+            if (lists == null){
+                return null;
+            }
+            ListNode head = new ListNode();
+            int k = lists.length;
+            PriorityQueue<ListNode> heap = new PriorityQueue<ListNode>( (a, b)->a.val - b.val);
+            for (int i = 0; i < k; i++){
+                if (lists[i] != null){
+                    heap.add(lists[i]);
+                }
+            }
+            ListNode cur = head;
+            while(!heap.isEmpty()){
+                ListNode top = heap.poll();
+                cur.next = new ListNode(top.val);
+                cur = cur.next;
+                if (top.next != null){
+                    heap.add(top.next);
+                }
+            }
+            return head.next;
         }
     }
 }
