@@ -33,4 +33,34 @@ public class FindMedianFromDataStream295 {
             }
         }
     }
+
+    /**
+     * the trick here is to make the new element going through both heaps to balance the 2 heaps
+     * */
+    class MedianFinder2 {
+        PriorityQueue<Integer> minH;
+        PriorityQueue<Integer> maxH;
+        /** initialize your data structure here. */
+        public MedianFinder2() {
+            minH = new PriorityQueue<>();
+            maxH = new PriorityQueue<>((a, b)-> b - a);
+        }
+        public void addNum(int num) {
+            minH.add(num);
+            maxH.add(minH.poll());
+            if (maxH.size() - minH.size() > 1)
+            {
+                minH.add(maxH.poll());
+            }
+        }
+
+        public double findMedian() {
+            if (maxH.size() - minH.size() > 0){
+                return maxH.peek();
+            }
+            else{
+                return (maxH.peek() + minH.peek()) * 0.5;
+            }
+        }
+    }
 }
