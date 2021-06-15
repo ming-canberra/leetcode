@@ -1,15 +1,8 @@
 package easy;
 
-import java.util.Arrays;
-import java.util.Comparator;
+import java.util.*;
 
 public class ReorderDataInLogFiles {
-    public static void main(String[] args) {
-        ReorderDataInLogFiles thisClass = new ReorderDataInLogFiles();
-
-
-    }
-
     public String[] reorderLogFiles(String[] logs) {
         Comparator<String> myCom = new MyCom();
         Arrays.sort(logs, myCom);
@@ -50,6 +43,38 @@ public class ReorderDataInLogFiles {
                 }
                 System.out.println(tempResult);
                 return tempResult;
+            }
+        }
+    }
+
+    class Solution {
+        public String[] reorderLogFiles(String[] logs) {
+            Arrays.sort(logs, new MyCom());
+            return logs;
+        }
+        class MyCom implements Comparator<String>{
+            @Override
+            public int compare(String a, String b){
+                boolean aIsDigit = Character.isDigit(a.charAt(a.indexOf(" ") + 1));
+                boolean bIsDigit = Character.isDigit(b.charAt(b.indexOf(" ") + 1));
+                String aContent = a.substring(a.indexOf(" ") + 1, a.length());
+                String bContent = b.substring(b.indexOf(" ") + 1, b.length());
+                if (aIsDigit && !bIsDigit){
+                    return 1;
+                }
+                if (!aIsDigit && bIsDigit){
+                    return -1;
+                }
+
+                if (!aIsDigit && !bIsDigit){
+                    if (aContent.equals(bContent)){
+                        return a.substring(0, a.indexOf(" ")).compareTo(b.substring(0, b.indexOf(" ")));
+                    }
+                    else{
+                        return aContent.compareTo(bContent);
+                    }
+                }
+                return 0;
             }
         }
     }
