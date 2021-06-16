@@ -53,4 +53,56 @@ public class CourseScheduleII210 {
             return new int[0];
         }
     }
+
+    class Solution {
+        public int[] findOrder(int numCourses, int[][] prerequisites) {
+            HashMap<Integer, List<int[]>> prereqToAffected = new HashMap<Integer, List<int[]>>();
+            HashMap<Integer, Integer> courseToPrereqCount = new HashMap<Integer, Integer>();
+            for (int i = 0; i < prerequisites.length; i++){
+                int[] cur = prerequisites[i];
+
+                int count = courseToPrereqCount.getOrDefault(cur[0], 0) + 1;
+                courseToPrereqCount.put(cur[0], count);
+
+                List<int[]> affected = prereqToAffected.getOrDefault(cur[1], new ArrayList<int[]>());
+                affected.add(cur);
+
+                prereqToAffected.put(cur[1], affected);
+            }
+            Queue<Integer> q = new LinkedList<>();
+
+            for (int i = 0; i < numCourses; i++){
+                if (!courseToPrereqCount.containsKey(i)){
+                    q.add(i);
+                }
+            }
+            List<Integer> result = new ArrayList<>();
+            while(!q.isEmpty()){
+                int top = q.poll();
+                result.add(top);
+                if (prereqToAffected.containsKey(top)){
+                    List<int[]> affected = prereqToAffected.get(top);
+                    for (int[] pre : affected){
+                        int count = courseToPrereqCount.get(pre[0]);
+                        count--;
+                        courseToPrereqCount.put(pre[0], count);
+                        if (count == 0){
+                            q.add(pre[0]);
+                        }
+                    }
+                }
+            }
+
+            int[] toReturn = new int[numCourses];
+            if (result.size() == numCourses){
+                for (int i = 0; i < result.size(); i++){
+                    toReturn[i] = result.get(i);
+                }
+                return toReturn;
+            }
+            else{
+                return new int[0];
+            }
+        }
+    }
 }
