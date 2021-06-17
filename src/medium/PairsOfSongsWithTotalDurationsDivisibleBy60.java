@@ -51,4 +51,23 @@ public class PairsOfSongsWithTotalDurationsDivisibleBy60 {
 
         return count;
     }
+
+    /**
+     * O(N)
+     * */
+    class Solution {
+        public int numPairsDivisibleBy60(int[] time) {
+            int[] sixty = new int[60];
+            for (int i : time){
+                sixty[i % 60]++;
+            }
+            int result = 0;
+            result += sixty[0] * (sixty[0] - 1) / 2;
+            result += sixty[30] * (sixty[30] - 1) / 2;
+            for (int i = 1; i <= 29; i++){
+                result += sixty[i] * sixty[60 - i];
+            }
+            return result;
+        }
+    }
 }
