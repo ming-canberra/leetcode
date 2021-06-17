@@ -1,5 +1,7 @@
 package medium;
 
+import java.util.*;
+
 public class NumberOfProvinces547 {
     public static void main(String[] args) {
         NumberOfProvinces547 thisClass = new NumberOfProvinces547();
@@ -31,6 +33,40 @@ public class NumberOfProvinces547 {
                     dfs(graph, visited, j);
                 }
             }
+        }
+    }
+
+    class Solution {
+        public int findCircleNum(int[][] isConnected) {
+            int n = isConnected.length;
+            int[] roots = new int[n];
+            for (int i = 0; i < n; i++){
+                roots[i] = i;
+            }
+            for (int i = 0; i < n - 1; i++){
+                for (int j = i + 1; j < n; j ++){
+                    // define i to be the root
+                    if (isConnected[i][j] == 1){
+                        int rootI = find(i, roots);
+                        int rootJ = find(j, roots);
+                        if (rootI != rootJ){
+                            roots[rootJ] = rootI;
+                        }
+                    }
+                }
+            }
+            Set<Integer> set = new HashSet<>();
+            for (int i = 0; i < n; i++){
+                set.add(find(i, roots));
+            }
+            return set.size();
+        }
+        private int find(int a, int[] roots){
+            while (a != roots[a]){
+                roots[a] = roots[roots[a]];
+                a = roots[a];
+            }
+            return a;
         }
     }
 }
