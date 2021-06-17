@@ -1,28 +1,6 @@
 package easy;
 
   public class MergeTwoSortedLists21 {
-      public static void main(String[] args) {
-          MergeTwoSortedLists21 thisClass = new MergeTwoSortedLists21();
-
-            ListNode input1 = new ListNode(2);
-            /*{
-                ListNode node2 = new ListNode(2);
-                ListNode node4 = new ListNode(4);
-                input1.next = node2;
-                node2.next = node4;
-            }*/
-          ListNode input2 = new ListNode(1);
-          /*{
-              ListNode node3 = new ListNode(3);
-              ListNode node4 = new ListNode(4);
-              input2.next = node3;
-              node3.next = node4;
-          }*/
-
-          System.out.println(
-                  thisClass.mergeTwoLists(input1, input2)
-          );
-      }
       public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
           if (l1==null && l2==null){
               return null;
@@ -68,3 +46,30 @@ package easy;
           return l1;
       }
   }
+class Solution {
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        ListNode head = new ListNode();
+        ListNode cur = head;
+        while (l1 != null || l2 != null){
+            if (l1 == null){
+                cur.next = l2;
+                break;
+            }
+            if (l2 == null){
+                cur.next = l1;
+                break;
+            }
+            if (l1.val < l2.val){
+                cur.next = l1;
+                cur = cur.next;
+                l1 = l1.next;
+            }
+            else{
+                cur.next = l2;
+                cur = cur.next;
+                l2 = l2.next;
+            }
+        }
+        return head.next;
+    }
+}
