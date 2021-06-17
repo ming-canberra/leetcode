@@ -45,4 +45,33 @@ public class CopyListWithRandomPointer138 {
 
         return newHead;
     }
+
+
+    class Solution {
+        public Node copyRandomList(Node head) {
+            Map<Node, Node> oldToNew = new HashMap<>();
+            Node curOld = head;
+            Node hat = new Node(1);
+            Node curNew = hat;
+            while (curOld != null){
+                Node newNode = new Node(curOld.val);
+                curNew.next = newNode;
+                oldToNew.put(curOld, newNode);
+                curOld = curOld.next;
+                curNew = curNew.next;
+            }
+            // start again from the beginning
+            curNew = hat.next;
+            curOld = head;
+            while (curOld != null)
+            {
+                if (curOld.random != null){
+                    curNew.random = oldToNew.get(curOld.random);
+                }
+                curOld = curOld.next;
+                curNew = curNew.next;
+            }
+            return hat.next;
+        }
+    }
 }
