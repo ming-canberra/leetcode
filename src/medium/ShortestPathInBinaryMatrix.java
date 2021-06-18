@@ -68,4 +68,56 @@ public class ShortestPathInBinaryMatrix {
         }
         return result;
     }
+
+    class Solution {
+        public int shortestPathBinaryMatrix(int[][] grid) {
+            int n = grid.length;
+            if (grid[n - 1][n - 1] == 1 || grid[0][0] == 1){
+                return -1;
+            }
+
+            boolean[][] visited = new boolean[n][n];
+
+            for (int i = 0; i < n; i++){
+                for (int j = 0; j < n; j++){
+                    if(grid[i][j] == 1){
+                        visited[i][j] = true;
+                    }
+                }
+            }
+
+            Queue<int[]> q = new LinkedList<>();
+            q.add(new int[]{0, 0});
+            visited[0][0] = true;
+            int[][] directions = new int[][]{new int[]{-1, -1}, new int[]{-1, 0}, new int[]{-1, 1}, new int[]{1, -1},
+                    new int[]{1, 1}, new int[]{1, 0}, new int[]{0, -1}, new int[]{0, 1}};
+            int result = 1;
+            if (n == 1){
+                return 1;
+            }
+            while(!q.isEmpty()){
+                int size = q.size();
+                result++;
+                // looping this level
+                for (int sizeIndex = 0; sizeIndex < size; sizeIndex++){
+                    int[] top = q.poll();
+                    for (int[] dir : directions){
+                        int[] next = new int[]{top[0] + dir[0], top[1] + dir[1]};
+                        if (next[0] >= 0 && next[0] < n && next[1] >= 0 && next[1] < n){
+                            if (!visited[next[0]][next[1]]){
+                                visited[next[0]][next[1]] = true;
+                                if(next[0] == n - 1 && next[1] == n - 1){
+                                    return result;
+                                }
+                                else{
+                                    q.add(next);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return -1;
+        }
+    }
 }
