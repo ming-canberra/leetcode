@@ -1,6 +1,6 @@
 package medium;
 
-import java.util.Arrays;
+import java.util.*;
 
 public class NumberOfConnectedComponentsInAnUndirectedGraph323 {
     public static void main(String[] args) {
@@ -101,6 +101,42 @@ public class NumberOfConnectedComponentsInAnUndirectedGraph323 {
                 x = roots[x];
             }
             return x;
+        }
+    }
+    /**
+     * union-find
+     *
+     * but this one did the 'finding' all over again, not efficient enough
+     *
+     *  O(N + E*F + N*F), not good in terms of time complexity
+     * */
+    class Solution2 {
+        public int countComponents(int n, int[][] edges) {
+            int[] roots = new int[n];
+            for (int i = 0; i < n; i++){
+                roots[i] = i;
+            }
+            for (int i = 0; i < edges.length; i++){
+                int pIndex = edges[i][0];
+                int cIndex = edges[i][1];
+                int rootP = find(pIndex, roots);
+                int rootC = find(cIndex, roots);
+                if (rootP != rootC){
+                    roots[rootC] = rootP;
+                }
+            }
+            Set<Integer> set = new HashSet<>();
+            for (int i = 0; i < n; i++){
+                set.add(find(i, roots));
+            }
+            return set.size();
+        }
+        private int find(int a, int[] roots){
+            while (a != roots[a]){
+                roots[a] = roots[roots[a]];
+                a = roots[a];
+            }
+            return a;
         }
     }
 }
