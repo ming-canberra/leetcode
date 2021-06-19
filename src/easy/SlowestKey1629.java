@@ -1,6 +1,6 @@
 package easy;
 
-import java.util.Stack;
+import java.util.*;
 
 public class SlowestKey1629 {
     public static void main(String[] args) {
@@ -31,5 +31,28 @@ public class SlowestKey1629 {
         }
 
         return result;
+    }
+
+    class Solution {
+        public char slowestKey(int[] releaseTimes, String keysPressed) {
+            int[] count = new int[26];
+            for (int i = 0; i < releaseTimes.length; i++){
+                int index = keysPressed.charAt(i) - 'a';
+                if (i == 0){
+                    count[index] = releaseTimes[0];
+                }
+                else{
+                    count[index] = Math.max(count[index], releaseTimes[i] - releaseTimes[i - 1]);
+                }
+            }
+            int resIndex = count.length - 1;
+            for (int i = count.length - 1; i >= 0; i--){
+                if (count[i] > count[resIndex])
+                {
+                    resIndex = i;
+                }
+            }
+            return (char)('a' + resIndex);
+        }
     }
 }
