@@ -54,4 +54,20 @@ public class MinimumCostToConnectSticks1167 {
 
         return result;
     }
+
+    class Solution {
+        public int connectSticks(int[] sticks) {
+            PriorityQueue<Integer> heap = new PriorityQueue<>();
+            int result = 0;
+            for (int i : sticks){
+                heap.add(i);
+            }
+            while (heap.size() > 1){
+                int newTop = heap.poll() + heap.poll();
+                result += newTop;
+                heap.add(newTop);
+            }
+            return result;
+        }
+    }
 }
