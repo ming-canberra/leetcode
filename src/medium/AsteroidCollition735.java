@@ -74,4 +74,66 @@ public class AsteroidCollition735 {
         }
         return result;
     }
+
+    class Solution {
+        public int[] asteroidCollision(int[] asteroids) {
+
+            Stack<Integer> stack = new Stack<>();
+
+            for (int i : asteroids){
+                if(stack.isEmpty()){
+                    stack.push(i);
+                }
+                else{
+
+                    int top = stack.peek();
+                    if (top > 0 && i > 0){
+                        stack.push(i);
+                    }
+                    else if (top < 0 && i < 0){
+                        stack.push(i);
+                    }
+                    else if (top < 0 && i > 0){
+                        stack.push(i);
+                    }
+                    else{
+                        while (!stack.isEmpty()){
+                            top = stack.peek();
+                            if (top > 0 && i < 0){
+                                if (top + i == 0){
+                                    stack.pop();
+                                    break;
+                                }
+                                else if (top + i > 0){
+                                    break;
+                                }
+                                // current i is heavier than top
+                                else{
+                                    stack.pop();
+                                    if (stack.isEmpty()){
+                                        stack.push(i);
+                                        break;
+                                    }
+                                }
+                            }
+                            else{
+                                stack.push(i);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            int[] result = new int[stack.size()];
+
+            int index = result.length - 1;
+            while(!stack.isEmpty()){
+                result[index] = stack.pop();
+                index--;
+            }
+
+            return result;
+        }
+    }
 }
