@@ -1,10 +1,6 @@
 package easy;
 
 public class SubtreeOfAnotherTree572 {
-    public static void main(String[] args) {
-        SubtreeOfAnotherTree572 thisClass = new SubtreeOfAnotherTree572();
-        System.out.println(thisClass.isSubtree(null, null));
-    }
     public boolean isSubtree(TreeNode bigTree, TreeNode smallTree) {
 
         if (bigTree == null){
@@ -37,5 +33,41 @@ public class SubtreeOfAnotherTree572 {
         else{
             return (isSameTree(p.left, q.left) && isSameTree(p.right, q.right));
         }
+    }
+
+    class Solution {
+        public boolean isSubtree(TreeNode root, TreeNode subRoot) {
+
+            if (equal(root, subRoot)){
+                return true;
+            }
+
+            if (root != null){
+                if (isSubtree(root.left, subRoot)){
+                    return true;
+                }
+                if (isSubtree(root.right, subRoot)){
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private boolean equal(TreeNode a, TreeNode b){
+            if (a == null && b == null){
+                return true;
+            }
+            else if (a == null && b != null){
+                return false;
+            }
+            else if (a != null && b == null){
+                return false;
+            }
+            else{
+                return a.val == b.val && equal(a.left, b.left) && equal(a.right, b.right);
+            }
+        }
+
     }
 }
