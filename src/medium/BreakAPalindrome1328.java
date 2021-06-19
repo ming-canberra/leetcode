@@ -45,4 +45,47 @@ public class BreakAPalindrome1328 {
             return new String(chars);
         }
     }
+
+
+    class Solution {
+        public String breakPalindrome(String palindrome) {
+            if (palindrome.length() == 1){
+                return "";
+            }
+
+            boolean even = palindrome.length() % 2 == 0;
+
+            char[] charArray = palindrome.toCharArray();
+            int index = 0;
+            if (even){
+                // replace the first char where it is not a, or replace the last char
+                while(index < palindrome.length() && palindrome.charAt(index) == 'a'){
+                    index++;
+                }
+                if (index == palindrome.length()){
+                    charArray[charArray.length - 1] = 'b';
+                    return new String(charArray);
+                }
+                else{
+                    charArray[index] = 'a';
+                    return new String(charArray);
+                }
+            }
+            else{
+                // replace the first char where it is not a and it is not he middle one, or replace the last char
+                while( ( index < palindrome.length() && palindrome.charAt(index) == 'a')  || (index == palindrome.length() / 2 ) ){
+                    index++;
+                }
+                if (index == palindrome.length()){
+                    charArray[charArray.length - 1] = 'b';
+                    return new String(charArray);
+                }
+                else{
+                    charArray[index] = 'a';
+                    return new String(charArray);
+                }
+            }
+
+        }
+    }
 }
