@@ -42,4 +42,44 @@ public class PrisonCellsAfterNDays957 {
             return 0;
         }
     }
+
+    class Solution1 {
+        public int[] prisonAfterNDays(int[] cells, int n) {
+            Set<String> set = new HashSet<>();
+            int[] curDay = cells;
+            boolean foundCircle = false;
+            for (int i = 0; i < n; i++){
+                curDay = nextDay(curDay);
+
+                if (!foundCircle){
+                    String curDayString = curDay[0] + "" + curDay[1] + curDay[2] + curDay[3] + curDay[4] + curDay[5] + curDay[6] + curDay[7];
+                    if (set.contains(curDayString)){
+                        int circleSize = set.size();
+                        // add some circles to i
+                        i = i + (n - 1 - i) / circleSize * circleSize;
+                        foundCircle = true;
+                    }
+                    else{
+                        set.add(curDayString);
+                    }
+                }
+            }
+            return curDay;
+        }
+
+        private int[] nextDay(int[] cells){
+            int[] result = new int[8];
+            result[0] = 0;
+            result[7] = 0;
+            for (int i = 1; i < 7; i++){
+                if(cells[i - 1] == cells[i + 1]){
+                    result[i] = 1;
+                }
+                else{
+                    result[i] = 0;
+                }
+            }
+            return result;
+        }
+    }
 }
