@@ -42,4 +42,38 @@ public class MaximumAverageSubtree1120 {
             this.val = val;
         }
     }
+
+    class Solution {
+        private double result = 0.0;
+        public double maximumAverageSubtree(TreeNode root) {
+            calculateTreeInfo(root);
+            return result;
+        }
+        private Info calculateTreeInfo(TreeNode root){
+            if (root == null){
+                return new Info(0, 0);
+            }
+
+            Info lInfo = calculateTreeInfo(root.left);
+            Info rInfo = calculateTreeInfo(root.right);
+
+            int count = lInfo.count + rInfo.count + 1;
+            int tValue = lInfo.totalValue + rInfo.totalValue + root.val;
+
+            result = Math.max(result, tValue * 1.0 / count);
+
+            return new Info(count, tValue);
+        }
+
+        class Info{
+
+            int count;
+            int totalValue;
+
+            Info(int count, int totalValue){
+                this.count = count;
+                this.totalValue = totalValue;
+            }
+        }
+    }
 }
