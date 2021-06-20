@@ -39,4 +39,36 @@ public class ConnectingCitiesWithMinimumCost1135 {
             return x;
         }
     }
+
+    class Solution2 {
+        public int minimumCost(int n, int[][] connections) {
+            int[] roots = new int[n + 1];
+            for (int i = 0; i < roots.length; i++){
+                roots[i] = i;
+            }
+            Arrays.sort(connections, (a, b) -> a[2] - b[2]);
+            int result = 0;
+            int count = 0;
+            for (int i = 0; i < connections.length; i++){
+                int aRoot = find(connections[i][0], roots);
+                int bRoot = find(connections[i][1], roots);
+                if (aRoot != bRoot){
+                    roots[bRoot] = aRoot;
+                    result += connections[i][2];
+                    count++;
+                    if (count == n - 1){
+                        return result;
+                    }
+                }
+            }
+            return -1;
+        }
+        private int find(int a, int[] roots){
+            while(a != roots[a]){
+                roots[a] = roots[roots[a]];
+                a = roots[a];
+            }
+            return a;
+        }
+    }
 }
