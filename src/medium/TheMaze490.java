@@ -57,4 +57,45 @@ public class TheMaze490 {
             return false;
         }
     }
+
+    class Solution2 {
+        private int[][] directions = new int[][]{new int[]{1, 0}, new int[]{-1, 0}, new int[]{0, 1}, new int[]{0, -1}};
+        public boolean hasPath(int[][] maze, int[] start, int[] destination) {
+            int m = maze.length;
+            int n = maze[0].length;
+            boolean[][] visited = new boolean[m][n];
+            return dfs(maze, visited, start, destination, m, n);
+        }
+        private boolean dfs(int[][] maze, boolean[][] visited, int[] start, int[] destination, int m, int n){
+            int rIndex = start[0];
+            int cIndex = start[1];
+            if (!visited[rIndex][cIndex]){
+                visited[rIndex][cIndex] = true;
+                boolean nextResult;
+                // go 4 directions
+                for (int i = 0; i < directions.length; i++){
+                    int[] next = getNextStop(maze, start, m, n, directions[i]);
+                    if (next[0] == destination[0] && next[1] == destination[1]){
+                        return true;
+                    }
+                    nextResult = dfs(maze, visited, next, destination, m, n);
+                    if (nextResult){
+                        return nextResult;
+                    }
+                }
+            }
+            return false;
+        }
+        private int[] getNextStop(int[][] maze, int[] start, int m, int n, int[] direction){
+            int rIndex = start[0];
+            int cIndex = start[1];
+            while (rIndex >= 0 && rIndex < m && cIndex >= 0 && cIndex < n && maze[rIndex][cIndex] == 0){
+                rIndex += direction[0];
+                cIndex += direction[1];
+            }
+            rIndex -= direction[0];
+            cIndex -= direction[1];
+            return new int[]{rIndex, cIndex};
+        }
+    }
 }
