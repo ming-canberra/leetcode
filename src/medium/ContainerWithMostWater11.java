@@ -1,12 +1,8 @@
 package medium;
 
-import java.util.HashSet;
+import java.util.*;
 
 public class ContainerWithMostWater11 {
-    public static void main(String[] args) {
-        ContainerWithMostWater11 thisClass = new ContainerWithMostWater11();
-    }
-
     public int maxArea(int[] height) {
         int lIndex = 0;
         int rIndex = height.length - 1;
@@ -24,5 +20,31 @@ public class ContainerWithMostWater11 {
             }
         }
         return result;
+    }
+
+    class Solution {
+        public int maxArea(int[] height) {
+            int result = 0;
+            int n = height.length;
+            int l = 0;
+            int r = n - 1;
+            while (l < r){
+                int area = (r - l) * Math.min(height[l], height[r]);
+                result = Math.max(result, area);
+                if (height[l] < height[r]){
+                    int ori = height[l];
+                    while (l < r && height[l] <= ori){
+                        l++;
+                    }
+                }
+                else{
+                    int ori = height[r];
+                    while (l < r && height[r] <= ori ){
+                        r--;
+                    }
+                }
+            }
+            return result;
+        }
     }
 }
