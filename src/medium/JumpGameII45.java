@@ -23,4 +23,33 @@ public class JumpGameII45 {
             return dp[n - 1];
         }
     }
+
+    /**
+    * O(N)
+    * */
+    class Solution2 {
+        public int jump(int[] nums) {
+            int count = 0;
+            int index = 0;
+            int n = nums.length;
+            if (n == 1){
+                return 0;
+            }
+            while(true){
+                if (index >= n || index + nums[index] >= n -1){
+                    return count + 1;
+                }
+                int max = 0;
+                int iMax = 0;
+                for (int i = 1; i <= nums[index]; i++){
+                    if (i + nums[index + i] > max){
+                        max = i + nums[index + i];
+                        iMax = i;
+                    }
+                }
+                count++;
+                index = index + iMax;
+            }
+        }
+    }
 }
