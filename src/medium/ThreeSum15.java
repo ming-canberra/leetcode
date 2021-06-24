@@ -45,4 +45,50 @@ public class ThreeSum15 {
         }
         return result;
     }
+
+    class Solution {
+        public List<List<Integer>> threeSum(int[] nums) {
+
+            int n = nums.length;
+            Arrays.sort(nums);
+            List<List<Integer>> result = new ArrayList<List<Integer>>();
+
+            if (n < 3){
+                return result;
+            }
+
+            for (int i = 0; i < n - 2; i++){
+                int iVal = nums[i];
+                if ( i > 0 ){
+                    if(nums[i] == nums[i - 1]){
+                        continue;
+                    }
+                }
+
+                int l = i + 1;
+                int r = n - 1;
+
+                while(l < r){
+                    int lVal = nums[l];
+                    int rVal = nums[r];
+
+                    if (lVal + rVal == -iVal){
+                        result.add(Arrays.asList(iVal, lVal, rVal));
+                        l++;
+                        while((nums[l] == nums[l - 1]) && (l < r)) {
+                            l++;
+                        }
+                    }
+                    else if (lVal + rVal < -iVal){
+                        l++;
+                    }
+                    else{
+                        r--;
+                    }
+                }
+            }
+
+            return result;
+        }
+    }
 }
