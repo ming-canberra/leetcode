@@ -130,4 +130,65 @@ public class ReorderList143 {
 
         return cur;
     }
+
+    class Solution {
+        public void reorderList(ListNode head) {
+            if(head == null || head.next == null){
+                return;
+            }
+            // find the length
+            int n = 0;
+            ListNode tmp = head;
+            while(tmp != null){
+                n++;
+                tmp = tmp.next;
+            }
+
+            ListNode tailFirstHalf = head;
+            int index = 1;
+            while(index < (n + 1) / 2){
+                tailFirstHalf = tailFirstHalf.next;
+                index++;
+            }
+
+            ListNode headSecondHalf = tailFirstHalf.next;
+            tailFirstHalf.next = null;
+
+            headSecondHalf = revert(headSecondHalf);
+
+            merge(head, headSecondHalf);
+        }
+
+        // revert a list and return new head
+        private ListNode revert(ListNode head){
+            ListNode prev = null;
+            ListNode cur = head;
+            ListNode next = null;
+
+            while(cur != null){
+                next = cur.next;
+                cur.next = prev;
+                prev = cur;
+                cur = next;
+            }
+
+            return prev;
+        }
+        // merge second list into first list
+        private void merge(ListNode node1, ListNode node2){
+            ListNode cur1 = node1;
+            ListNode cur2 = node2;
+            ListNode next1 = null;
+            ListNode next2 = null;
+            while(cur1 != null && cur2 != null){
+                next1 = cur1.next;
+                next2 = cur2.next;
+                cur1.next = cur2;
+                cur2.next = next1;
+
+                cur1 = next1;
+                cur2 = next2;
+            }
+        }
+    }
 }
