@@ -63,4 +63,38 @@ public class AddTwoNumbersII445 {
 
         return last;
     }
+
+    class Solution {
+        public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+            Stack<ListNode> s1 = new Stack<>();
+            Stack<ListNode> s2 = new Stack<>();
+            fillStack(s1, l1);
+            fillStack(s2, l2);
+
+            int carry = 0;
+            ListNode dummy = new ListNode(-1);
+            ListNode cur = null;
+            while( !s1.isEmpty() || !s2.isEmpty() || carry != 0 ){
+                int value1 = s1.isEmpty() ? 0 : s1.pop().val;
+                int value2 = s2.isEmpty() ? 0 : s2.pop().val;
+
+                int sum = value1 + value2 + carry;
+
+                cur = dummy.next;
+
+                dummy.next = new ListNode(sum % 10);
+                dummy.next.next = cur;
+
+                carry = sum / 10;
+            }
+
+            return dummy.next;
+        }
+        private void fillStack(Stack<ListNode> s, ListNode l){
+            while(l != null){
+                s.push(l);
+                l = l.next;
+            }
+        }
+    }
 }
