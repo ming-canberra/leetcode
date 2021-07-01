@@ -62,5 +62,26 @@ public class Subsets78 {
             list.remove(list.size() - 1);
         }
     }
+    class SolutionIterativeBFS {
+        public List<List<Integer>> subsets(int[] nums) {
+            List<List<Integer>> result = new ArrayList<List<Integer>>();
+            Queue<List<Integer>> queue = new LinkedList<>();
+            queue.add(new ArrayList<Integer>());
+            for(int i = 0; i < nums.length; i++){
+                int size = queue.size();
+                for (int j = 0; j < size; j++){
+                    List<Integer> top = queue.poll();
+                    queue.add(new ArrayList<Integer>(top));
+                    top.add(nums[i]);
+                    queue.add(top);
+                }
+            }
 
+            while(!queue.isEmpty()){
+                result.add( queue.poll()  ) ;
+            }
+
+            return result;
+        }
+    }
 }
