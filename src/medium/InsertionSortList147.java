@@ -61,4 +61,29 @@ public class InsertionSortList147 {
             return dummy.next;
         }
     }
+
+    class Solution2 {
+        public ListNode insertionSortList(ListNode head) {
+            ListNode dummy = new ListNode(0);
+            while(head != null){
+                ListNode next = head.next;
+                head.next = null;
+                if (dummy.next == null){
+                    dummy.next = head;
+                }
+                else{
+                    ListNode prev = dummy;
+                    ListNode cur = dummy.next;
+                    while(cur != null && head.val > cur.val){
+                        prev = cur;
+                        cur = cur.next;
+                    }
+                    prev.next = head;
+                    head.next = cur;
+                }
+                head = next;
+            }
+            return dummy.next;
+        }
+    }
 }
