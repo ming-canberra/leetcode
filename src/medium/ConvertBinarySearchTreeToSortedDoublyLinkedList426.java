@@ -95,4 +95,58 @@ class Node {
         }
 
     }
+
+
+    class Solution2 {
+
+        public Node treeToDoublyList(Node root) {
+            if (root == null){
+                return null;
+            }
+
+            Pair pair = dfs(root);
+            Node head = pair.head;
+            Node tail = pair.tail;
+
+            head.left = tail;
+            tail.right = head;
+
+            return head;
+        }
+
+        private Pair dfs(Node root){
+            if (root == null){
+                return null;
+            }
+
+            Pair leftPair = dfs(root.left);
+
+            Pair rightPair = dfs(root.right);
+
+            Node head = root;
+            if (leftPair != null){
+                head = leftPair.head;
+                leftPair.tail.right = root;
+                root.left = leftPair.tail;
+            }
+
+            Node tail = root;
+            if (rightPair != null){
+                tail = rightPair.tail;
+                rightPair.head.left = root;
+                root.right = rightPair.head;
+            }
+
+            return new Pair(head, tail);
+        }
+
+        class Pair{
+            Node head;
+            Node tail;
+            Pair(Node h, Node t){
+                head = h;
+                tail = t;
+            }
+        }
+    }
 }
