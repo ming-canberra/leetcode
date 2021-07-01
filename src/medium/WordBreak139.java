@@ -103,4 +103,32 @@ public class WordBreak139 {
             return false;
         }
     }
+
+    class Solution2 {
+        public boolean wordBreak(String s, List<String> wordDict) {
+            Set<String> set = new HashSet<>();
+            for (int i = 0; i < wordDict.size(); i++){
+                set.add(wordDict.get(i));
+            }
+            int n = s.length();
+            boolean dp[] = new boolean[n];
+            dp[0] = set.contains(s.substring(0, 1));
+            for (int i = 1; i < n; i++){
+                if (set.contains(s.substring(0, i + 1))){
+                    dp[i] = true;
+                }
+                else{
+                    for (int j = 0; j < i; j++){
+                        if(dp[j]){
+                            if (set.contains(s.substring(j + 1, i + 1))){
+                                dp[i] = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            return dp[n - 1];
+        }
+    }
 }
