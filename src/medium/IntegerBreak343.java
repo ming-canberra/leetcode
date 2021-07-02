@@ -59,4 +59,28 @@ public class IntegerBreak343 {
 
         return Math.max(2 * dp[n-2], 3 * dp[n-3]);
     }
+
+    class Solution {
+        public int integerBreak(int n) {
+            if (n == 2){
+                return 1;
+            }
+            if (n == 3){
+                return 2;
+            }
+
+            int[] dp = new int[n + 1];
+            dp[2] = 2;
+            dp[3] = 3;
+
+            for (int i = 4; i < n + 1; i++){
+                int max = 0;
+                for (int j = 2; j <= i / 2; j++){
+                    max = Math.max(max, dp[j] * dp[i - j]  );
+                }
+                dp[i] = max;
+            }
+            return dp[n];
+        }
+    }
 }
