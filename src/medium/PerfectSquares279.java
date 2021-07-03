@@ -33,5 +33,33 @@ public class PerfectSquares279 {
         return dp[n];
     }
 
+    class Solution {
+        public int numSquares(int n) {
+            List<Integer> candidates = new ArrayList<>();
 
+            for (int i = 1; i * i <= n; i++){
+                candidates.add(i * i);
+            }
+
+            int[] dp = new int[n + 1];
+            dp[1] = 1;
+            for (int i = 2; i < n + 1; i++){
+                dp[i] = Integer.MAX_VALUE;
+                for (int j = 0; j < candidates.size(); j++){
+                    if(i == candidates.get(j)){
+                        dp[i] = 1;
+                        break;
+                    }
+                    else if (i < candidates.get(j)){
+                        break;
+                    }
+                    else{
+                        dp[i] = Math.min(dp[i], 1 + dp[i - candidates.get(j)]);
+                    }
+                }
+            }
+
+            return dp[n];
+        }
+    }
 }
