@@ -37,4 +37,24 @@ public class UniqueBinarySearchTrees96 {
             return dp[n];
         }
     }
+
+    class Solution2 {
+        int[] memo;
+        public int numTrees(int n) {
+            memo = new int[n + 1];
+            memo[0] = 1;
+            return dfs(n);
+        }
+        private int dfs(int n){
+            if (memo[n] > 0){
+                return memo[n];
+            }
+            int sum = 0;
+            for (int i = 0; i < n; i++){
+                sum += dfs(i) * dfs(n - 1 - i);
+            }
+            memo[n] = sum;
+            return sum;
+        }
+    }
 }
