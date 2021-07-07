@@ -131,4 +131,34 @@ public class WordBreak139 {
             return dp[n - 1];
         }
     }
+
+    class Solution {
+        Boolean[] m;
+        public boolean wordBreak(String s, List<String> wordDict) {
+            Set<String> set = new HashSet<>(wordDict);
+            m = new Boolean[s.length() + 1];
+            return dfs(s, s.length(), set);
+        }
+        boolean dfs(String s, int l, Set<String> set){
+            if (l == 0){
+                return true;
+            }
+            if (m[l] != null){
+                return m[l];
+            }
+
+            for (int i = 0; i < l; i++){
+                String right = s.substring(i, l);
+                if (set.contains(right)){
+                    boolean tmp = dfs(s, i, set);
+                    if(tmp){
+                        m[l] = true;
+                        return true;
+                    }
+                }
+            }
+            m[l] = false;
+            return false;
+        }
+    }
 }
