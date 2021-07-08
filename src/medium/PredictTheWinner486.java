@@ -4,6 +4,9 @@ import java.util.Arrays;
 
 public class PredictTheWinner486 {
 
+    /**
+     * recursion
+     * */
     class Solution {
         public boolean PredictTheWinner(int[] nums) {
             return maxRelativeScore(nums, 0, nums.length - 1) >= 0;
@@ -17,6 +20,10 @@ public class PredictTheWinner486 {
             return Math.max(cur1, cur2);
         }
     }
+
+    /**
+     * recursion + memoization
+     * */
     class Solution1 {
         Integer[][] memo;
         public boolean PredictTheWinner(int[] nums) {
@@ -40,6 +47,9 @@ public class PredictTheWinner486 {
         }
     }
 
+    /**
+     * dp
+     * */
     class Solution2 {
         public boolean PredictTheWinner(int[] nums) {
             int n = nums.length;
