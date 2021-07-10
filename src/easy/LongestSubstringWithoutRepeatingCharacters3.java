@@ -1,12 +1,8 @@
 package easy;
 
-import java.util.HashMap;
+import java.util.*;
 
 public class LongestSubstringWithoutRepeatingCharacters3 {
-    public static void main(String[] args) {
-        LongestSubstringWithoutRepeatingCharacters3 thisClass = new LongestSubstringWithoutRepeatingCharacters3();
-        System.out.println(" " + thisClass.lengthOfLongestSubstring("dvdf"));
-    }
     public int lengthOfLongestSubstring(String s) {
         HashMap<Character, Integer> map = new HashMap<Character, Integer>();
 
@@ -37,5 +33,32 @@ public class LongestSubstringWithoutRepeatingCharacters3 {
         max = Math.max(max, map.size());
 
         return max;
+    }
+
+    class Solution {
+        public int lengthOfLongestSubstring(String s) {
+            if (s.length() < 2){
+                return s.length();
+            }
+            int l = 0;
+            Set<Character> set = new HashSet<>();//current longest Substring
+            int result = 1;
+            for (int r = 0; r < s.length(); r++){
+                char curChar = s.charAt(r);
+
+                if (set.contains(curChar)){
+                    while(s.charAt(l) != curChar){
+                        set.remove(s.charAt(l));
+                        l++;
+                    }
+                    l++;
+                }
+                else{
+                    set.add(curChar);
+                    result = Math.max(result, set.size());
+                }
+            }
+            return result;
+        }
     }
 }
