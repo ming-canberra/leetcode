@@ -64,4 +64,25 @@ public class CoinChange322 {
             return dp[amount];
         }
     }
+
+    class Solution1 {
+        public int coinChange(int[] coins, int amount) {
+            Integer[] dp = new Integer[amount + 1];
+            dp[0] = 0;
+            for (int i = 1; i < dp.length; i++){
+                int min = Integer.MAX_VALUE;
+                for (int j = coins.length - 1; j >= 0; j--){
+                    if(i - coins[j] >= 0){
+                        if(dp[i - coins[j]] != null){
+                            min = Math.min(min, dp[i - coins[j]] + 1);
+                        }
+                    }
+                }
+                if (min != Integer.MAX_VALUE){
+                    dp[i] = min;
+                }
+            }
+            return dp[amount] == null ? -1 : dp[amount];
+        }
+    }
 }
