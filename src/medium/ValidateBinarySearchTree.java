@@ -6,19 +6,6 @@ import java.util.List;
 import java.util.Queue;
 
 public class ValidateBinarySearchTree {
-    public static void main(String[] args) {
-        ValidateBinarySearchTree thisClass = new ValidateBinarySearchTree();
-
-        TreeNode node2 = new TreeNode(2);
-        TreeNode node1 = new TreeNode(1);
-        TreeNode node3 = new TreeNode(3);
-        node2.left = node1;
-        node2.right = node3;
-
-        boolean res = thisClass.isValidBST(node2);
-        System.out.println(res);
-    }
-
     public boolean isValidBST(TreeNode root) {
         return isValid(root.left, Long.MIN_VALUE, root.val) && isValid(root.right, root.val, Long.MAX_VALUE);
     }
@@ -35,5 +22,25 @@ public class ValidateBinarySearchTree {
         }
         return isValid(node.left, min, Math.min(max, node.val))
                 && isValid(node.right, Math.max(min, node.val), max);
+    }
+
+    class Solution {
+        public boolean isValidBST(TreeNode root) {
+            return isValid(root, null, null);
+        }
+        private boolean isValid(TreeNode node, Integer low, Integer high){
+            if (node == null){
+                return true;
+            }
+            if (high != null && node.val >= high){
+                return false;
+            }
+            if (low != null && node.val <= low){
+                return false;
+            }
+            boolean leftValid = isValid(node.left, low, node.val);
+            boolean rightValid = isValid(node.right, node.val, high);
+            return leftValid && rightValid;
+        }
     }
 }
