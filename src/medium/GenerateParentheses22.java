@@ -3,12 +3,7 @@ package medium;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GenerateParentheses {
-    public static void main(String[] args) {
-        GenerateParentheses thisClass = new GenerateParentheses();
-        List<String> res = thisClass.generateParenthesis(5);
-        System.out.println(res.size());
-    }
+public class GenerateParentheses22 {
     public List<String> generateParenthesis(int n) {
         List<String> result = new ArrayList<String>();
         generate(result,"", n, n, n);
@@ -28,6 +23,29 @@ public class GenerateParentheses {
                 }
                 generate(result, string + ")", numOpen, numClose - 1, n);
             }
+        }
+    }
+
+    class Solution {
+        private List<String> result;
+        public List<String> generateParenthesis(int n) {
+            result = new ArrayList<>();
+            addP("(", n - 1, n);
+            return result;
+        }
+        private void addP(String cur, int open, int close){
+            if (open == 0 && close == 0){
+                result.add(cur);
+                return;
+            }
+            if (open < 0 || close < 0){
+                return;
+            }
+            if (open > close){
+                return;
+            }
+            addP(cur + "(", open - 1, close);
+            addP(cur + ")", open, close - 1);
         }
     }
 }
