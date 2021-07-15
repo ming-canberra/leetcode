@@ -1,24 +1,32 @@
 package easy;
 
 public class SearchA2DMatrixII240 {
-    public static void main(String[] args) {
-        SearchA2DMatrixII240 thisClass = new SearchA2DMatrixII240();
-        System.out.println(thisClass.searchMatrix(new int[][]{new int[]{5,6,10,14},new int[]{6,10,13,18},new int[]{10,13,18,19}}, 14));
-
-        StringBuilder sb = new StringBuilder();
-    }
-
     public boolean searchMatrix(int[][] matrix, int target) {
         int m = matrix.length;
-        int n = matrix[0].length;
-        int row = 0;
-        int col = n-1;
-
-
-
-
-
-
+        for (int i = 0; i < m; i++){
+            boolean result = search(matrix[i], target);
+            if (result){
+                return true;
+            }
+        }
+        return false;
+    }
+    private boolean search(int[] array, int target){
+        int n = array.length;
+        int l = -1;
+        int r = n;
+        while(l + 1 < r){
+            int middle = l + (r - l) / 2;
+            if (array[middle] == target){
+                return true;
+            }
+            else if (array[middle] > target){
+                r = middle;
+            }
+            else{
+                l = middle;
+            }
+        }
 
         return false;
     }
