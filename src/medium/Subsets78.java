@@ -84,4 +84,24 @@ public class Subsets78 {
             return result;
         }
     }
+
+    class SolutionBacktrack {
+        List<List<Integer>> result;
+        public List<List<Integer>> subsets(int[] nums) {
+            result = new ArrayList<>();
+            dfs(nums, 0, new ArrayList<>());
+            return result;
+        }
+        private void dfs(int[] nums, int index, List<Integer> list){
+            if (index == nums.length){
+                result.add(new ArrayList<>(list));
+            }
+            else{
+                dfs(nums, index + 1, list);
+                list.add(nums[index]);
+                dfs(nums, index + 1, list);
+                list.remove(list.size() - 1);
+            }
+        }
+    }
 }
