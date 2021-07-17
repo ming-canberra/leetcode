@@ -1,15 +1,11 @@
 package medium;
 
-import easy.ListNode;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Stack;
 
-public class CombinationSum {
+public class CombinationSum39 {
     public static void main(String[] args) {
-        CombinationSum thisClass = new CombinationSum();
+        CombinationSum39 thisClass = new CombinationSum39();
         System.out.println (thisClass.combinationSum(null, 3));
     }
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
@@ -28,6 +24,30 @@ public class CombinationSum {
         }
         else if (prevSum == target){
             result.add(new ArrayList<Integer>(prevList));
+        }
+    }
+
+    class Solution {
+        List<List<Integer>> result;
+        public List<List<Integer>> combinationSum(int[] candidates, int target) {
+            result = new ArrayList<>();
+            dfs(candidates, target, new ArrayList<>(), 0, 0);
+            return result;
+        }
+        private void dfs(int[] candidates, int target, List<Integer> list, int curIndex, int sum){
+            if(sum == target){
+                result.add(new ArrayList<>(list));
+            }
+            else if (sum > target){
+                return;
+            }
+            else{
+                for (int i = curIndex; i < candidates.length; i++){
+                    list.add(candidates[i]);
+                    dfs(candidates, target, list, i, sum + candidates[i]);
+                    list.remove(list.size() - 1);
+                }
+            }
         }
     }
 }
