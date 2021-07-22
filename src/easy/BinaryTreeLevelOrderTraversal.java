@@ -42,4 +42,31 @@ public class BinaryTreeLevelOrderTraversal {
             fun(newQ, ans);
         }
     }
+
+    class Solution {
+        public List<List<Integer>> levelOrder(TreeNode root) {
+            List<List<Integer>> result = new ArrayList<>();
+            Queue<TreeNode> q = new LinkedList<>();
+            if (root == null){
+                return result;
+            }
+            q.add(root);
+            while(!q.isEmpty()){
+                int size = q.size();
+                List<Integer> curList = new ArrayList<>();
+                for (int i = 0; i < size; i++){
+                    TreeNode top = q.poll();
+                    curList.add(top.val);
+                    if (top.left != null){
+                        q.add(top.left);
+                    }
+                    if (top.right != null){
+                        q.add(top.right);
+                    }
+                }
+                result.add(curList);
+            }
+            return result;
+        }
+    }
 }
