@@ -149,4 +149,33 @@ class Node {
             }
         }
     }
+
+    class Solution3 {
+        Node head = null;
+        Node tail = null;
+        public Node treeToDoublyList(Node root) {
+            if (root == null){
+                return null;
+            }
+            recurse(root);
+            head.left = tail;
+            tail.right = head;
+            return head;
+        }
+        private void recurse(Node root){
+            if (root != null){
+                recurse(root.left);
+                if (tail == null){
+                    tail = root;
+                    head = root;
+                }
+                else{
+                    tail.right = root;
+                    root.left = tail;
+                    tail = root;
+                }
+                recurse(root.right);
+            }
+        }
+    }
 }
