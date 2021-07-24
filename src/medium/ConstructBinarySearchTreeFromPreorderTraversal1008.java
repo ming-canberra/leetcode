@@ -35,4 +35,39 @@ public class ConstructBinarySearchTreeFromPreorderTraversal1008 {
             }
         }
     }
+
+
+    class Solution {
+        public TreeNode bstFromPreorder(int[] preorder) {
+            return helper(preorder, 0, preorder.length - 1);
+        }
+        private TreeNode helper(int[] preorder, int start, int end){
+            TreeNode root = new TreeNode(preorder[start]);
+            Integer leftStart = null;
+            Integer leftEnd = null;
+            Integer rightStart = null;
+            Integer rightEnd = null;
+            for (int i = start + 1; i <= end; i++){
+                if (preorder[i] < root.val && leftStart == null){
+                    leftStart = i;
+                }
+                if (preorder[i] < root.val){
+                    leftEnd = i;
+                }
+                if (preorder[i] > root.val  && rightStart == null){
+                    rightStart = i;
+                }
+                if (preorder[i] > root.val){
+                    rightEnd = i;
+                }
+            }
+            if (leftStart != null && leftEnd != null){
+                root.left = helper(preorder, leftStart, leftEnd);
+            }
+            if (rightStart != null && rightEnd != null){
+                root.right = helper(preorder, rightStart, rightEnd);
+            }
+            return root;
+        }
+    }
 }
