@@ -1,5 +1,7 @@
 package medium;
 
+import java.util.*;
+
 public class ConstructBinaryTreeFromPreorderAndInorderTraversal105 {
     public static void main(String[] args) {
         ConstructBinaryTreeFromPreorderAndInorderTraversal105 thisClass = new ConstructBinaryTreeFromPreorderAndInorderTraversal105();
@@ -32,5 +34,44 @@ public class ConstructBinaryTreeFromPreorderAndInorderTraversal105 {
             return treeNode;
         }
         return null;
+    }
+
+    class Solution {
+        private Map<Integer, Integer> inorderValueToIndex;
+        public TreeNode buildTree(int[] preorder, int[] inorder) {
+            inorderValueToIndex = new HashMap<>();
+            for (int i = 0; i < inorder.length; i++){
+                inorderValueToIndex.put(inorder[i], i);
+            }
+            return helper(preorder, inorder, 0, inorder.length);
+        }
+        private TreeNode helper(int[] preorder, int[] inorder, int preStartIndex, int length){
+            if (preStartIndex >= 0 && preStartIndex < preorder.length && length > 0){
+                TreeNode root = new TreeNode(preorder[preStartIndex]);
+                if (length > 1){
+                    int rootIndex = inorderValueToIndex.get(root.val);
+                    int leftOrRightRootIndex = inorderValueToIndex.get(preorder[preStartIndex + 1]);
+                    //no left tree, only right tree
+                    if (leftOrRightRootIndex > rootIndex){
+                        root.right = helper(preorder, inorder, preStartIndex + 1, length - 1);
+                    }
+                    // both left and right tree to be located
+                    else{
+                        int leftTreeEndIndex = 0;
+                        for (int i = preStartIndex + 1; i < preStartIndex + length; i++){
+                            if (inorderValueToIndex.get(preorder[i]) < rootIndex){
+                                leftTreeEndIndex = i;
+                            }
+                        }
+                        root.left = helper(preorder, inorder, preStartIndex + 1, leftTreeEndIndex - preStartIndex);
+                        root.right = helper(preorder, inorder, leftTreeEndIndex + 1, length - 1 - leftTreeEndIndex + preStartIndex);
+                    }
+                }
+                return root;
+            }
+            else{
+                return null;
+            }
+        }
     }
 }
