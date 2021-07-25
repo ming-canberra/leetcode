@@ -74,4 +74,28 @@ public class ConstructBinaryTreeFromPreorderAndInorderTraversal105 {
             }
         }
     }
+
+    class SolutionOptimal {
+        private int preorderRootIndex = 0;
+        private Map<Integer, Integer> inorderValueIndexMap;
+        public TreeNode buildTree(int[] preorder, int[] inorder) {
+            inorderValueIndexMap = new HashMap<>();
+            for (int i = 0; i < inorder.length; i++){
+                inorderValueIndexMap.put(inorder[i], i);
+            }
+            return helper(preorder, inorder, 0, inorder.length - 1);
+        }
+        private TreeNode helper(int[] preorder, int[] inorder, int start, int end) {
+            if (start <= end){
+                TreeNode root = new TreeNode(preorder[preorderRootIndex++]);
+                int curRootIndexInorder = inorderValueIndexMap.get(root.val);
+                root.left = helper(preorder, inorder, start, curRootIndexInorder - 1);
+                root.right = helper(preorder, inorder, curRootIndexInorder + 1, end);
+                return root;
+            }
+            else{
+                return null;
+            }
+        }
+    }
 }
