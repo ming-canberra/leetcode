@@ -2,14 +2,7 @@ package medium;
 
 import java.util.HashSet;
 
-public class LowestCommonAncestorOfABinaryTree {
-    public static void main(String[] args) {
-        LowestCommonAncestorOfABinaryTree thisClass = new LowestCommonAncestorOfABinaryTree();
-
-        TreeNode res = thisClass.lowestCommonAncestor(null, null, null);
-        System.out.println(res);
-    }
-
+public class LowestCommonAncestorOfABinaryTree236 {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         TreeInfo result = generateTreeInfo(root, p, q);
         return result.lca;
@@ -53,5 +46,42 @@ public class LowestCommonAncestorOfABinaryTree {
     class TreeInfo{
         TreeNode lca = null;
         int numNodesFound = 0;
+    }
+
+    class Solution {
+        private TreeNode result = null;
+        public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+            numGivenNodesFound(root, p, q);
+            return result;
+        }
+        private int numGivenNodesFound(TreeNode root, TreeNode p, TreeNode q) {
+            if (root == null){
+                return -1;
+            }
+            int numResult = -1;
+            if (result == null){
+                if (root == p || root == q){
+                    numResult = 1;
+                }
+                int numL = numGivenNodesFound(root.left, p, q);
+                if (numL > 0 && numResult == 1){
+                    result = root;
+                    return -1;
+                }
+
+                int numR = numGivenNodesFound(root.right, p, q);
+                if (numR > 0 && numResult == 1){
+                    result = root;
+                    return -1;
+                }
+
+                if (numL + numR == 2){
+                    result = root;
+                    return -1;
+                }
+                numResult = Math.max(numResult, Math.max(numL, numR));
+            }
+            return numResult;
+        }
     }
 }
