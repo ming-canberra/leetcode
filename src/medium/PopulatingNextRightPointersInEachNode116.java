@@ -3,9 +3,9 @@ package medium;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class PopulatingNextRightPointersInEachNode {
+public class PopulatingNextRightPointersInEachNode116 {
     public static void main(String[] args) {
-        PopulatingNextRightPointersInEachNode thisClass = new PopulatingNextRightPointersInEachNode();
+        PopulatingNextRightPointersInEachNode116 thisClass = new PopulatingNextRightPointersInEachNode116();
 
         Node res = thisClass.connect(null);
         System.out.println(res);
@@ -104,4 +104,31 @@ public class PopulatingNextRightPointersInEachNode {
         recursiveFun(q1, q2);
     }
 
+    class Solution {
+        public Node connect(Node root) {
+            if (root == null){
+                return root;
+            }
+            Queue<Node> q = new LinkedList<>();
+            q.add(root);
+            while(!q.isEmpty()){
+                int size = q.size();
+                Node prev = null;
+                for (int i = 0; i < size; i++){
+                    Node top = q.poll();
+                    if (prev != null){
+                        prev.next = top;
+                    }
+                    prev = top;
+                    if (top.left != null){
+                        q.add(top.left);
+                    }
+                    if (top.right != null){
+                        q.add(top.right);
+                    }
+                }
+            }
+            return root;
+        }
+    }
 }
