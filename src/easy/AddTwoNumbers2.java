@@ -5,6 +5,35 @@ public class AddTwoNumbers2 {
         AddTwoNumbers2 thisClass = new AddTwoNumbers2();
         System.out.println(" " + thisClass.addTwoNumbers2(null, null));
     }
+    class Solution {
+        public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+            ListNode cur1 = l1;
+            ListNode cur2 = l2;
+            ListNode dummy = new ListNode(1);
+            ListNode tail = dummy;
+            int carry = 0;
+            while(cur1 != null || cur2 != null){
+                int int1 = 0;
+                if (cur1 != null){
+                    int1 = cur1.val;
+                    cur1 = cur1.next;
+                }
+                int int2 = 0;
+                if (cur2 != null){
+                    int2 = cur2.val;
+                    cur2 = cur2.next;
+                }
+                ListNode newNode = new ListNode((int1 + int2 + carry) % 10);
+                carry = (int1 + int2 + carry) / 10;
+                tail.next = newNode;
+                tail = newNode;
+            }
+            if (carry > 0){
+                tail.next = new ListNode(carry);
+            }
+            return dummy.next;
+        }
+    }
     public ListNode addTwoNumbers2(ListNode l1, ListNode l2) {
 
         ListNode currentNode= new ListNode();
