@@ -1,8 +1,6 @@
 package easy;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class PalindromeLinkedList234 {
     public static void main(String[] args) {
@@ -91,5 +89,32 @@ public class PalindromeLinkedList234 {
             second = second.next;
         }
         return true;
+    }
+    class Solution {
+        public boolean isPalindrome(ListNode head) {
+            if (head == null || head.next == null){
+                return true;
+            }
+            Stack<Integer> stack = new Stack<>();
+            ListNode slow = head;
+            ListNode fast = head.next;
+            while(fast != null && fast.next != null){
+                stack.push(slow.val);
+                slow = slow.next;
+                fast = fast.next.next;
+            }
+            if (fast != null){
+                stack.push(slow.val);
+            }
+            ListNode secondHalfHead = slow.next;
+            while(!stack.isEmpty()){
+                Integer top = stack.pop();
+                if (secondHalfHead.val != top){
+                    return false;
+                }
+                secondHalfHead = secondHalfHead.next;
+            }
+            return true;
+        }
     }
 }
