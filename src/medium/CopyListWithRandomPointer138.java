@@ -74,4 +74,29 @@ public class CopyListWithRandomPointer138 {
             return hat.next;
         }
     }
+
+    class Solution1 {
+        public Node copyRandomList(Node head) {
+            Map<Node, Node> map = new HashMap<>();// from existing to new
+            Node cur = head;
+            while(cur != null){
+                Node newNode = new Node(cur.val);
+                map.put(cur, newNode);
+                cur = cur.next;
+            }
+            Node dummy = new Node(1);
+            Node tail = dummy;
+            cur = head;
+            while(cur != null){
+                Node mappedNode = map.get(cur);
+                if (cur.random != null){
+                    mappedNode.random = map.get(cur.random);
+                }
+                tail.next = mappedNode;
+                tail = tail.next;
+                cur = cur.next;
+            }
+            return dummy.next;
+        }
+    }
 }
