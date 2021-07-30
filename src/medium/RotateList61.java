@@ -40,4 +40,49 @@ public class RotateList61 {
             return head2;
         }
     }
+
+    class Solution {
+        public ListNode rotateRight(ListNode head, int k) {
+            if (head == null || head.next == null){
+                return head;
+            }
+
+            ListNode cur = head;
+            int length = 0;
+            while(cur != null){
+                length++;
+                cur = cur.next;
+            }
+
+            int nth = 0;
+            if (k % length == 0){
+                return head;
+            }
+            else{
+                nth = k % length;
+            }
+            //locate second head by locate the nth node from behind
+            ListNode fast = head;
+            cur = head;
+            for (int i = 0; i < nth; i++){
+                fast = fast.next;
+            }
+
+            while(fast.next != null){
+                cur = cur.next;
+                fast = fast.next;
+            }
+
+            ListNode secondHead = cur.next;
+            cur.next = null;
+
+
+            ListNode tail = secondHead;
+            while(tail.next != null){
+                tail = tail.next;
+            }
+            tail.next = head;
+            return secondHead;
+        }
+    }
 }
