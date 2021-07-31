@@ -47,4 +47,30 @@ public class InorderSuccessorInBST285 {
 
 
     }
+    class Solution {
+        boolean targetFound = false;
+        TreeNode result = null;
+        public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
+            inorder(root, p.val);
+            return result;
+        }
+        private void inorder(TreeNode root, int target){
+            if (root == null || result != null){
+                return;
+            }
+            if (root.val > target){
+                inorder(root.left, target);
+            }
+            if (targetFound){
+                if (root.val > target && result == null){
+                    result = root;
+                    return;
+                }
+            }
+            else if (root.val == target){
+                targetFound = true;;
+            }
+            inorder(root.right, target);
+        }
+    }
 }
