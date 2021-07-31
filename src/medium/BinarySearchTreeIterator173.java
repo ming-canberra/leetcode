@@ -1,8 +1,6 @@
 package medium;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 public class BinarySearchTreeIterator173 {
     public static void main(String[] args) {
@@ -28,6 +26,33 @@ public class BinarySearchTreeIterator173 {
         }
         public boolean hasNext() {
             return this.index < this.nodeList.size() - 1;
+        }
+    }
+
+    class BSTIteratorStack {
+        private Stack<TreeNode> q = new Stack<>();
+        public void BSTIterator(TreeNode root) {
+            q.push(root);
+        }
+        public int next() {
+            if (hasNext()){
+                TreeNode top = q.pop();
+                while(top.left != null || top.right != null){
+                    if (top.right != null){
+                        q.push(top.right);
+                    }
+                    q.push(new TreeNode(top.val));
+                    if (top.left != null){
+                        q.push(top.left);
+                    }
+                    top = q.pop();
+                }
+                return top.val;
+            }
+            return -1;
+        }
+        public boolean hasNext() {
+            return q.size() > 0;
         }
     }
 }
