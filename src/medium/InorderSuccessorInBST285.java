@@ -73,4 +73,24 @@ public class InorderSuccessorInBST285 {
             inorder(root.right, target);
         }
     }
+
+    class SolutionRecursive {
+        public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
+            if (root == null){
+                return null;
+            }
+            if (root.val <= p.val){
+                return inorderSuccessor(root.right, p);
+            }
+            else{
+                TreeNode tmp = inorderSuccessor(root.left, p);
+                if (tmp == null){
+                    return root;
+                }
+                else{
+                    return tmp;
+                }
+            }
+        }
+    }
 }
