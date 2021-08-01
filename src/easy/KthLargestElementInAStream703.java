@@ -28,4 +28,27 @@ public class KthLargestElementInAStream703 {
             return heap.peek();
         }
     }
+
+    class KthLargest1 {
+        PriorityQueue<Integer> h;
+        int size = 0;
+        public KthLargest1(int k, int[] nums) {
+            size = k;
+            h = new PriorityQueue<Integer>();
+            for (int integer : nums){
+                add(integer);
+            }
+        }
+        public int add(int val) {
+            if (h.size() < size){
+                h.add(val);
+                return h.peek();
+            }
+            else{
+                h.add(val);
+                h.poll();
+                return h.peek();
+            }
+        }
+    }
 }
