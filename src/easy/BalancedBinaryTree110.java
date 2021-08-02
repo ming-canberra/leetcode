@@ -41,4 +41,29 @@ public class BalancedBinaryTree110 {
             this.balanced = b;
         }
     }
+
+    class Solution {
+        public boolean isBalanced(TreeNode root) {
+            if (root == null){
+                return true;
+            }
+
+            if (isBalanced(root.left)){
+                if (isBalanced(root.right)){
+                    int lHeight = getHeight(root.left);
+                    int rHeight = getHeight(root.right);
+                    return Math.abs(lHeight - rHeight) <= 1;
+                }
+            }
+            return false;
+        }
+        private int getHeight(TreeNode root){
+            if (root == null){
+                return 0;
+            }
+            int lHeight = getHeight(root.left);
+            int rHeight = getHeight(root.right);
+            return Math.max(lHeight, rHeight) + 1;
+        }
+    }
 }
