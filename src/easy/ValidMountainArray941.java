@@ -46,4 +46,33 @@ public class ValidMountainArray941 {
 
         return true;
     }
+
+    class Solution {
+        public boolean validMountainArray(int[] arr) {
+            int n = arr.length;
+            if (n >= 3){
+                if (arr[0] < arr[1] && arr[n - 2] > arr[n - 1]){
+                    boolean ascending = true;
+                    for (int i = 2; i <= n - 2; i++){
+                        if(arr[i - 1] == arr[i]){
+                            return false;
+                        }
+                        if (ascending){
+                            if(arr[i - 1] > arr[i]){
+                                ascending = false;
+                            }
+                        }
+                        else{
+                            if(arr[i - 1] < arr[i]){
+                                return false;
+                            }
+                        }
+                    }
+                    return true;
+                }
+                return false;
+            }
+            return false;
+        }
+    }
 }
