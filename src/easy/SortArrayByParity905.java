@@ -23,4 +23,22 @@ public class SortArrayByParity905 {
 
         return a;
     }
+
+    class Solution {
+        public int[] sortArrayByParity(int[] nums) {
+            int curIndex = -1;
+            for (int i = 0; i < nums.length; i++){
+                if (nums[i] % 2 == 0){
+                    curIndex++;
+                    swap(nums, i, curIndex);
+                }
+            }
+            return nums;
+        }
+        private void swap(int[] nums, int a, int b){
+            int tmp = nums[a];
+            nums[a] = nums[b];
+            nums[b] = tmp;
+        }
+    }
 }
