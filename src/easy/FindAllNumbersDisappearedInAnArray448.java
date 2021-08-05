@@ -5,16 +5,20 @@ import java.util.Arrays;
 import java.util.List;
 
 public class FindAllNumbersDisappearedInAnArray448 {
-    public static void main(String[] args) {
-        FindAllNumbersDisappearedInAnArray448 thisClass = new FindAllNumbersDisappearedInAnArray448();
-        thisClass.findDisappearedNumbers(null);
-        StringBuilder sb = new StringBuilder();
-    }
-    public List<Integer> findDisappearedNumbers(int[] nums) {
-
-
-
-
-        return null;
+    class Solution {
+        public List<Integer> findDisappearedNumbers(int[] nums) {
+            int n = nums.length;
+            List<Integer> result = new ArrayList<>();
+            boolean[] existing = new boolean[nums.length + 1];
+            for (int i : nums){
+                existing[i] = true;
+            }
+            for (int i = 1; i < existing.length; i++){
+                if (!existing[i]){
+                    result.add(i);
+                }
+            }
+            return result;
+        }
     }
 }
