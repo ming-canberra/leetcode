@@ -28,4 +28,34 @@ public class MoveZeroes283 {
             }
         }
     }
+
+    class Solution {
+        public void moveZeroes(int[] nums) {
+            int indexZero = 0;
+            int indexNonZero = 0;
+            int n = nums.length;
+            while (indexNonZero < n){
+                while(indexZero < n && nums[indexZero] != 0){
+                    indexZero++;
+                }
+                if (indexZero == n){
+                    break;
+                }
+                indexNonZero = indexZero + 1;
+                while(indexNonZero < n && nums[indexNonZero] == 0){
+                    indexNonZero++;
+                }
+                if (indexNonZero == n){
+                    break;
+                }
+                swap(nums, indexZero, indexNonZero);
+                indexZero++;
+            }
+        }
+        private void swap(int[] nums, int a, int b){
+            int tmp = nums[a];
+            nums[a] = nums[b];
+            nums[b] = tmp;
+        }
+    }
 }
