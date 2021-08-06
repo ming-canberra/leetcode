@@ -91,4 +91,30 @@ public class ThreeSum15 {
             return result;
         }
     }
+
+    class Solution1 {
+        public List<List<Integer>> threeSum(int[] nums) {
+            List<List<Integer>> result = new ArrayList<>();
+            Arrays.sort(nums);
+            if (nums.length < 3){
+                return result;
+            }
+            for (int i = 0; i < nums.length - 2; i++){
+                if (i != 0 && nums[i] == nums[i - 1]){
+                    continue;
+                }
+                Set<Integer> set = new HashSet<>();
+                for (int j = i + 1; j < nums.length; j++){
+                    if (set.contains(-nums[j] - nums[i])){
+                        result.add(Arrays.asList(new Integer[]{nums[i], nums[j], - nums[i] - nums[j]}));
+                        while(j + 1 < nums.length && nums[j] == nums[j + 1]){
+                            j++;
+                        }
+                    }
+                    set.add(nums[j]);
+                }
+            }
+            return result;
+        }
+    }
 }
