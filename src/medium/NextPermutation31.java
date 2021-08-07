@@ -42,4 +42,34 @@ public class NextPermutation31 {
             end--;
         }
     }
+
+    class Solution {
+        public void nextPermutation(int[] nums) {
+            int n = nums.length;
+            for (int i = n - 2; i >= 0; i--){
+                //index found
+                if (nums[i] < nums[i + 1]){
+                    int tmp = nums[i];
+                    for (int j = n - 1; j > i; j--){
+                        if (tmp < nums[j]){
+                            nums[i] = nums[j];
+                            nums[j] = tmp;
+                            reverse(nums, i + 1, n - 1);
+                            return;
+                        }
+                    }
+                }
+            }
+            reverse(nums, 0, n - 1);
+        }
+        private void reverse(int[] nums, int left, int right){
+            while(left < right){
+                int leftValue = nums[left];
+                nums[left] = nums[right];
+                nums[right] = leftValue;
+                left++;
+                right--;
+            }
+        }
+    }
 }
