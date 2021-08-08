@@ -29,4 +29,26 @@ public class SearchA2DMatrix74 {
         int j = m % colLength;
         return matrix[i][j];
     }
+    class Solution {
+        public boolean searchMatrix(int[][] matrix, int target) {
+            int m = matrix.length;
+            int n = matrix[0].length;
+            int l = -1;
+            int r = m * n;
+            while (l + 1 < r){
+                int middle = (l + r) / 2;
+                int value = matrix[middle / n][middle % n];
+                if (value == target){
+                    return true;
+                }
+                else if (value > target){
+                    r = middle;
+                }
+                else{
+                    l = middle;
+                }
+            }
+            return false;
+        }
+    }
 }
