@@ -57,4 +57,43 @@ public class SearchInRotatedSortedArray33 {
             return -1;
         }
     }
+
+    class Solution {
+        public int search(int[] nums, int target) {
+            int l = 0;
+            int r = nums.length - 1;
+            while (l <= r){
+                int m = l + (r - l) / 2;
+                if (nums[m] == target){
+                    return m;
+                }
+                if (nums[l] == target){
+                    return l;
+                }
+                if (nums[r] == target){
+                    return r;
+                }
+                if (target > nums[m] && target < nums[r]){
+                    l = m + 1;
+                    r = r - 1;
+                }
+                else if (target > nums[l] && target < nums[m]){
+                    l = l + 1;
+                    r = m - 1;
+                }
+                else if (nums[m] > nums[r]){
+                    l = m + 1;
+                    r = r - 1;
+                }
+                else if (nums[m] < nums[l]){
+                    l = l + 1;
+                    r = m - 1;
+                }
+                else{
+                    break;
+                }
+            }
+            return -1;
+        }
+    }
 }
