@@ -39,4 +39,43 @@ public class SqrtX69 {
             }
         }
     }
+
+    class Solution {
+        public int mySqrt(int x) {
+            if (x == 0){
+                return 0;
+            }
+            if (x == 1){
+                return 1;
+            }
+            if (x == 2){
+                return 1;
+            }
+            if (x == 3){
+                return 1;
+            }
+            if (x == 4){
+                return 2;
+            }
+            if (x == 5){
+                return 2;
+            }
+            long l = -1;
+            long r = x / 2 + 1;
+            while(l + 1 < r){
+                long m = l + (r - l) / 2;
+                long prod = m * m;
+                if (prod == (long) x){
+                    return (int)m;
+                }
+                else if (prod > (long) x){
+                    r = m;
+                }
+                else{
+                    l = m;
+                }
+            }
+            return (int)l;
+        }
+    }
 }
