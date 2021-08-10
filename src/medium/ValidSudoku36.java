@@ -54,4 +54,87 @@ public class ValidSudoku36 {
             return true;
         }
     }
+
+    class Solution1 {
+        public boolean isValidSudoku(char[][] board) {
+            for (int i = 0; i < 9; i++){
+                if (!isValidRow(board, i)){
+                    return false;
+                }
+                if (!isValidCol(board, i)){
+                    return false;
+                }
+            }
+            for (int i = 0; i < 3; i++){
+                for (int j = 0; j < 3; j++){
+                    if (!isValidSquare(board, i * 3, j * 3)){
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+        private boolean isValidRow(char[][] board, int rowIndex){
+            Set<Character> set = new HashSet<>();
+            for (int i = 0; i < 9; i++){
+                char charValue =  board[rowIndex][i];
+                if (charValue != '.'){
+                    if (charValue == '0'){
+                        return false;
+                    }
+                    else{
+                        if (set.contains(charValue)){
+                            return false;
+                        }
+                        else{
+                            set.add(charValue);
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+        private boolean isValidCol(char[][] board, int colIndex){
+            Set<Character> set = new HashSet<>();
+            for (int i = 0; i < 9; i++){
+                char charValue =  board[i][colIndex];
+                if (charValue != '.'){
+                    if (charValue == '0'){
+                        return false;
+                    }
+                    else{
+                        if (set.contains(charValue)){
+                            return false;
+                        }
+                        else{
+                            set.add(charValue);
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+        private boolean isValidSquare(char[][] board, int rowDiff, int colDiff){
+            Set<Character> set = new HashSet<>();
+            for (int i = 0; i < 3; i++){
+                for (int j = 0; j < 3; j++){
+                    char charValue =  board[i + rowDiff][j + colDiff];
+                    if (charValue != '.'){
+                        if (charValue == '0'){
+                            return false;
+                        }
+                        else{
+                            if (set.contains(charValue)){
+                                return false;
+                            }
+                            else{
+                                set.add(charValue);
+                            }
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+    }
 }
