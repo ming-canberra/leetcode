@@ -50,4 +50,24 @@ public class CombinationSum39 {
             }
         }
     }
+
+    class Solution1 {
+        private List<List<Integer>> result = new ArrayList<>();
+        public List<List<Integer>> combinationSum(int[] candidates, int target) {
+            dfs(candidates, target, new ArrayList<>(), 0);
+            return result;
+        }
+        private void dfs(int[] candidates, int target, List<Integer> curList, int index) {
+            if (target == 0){
+                result.add(new ArrayList<>(curList));
+            }
+            else if(target > 0){
+                for(int i = index; i < candidates.length; i++){
+                    curList.add(candidates[i]);
+                    dfs(candidates, target - candidates[i], curList, i);
+                    curList.remove(curList.size() - 1);
+                }
+            }
+        }
+    }
 }
