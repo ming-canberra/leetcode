@@ -58,4 +58,28 @@ public class Permutations {
             }
         }
     }
+
+    class Solution1 {
+        List<List<Integer>> result = new ArrayList<>();
+        public List<List<Integer>> permute(int[] nums) {
+            dfs(nums, new ArrayList<>(), new HashSet<>());
+            return result;
+        }
+        private void dfs(int[] nums, List<Integer> list, Set<Integer> set){
+            if (list.size() == nums.length){
+                result.add(new ArrayList<>(list));
+            }
+            else{
+                for (int val : nums){
+                    if (!set.contains(val)){
+                        set.add(val);
+                        list.add(val);
+                        dfs(nums, list, set);
+                        list.remove(list.size() - 1);
+                        set.remove(val);
+                    }
+                }
+            }
+        }
+    }
 }
