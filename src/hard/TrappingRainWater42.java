@@ -25,4 +25,27 @@ public class TrappingRainWater42 {
             return result;
         }
     }
+
+    class Solution1 {
+        public int trap(int[] height) {
+            Stack<int[]> stack = new Stack<>();
+            int result = 0;
+            for (int i = 0; i < height.length; i++){
+                if (stack.isEmpty()){
+                    stack.push(new int[]{i, height[i]});
+                }
+                else{
+                    while(!stack.isEmpty() && stack.peek()[1] < height[i]){
+                        int[] poped = stack.pop();
+                        if (!stack.isEmpty()){
+                            int[] curTop = stack.peek();
+                            result += (Math.min(height[i], curTop[1]) - poped[1]) * (i - curTop[0] - 1);
+                        }
+                    }
+                    stack.push(new int[]{i, height[i]});
+                }
+            }
+            return result;
+        }
+    }
 }
