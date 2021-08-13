@@ -5,10 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MergeIntervals {
-    public static void main(String[] args) {
-        MergeIntervals thisClass = new MergeIntervals();
-        System.out.println (thisClass.merge(new int[][]{new int[]{8, 10}, new int[]{15, 18}}));
-    }
     public int[][] merge(int[][] intervals) {
         if (intervals.length == 1){
             return intervals;
@@ -35,5 +31,29 @@ public class MergeIntervals {
             result[i] = resultList.get(i);
         }
         return result;
+    }
+
+    class Solution {
+        public int[][] merge(int[][] intervals) {
+            List<int[]> resultList = new ArrayList<>();
+            Arrays.sort( intervals, (a, b)-> a[0] - b[0] );
+            for(int startI = 0; startI < intervals.length; startI++){
+                int lower = intervals[startI][0];
+                int upper = intervals[startI][1];
+                while(startI + 1 < intervals.length && intervals[startI + 1][0] <= upper){
+                    startI++;
+                    upper = Math.max(upper, intervals[startI][1]);
+                }
+                resultList.add(new int[]{lower, upper});
+            }
+
+            int[][] result = new int[resultList.size()][2];
+
+            for (int i = 0; i < resultList.size(); i++){
+                result[i] = resultList.get(i);
+            }
+
+            return result;
+        }
     }
 }
