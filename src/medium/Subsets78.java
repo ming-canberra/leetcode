@@ -104,4 +104,23 @@ public class Subsets78 {
             }
         }
     }
+
+    class Solution1 {
+        List<List<Integer>> result = new ArrayList<>();
+        public List<List<Integer>> subsets(int[] nums) {
+            dfs(nums, 0, new ArrayList<>());
+            return result;
+        }
+        private void dfs(int[] nums, int index, List<Integer> list){
+            if (index == nums.length){
+                result.add(new ArrayList<>(list));
+            }
+            else{
+                dfs(nums, index + 1, list);
+                list.add(nums[index]);
+                dfs(nums, index + 1, list);
+                list.remove(list.size() - 1);
+            }
+        }
+    }
 }
