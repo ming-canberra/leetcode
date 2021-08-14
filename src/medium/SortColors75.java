@@ -35,4 +35,31 @@ public class SortColors75 {
             nums[i] = 2;
         }
     }
+
+    class Solution {
+        public void sortColors(int[] nums) {
+            int n = nums.length;
+            //0 red
+            int rIndex = -1;
+            for (int i = 0; i < n; i++){
+                if (nums[i] == 0){
+                    rIndex++;
+                    swap(nums, i, rIndex);
+                }
+            }
+            //2 blue
+            int bIndex = n;
+            for (int i = n - 1; i >= 0; i--){
+                if (nums[i] == 2){
+                    bIndex--;
+                    swap(nums, i, bIndex);
+                }
+            }
+        }
+        private void swap(int[] nums, int a, int b){
+            int tmp = nums[a];
+            nums[a] = nums[b];
+            nums[b] = tmp;
+        }
+    }
 }
