@@ -33,4 +33,29 @@ public class SubsetsII90 {
             }
         }
     }
+
+    class Solution1 {
+        List<List<Integer>> result = new ArrayList<>();
+        public List<List<Integer>> subsetsWithDup(int[] nums) {
+            Arrays.sort(nums);
+            dfs(nums, new ArrayList<>(), 0, new boolean[nums.length]);
+            return result;
+        }
+        private void dfs(int[] nums, List<Integer> list, int index, boolean[] used){
+            if (index == nums.length){
+                result.add(new ArrayList<>(list));
+            }
+            else{
+                dfs(nums, list, index + 1, used);
+                if(index > 0 && nums[index - 1] == nums[index] && !used[index - 1]){
+                    return;
+                }
+                used[index] = true;
+                list.add(nums[index]);
+                dfs(nums, list, index + 1, used);
+                list.remove(list.size() - 1);
+                used[index] = false;
+            }
+        }
+    }
 }
