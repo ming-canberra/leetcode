@@ -58,4 +58,28 @@ public class MaximumProductSubarray152 {
         }
         return result;
     }
+
+    class Solution {
+        public int maxProduct(int[] nums) {
+            int n = nums.length;
+            int result = nums[0];
+            int cur = 1;
+            for (int i = 0; i < n; i++){
+                cur = cur * nums[i];
+                result = Math.max(cur, result);
+                if (nums[i] == 0){
+                    cur = 1;
+                }
+            }
+            cur = 1;
+            for (int i = n - 1; i >= 0; i--){
+                cur = cur * nums[i];
+                result = Math.max(cur, result);
+                if (nums[i] == 0){
+                    cur = 1;
+                }
+            }
+            return result;
+        }
+    }
 }
