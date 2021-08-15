@@ -32,4 +32,25 @@ public class Triangle120 {
             return result;
         }
     }
+
+    class Solution1 {
+        public int minimumTotal(List<List<Integer>> triangle) {
+            int[] array = new int[triangle.size()];
+            for (int i = 0; i < triangle.size(); i++){
+                for (int j = triangle.get(i).size() - 1; j >= 0; j--){
+                    if (j == 0){
+                        array[j] = triangle.get(i).get(j) + array[j];
+                    }
+                    else if (j == triangle.get(i).size() - 1){
+                        array[j] = triangle.get(i).get(j) + array[j - 1];
+                    }
+                    else{
+                        array[j] = triangle.get(i).get(j) + Math.min(array[j - 1], array[j]);
+                    }
+                }
+            }
+            Arrays.sort(array);
+            return array[0];
+        }
+    }
 }
