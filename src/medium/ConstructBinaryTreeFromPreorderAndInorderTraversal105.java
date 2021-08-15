@@ -3,13 +3,6 @@ package medium;
 import java.util.*;
 
 public class ConstructBinaryTreeFromPreorderAndInorderTraversal105 {
-    public static void main(String[] args) {
-        ConstructBinaryTreeFromPreorderAndInorderTraversal105 thisClass = new ConstructBinaryTreeFromPreorderAndInorderTraversal105();
-
-        TreeNode res = thisClass.buildTree(new int[]{1, 2, 3}, new int[]{3, 2, 1});
-        System.out.println(res);
-    }
-
     public TreeNode buildTree(int[] preorder, int[] inorder) {
         TreeNode result = buildBranches(preorder, inorder, 0, preorder.length);
         return result;
@@ -96,6 +89,28 @@ public class ConstructBinaryTreeFromPreorderAndInorderTraversal105 {
             else{
                 return null;
             }
+        }
+    }
+
+    class Solution1 {
+        Map<Integer, Integer> valueToIndexInorder = new HashMap<>();
+        int preorderIdx = 0;
+        public TreeNode buildTree(int[] preorder, int[] inorder) {
+            for (int i = 0; i < inorder.length; i++){
+                valueToIndexInorder.put(inorder[i], i);
+            }
+            return helper(preorder, inorder, 0, inorder.length - 1);
+        }
+        private TreeNode helper(int[] preorder, int[] inorder, int inorderStart, int inorderEnd) {
+            if (preorderIdx < preorder.length && inorderStart <= inorderEnd){
+                TreeNode root = new TreeNode(preorder[preorderIdx]);
+                preorderIdx++;
+                int rootIndexInorder = valueToIndexInorder.get(root.val);
+                root.left = helper(preorder, inorder, inorderStart, rootIndexInorder - 1);
+                root.right = helper(preorder, inorder, rootIndexInorder + 1, inorderEnd);
+                return root;
+            }
+            return null;
         }
     }
 }
