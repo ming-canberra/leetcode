@@ -3,6 +3,13 @@ package medium;
 import java.util.*;
 
 public class ConstructBinaryTreeFromPreorderAndInorderTraversal105 {
+    public static void main(String[] args) {
+        ConstructBinaryTreeFromPreorderAndInorderTraversal105 thisClass = new ConstructBinaryTreeFromPreorderAndInorderTraversal105();
+
+        TreeNode res = thisClass.buildTree(new int[]{1, 2, 3}, new int[]{3, 2, 1});
+        System.out.println(res);
+    }
+
     public TreeNode buildTree(int[] preorder, int[] inorder) {
         TreeNode result = buildBranches(preorder, inorder, 0, preorder.length);
         return result;
