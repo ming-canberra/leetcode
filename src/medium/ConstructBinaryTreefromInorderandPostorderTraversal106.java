@@ -28,4 +28,27 @@ public class ConstructBinaryTreefromInorderandPostorderTraversal106 {
             }
         }
     }
+
+    class Solution1 {
+        int postorderRootIdx = 0;
+        Map<Integer, Integer> inorderValueIndexMap = new HashMap<>();
+        public TreeNode buildTree(int[] inorder, int[] postorder) {
+            postorderRootIdx = postorder.length - 1;
+            for (int i = 0; i < inorder.length; i++){
+                inorderValueIndexMap.put(inorder[i], i);
+            }
+            return helper(inorder, postorder, 0, postorder.length - 1);
+        }
+        private TreeNode helper(int[] inorder, int[] postorder, int startIdx, int endIdx) {
+            if(postorderRootIdx >= 0 && startIdx <= endIdx){
+                TreeNode root = new TreeNode(postorder[postorderRootIdx]);
+                postorderRootIdx--;
+                int inorderRootIndex = inorderValueIndexMap.get(root.val);
+                root.right = helper(inorder, postorder, inorderRootIndex + 1, endIdx);
+                root.left = helper(inorder, postorder, startIdx, inorderRootIndex - 1);
+                return root;
+            }
+            return null;
+        }
+    }
 }
