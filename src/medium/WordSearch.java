@@ -29,7 +29,7 @@ public class WordSearch {
         else{
             if (rIndex < board.length && rIndex >=0
                     && cIndex < board[0].length && cIndex >= 0
-                    && traversed[rIndex][cIndex] == false
+                    && !traversed[rIndex][cIndex]
                     && board[rIndex][cIndex] == word.charAt(charIndex)){
                 traversed[rIndex][cIndex] = true;
 
@@ -50,6 +50,59 @@ public class WordSearch {
                     return true;
                 }
                 traversed[rIndex][cIndex] = false;
+            }
+            return false;
+        }
+    }
+
+    class Solution {
+        public boolean exist(char[][] board, String word) {
+            int m = board.length;
+            int n = board[0].length;
+            for (int i = 0; i < m; i++){
+                for (int j = 0; j < n; j++){
+                    boolean result = dfs(board, word, i, j, 0, new boolean[m][n]);
+                    if (result){
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        private boolean dfs(char[][] board, String word, int rowI, int colI, int wIndex, boolean[][] used){
+            if (used[rowI][colI]){
+                return false;
+            }
+            if (board[rowI][colI] == word.charAt(wIndex)){
+                used[rowI][colI] = true;
+                if (wIndex == word.length() - 1){
+                    return true;
+                }
+                if (rowI + 1 < board.length){
+                    boolean tmpResult = dfs(board, word, rowI + 1, colI, wIndex + 1, used);
+                    if (tmpResult){
+                        return tmpResult;
+                    }
+                }
+                if (rowI - 1 >= 0){
+                    boolean tmpResult = dfs(board, word, rowI - 1, colI, wIndex + 1, used);
+                    if (tmpResult){
+                        return tmpResult;
+                    }
+                }
+                if (colI + 1 < board[0].length){
+                    boolean tmpResult = dfs(board, word, rowI, colI + 1, wIndex + 1, used);
+                    if (tmpResult){
+                        return tmpResult;
+                    }
+                }
+                if (colI - 1 >= 0){
+                    boolean tmpResult = dfs(board, word, rowI, colI - 1, wIndex + 1, used);
+                    if (tmpResult){
+                        return tmpResult;
+                    }
+                }
+                used[rowI][colI] = false;
             }
             return false;
         }
