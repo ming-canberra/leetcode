@@ -25,4 +25,24 @@ public class FindMinimumInRotatedSortedArray153 {
             return fun (nums, l, m);
         }
     }
+
+    class Solution {
+        public int findMin(int[] nums) {
+            int l = 0;
+            int r = nums.length - 1;
+            while(l + 1 < r){
+                int m = l + (r - l) / 2;
+                if (nums[r] > nums[m] && nums[m] > nums[l]){
+                    return nums[l];
+                }
+                else if (nums[m] > nums[l] && nums[m] > nums[r]){
+                    l = m;
+                }
+                else if (nums[m] < nums[l] && nums[m] < nums[r]){
+                    r = m;
+                }
+            }
+            return nums[l] < nums[r] ? nums[l] : nums[r];
+        }
+    }
 }
