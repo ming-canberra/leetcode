@@ -73,4 +73,35 @@ public class NumberOfIslands {
             }
         }
     }
+
+    class Solution1 {
+        private boolean[][] visited;
+        public int numIslands(char[][] grid) {
+            int result = 0;
+            int m = grid.length;
+            int n = grid[0].length;
+            visited = new boolean[m][n];
+            //1 island
+            for (int i = 0; i < m; i++){
+                for (int j = 0; j < n; j++){
+                    if(!visited[i][j] && grid[i][j] == '1'){
+                        result++;
+                        dfs(grid, i, j);
+                    }
+                }
+            }
+            return result;
+        }
+        private void dfs(char[][]grid, int row, int col){
+            if (row >= 0 && row < grid.length && col >= 0 && col < grid[0].length && !visited[row][col]){
+                visited[row][col] = true;
+                if(grid[row][col] == '1'){
+                    dfs(grid, row + 1, col);
+                    dfs(grid, row - 1, col);
+                    dfs(grid, row, col + 1);
+                    dfs(grid, row, col - 1);
+                }
+            }
+        }
+    }
 }
