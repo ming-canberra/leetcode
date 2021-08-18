@@ -44,4 +44,29 @@ public class MinimumSizeSubarraySum209 {
 
         return false;
     }
+
+    class Solution {
+        public int minSubArrayLen(int target, int[] nums) {
+            Integer result = null;
+            int l = 0;
+            int sum = 0;
+            for (int i = 0; i < nums.length; i++){
+                sum += nums[i];
+                while(sum >= target && l <= i){
+                    if (result == null){
+                        result = i - l + 1;
+                    }
+                    else{
+                        result = Math.min(result, i - l + 1);
+                    }
+                    sum -= nums[l];
+                    if (l == i){
+                        return 1;
+                    }
+                    l++;
+                }
+            }
+            return result == null ? 0 : result;
+        }
+    }
 }
