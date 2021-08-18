@@ -1,8 +1,6 @@
 package medium;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 public class KthLargestElementInAnArray215 {
     public static void main(String[] args) {
@@ -44,5 +42,18 @@ public class KthLargestElementInAnArray215 {
         int tmp = nums[a];
         nums[a] = nums[b];
         nums[b] = tmp;
+    }
+
+    class Solution {
+        public int findKthLargest(int[] nums, int k) {
+            PriorityQueue<Integer> heap = new PriorityQueue<>();
+            for (int intV : nums){
+                heap.add(intV);
+                if (heap.size() > k){
+                    heap.poll();
+                }
+            }
+            return heap.peek();
+        }
     }
 }
