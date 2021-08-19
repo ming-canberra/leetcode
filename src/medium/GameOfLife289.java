@@ -58,4 +58,39 @@ public class GameOfLife289 {
             }
         }
     }
+    class Solution1 {
+        public void gameOfLife(int[][] board) {
+            int m = board.length;
+            int n = board[0].length;
+            int[][] dummyB = new int[m + 2][n + 2];
+            for (int i = 1; i < m + 1; i++){
+                for (int j = 1; j < n + 1; j++){
+                    dummyB[i][j] = board[i - 1][j - 1];
+                }
+            }
+            int[][] neighbors = new int[][]{new int[]{-1, -1}, new int[]{-1, 0}, new int[]{-1, 1},
+                    new int[]{0, -1}, new int[]{0, 1},
+                    new int[]{1, -1}, new int[]{1, 0}, new int[]{1, 1}};
+            for (int i = 1; i < m + 1; i++){
+                for (int j = 1; j < n + 1; j++){
+                    int liveN = 0;
+                    for (int k = 0; k < neighbors.length; k++){
+                        if (dummyB[i + neighbors[k][0]][j + neighbors[k][1]] == 1){
+                            liveN++;
+                        }
+                    }
+                    if(board[i - 1][j - 1] == 1){
+                        if (liveN < 2 || liveN > 3){
+                            board[i - 1][j - 1] = 0;
+                        }
+                    }
+                    else{
+                        if (liveN == 3){
+                            board[i - 1][j - 1] = 1;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
