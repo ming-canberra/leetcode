@@ -34,4 +34,25 @@ public class TopKFrequentElements347 {
             }
         }
     }
+
+    class Solution1 {
+        public int[] topKFrequent(int[] nums, int k) {
+            Map<Integer, Integer> map = new HashMap<>();
+            for (int intV : nums){
+                map.put(intV, map.getOrDefault(intV, 0) + 1);
+            }
+            PriorityQueue<int[]> heap = new PriorityQueue<>( (a, b)->a[1] - b[1] );// min heap
+            for (Object o : map.keySet()){
+                heap.add(new int[]{(Integer)o, map.get(o)});
+                if (heap.size() > k){
+                    heap.poll();
+                }
+            }
+            int[] result = new int[k];
+            for (int i = 0; i < k; i++){
+                result[i] = heap.poll()[0];
+            }
+            return result;
+        }
+    }
 }
