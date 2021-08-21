@@ -39,4 +39,29 @@ public class WiggleSubsequence376 {
 
         return toReturn;
     }
+
+    class Solution {
+        public int wiggleMaxLength(int[] nums) {
+            int length = nums.length;
+            int[] dpPos = new int[length];// last diff is pos, ending with ith element of nums;
+            int[] dpNeg = new int[length];
+            for (int i = 0; i < length; i++){
+                int tmpNeg = 1;
+                int tmpPos = 1;
+                for (int j = 0; j < i; j++){
+                    if (nums[i] > nums[j]){
+                        tmpPos = Math.max(tmpPos, dpNeg[j] + 1);
+                    }
+                    if (nums[i] < nums[j]){
+                        tmpNeg = Math.max(tmpNeg, dpPos[j] + 1);
+                    }
+                }
+                dpPos[i] = tmpPos;
+                dpNeg[i] = tmpNeg;
+            }
+            Arrays.sort(dpPos);
+            Arrays.sort(dpNeg);
+            return Math.max(dpPos[length - 1], dpNeg[length - 1]);
+        }
+    }
 }
