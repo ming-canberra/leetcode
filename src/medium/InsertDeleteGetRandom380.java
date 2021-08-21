@@ -109,5 +109,57 @@ public class InsertDeleteGetRandom380 {
             return list.get(random.nextInt(list.size()));
         }
     }
+    class RandomizedSet1 {
 
+        private Map<Integer, Integer> valueIndexMap = new HashMap<>();
+        private Map<Integer, Integer> indexValueMap = new HashMap<>();
+        /** Initialize your data structure here. */
+        public RandomizedSet1() {
+
+        }
+
+        /** Inserts a value to the set. Returns true if the set did not already contain the specified element. */
+        public boolean insert(int val) {
+            if (valueIndexMap.containsKey(val)){
+                return false;
+            }
+            else{
+                int index = valueIndexMap.size();
+                valueIndexMap.put(val, index);
+                indexValueMap.put(index, val);
+                return true;
+            }
+        }
+
+        /** Removes a value from the set. Returns true if the set contained the specified element. */
+        public boolean remove(int val) {
+            if (valueIndexMap.containsKey(val)){
+                int index = valueIndexMap.get(val);
+                if (index == indexValueMap.size() - 1){
+                    valueIndexMap.remove(val);
+                    indexValueMap.remove(indexValueMap.size() - 1);
+                }
+                else{
+                    int lastValue = indexValueMap.get(indexValueMap.size() - 1);
+
+                    valueIndexMap.remove(val);
+                    valueIndexMap.put(lastValue, index);
+
+                    indexValueMap.remove(indexValueMap.size() - 1);
+                    indexValueMap.put(index, lastValue);
+                }
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+
+        /** Get a random element from the set. */
+        public int getRandom() {
+            Random random = new Random();
+            int index = random.nextInt(valueIndexMap.size());
+            return indexValueMap.get(index);
+        }
+    }
 }
