@@ -34,4 +34,28 @@ public class MaxConsecutiveOnesII487 {
             return nextZeroIndex;
         }
     }
+
+    class Solution1 {
+        public int findMaxConsecutiveOnes(int[] nums) {
+            int result = 0;
+            int comResult = 0;
+            int oneCounter = 0;
+            for (int i = 0; i < nums.length; i++){
+                if (nums[i] == 1){
+                    oneCounter++;
+                }
+                else{
+                    if (comResult != 0){
+                        result = Math.max(result, comResult + oneCounter);
+                    }
+                    comResult = oneCounter + 1;
+                    oneCounter = 0;
+                }
+                if (i == nums.length - 1){
+                    result = Math.max(result, comResult + oneCounter);
+                }
+            }
+            return result;
+        }
+    }
 }
