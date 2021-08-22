@@ -36,4 +36,27 @@ public class ArithmeticSlices413 {
             return toReturn;
         }
     }
+
+    class Solution {
+        public int numberOfArithmeticSlices(int[] nums) {
+            if (nums.length < 3){
+                return 0;
+            }
+            int result = 0;
+            int preCount = 0;
+            int preDiff = nums[1] - nums[0];
+            for (int i = 2; i < nums.length; i++){
+                int diff = nums[i] - nums[i - 1];
+                if (diff == preDiff){
+                    preCount++;
+                }
+                else{
+                    preDiff = diff;
+                    preCount = 0;
+                }
+                result += preCount;
+            }
+            return result;
+        }
+    }
 }
