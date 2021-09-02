@@ -55,4 +55,25 @@ public class ProductOfArrayExceptSelf238 {
             return result;
         }
     }
+
+    /**
+     * O(N) O(1)
+     */
+    class Solution1 {
+        public int[] productExceptSelf(int[] nums) {
+            int[] answer = new int[nums.length];
+            int prod = 1;
+            for (int i = 0; i < nums.length - 1; i++){
+                prod *= nums[i];
+                answer[i + 1] = prod;
+            }
+            answer[0] = 1;
+            prod = 1;
+            for (int i = nums.length - 1; i > 0; i--){
+                prod *= nums[i];
+                answer[i - 1] *= prod;
+            }
+            return answer;
+        }
+    }
 }
