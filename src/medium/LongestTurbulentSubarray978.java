@@ -25,4 +25,45 @@ public class LongestTurbulentSubarray978 {
             return result;
         }
     }
+
+    class Solution1 {
+        public int maxTurbulenceSize(int[] arr) {
+            int len = arr.length;
+            int result = 1;
+            int status = 0;// 1 ascending, -1 descending, 0 flat
+            int curResult = 1;
+            for (int i = 1; i < len; i++){
+                if (arr[i - 1] < arr[i]){  //when ascending
+                    if (status > 0){
+                        curResult = 2;
+                    }
+                    else if (status < 0){
+                        curResult++;
+                    }
+                    else{
+                        curResult = 2;
+                    }
+                    status = 1;
+                }
+                else if (arr[i - 1] > arr[i]){ // when descending
+                    if (status < 0){
+                        curResult = 2;
+                    }
+                    else if (status > 0){
+                        curResult++;
+                    }
+                    else{
+                        curResult = 2;
+                    }
+                    status = -1;
+                }
+                else{   //going flat
+                    curResult = 1;
+                    status = 0;
+                }
+                result = Math.max(result, curResult);
+            }
+            return result;
+        }
+    }
 }
