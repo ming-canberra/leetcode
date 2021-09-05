@@ -43,4 +43,46 @@ public class Medium1065IndexPairsOfAString {
             boolean isCompleteWord = false;
         }
     }
+
+    class Solution1 {
+        public int[][] indexPairs(String text, String[] words) {
+            TrieNode trie = new TrieNode();
+            for (String word : words){
+                TrieNode cur = trie;
+                for (int i = 0; i < word.length(); i++){
+                    char c = word.charAt(i);
+                    if (cur.children[c - 'a'] == null){
+                        cur.children[c - 'a'] = new TrieNode();
+                    }
+                    cur = cur.children[c - 'a'];
+                }
+                cur.isCompleteWord = true;
+            }
+            List<int[]> list = new ArrayList<>();
+            for (int i = 0; i < text.length(); i++){
+                TrieNode cur = trie;
+                int j = i;
+                while(j < text.length() && cur.children[text.charAt(j) - 'a'] != null){
+                    cur = cur.children[text.charAt(j) - 'a'];
+                    if (cur.isCompleteWord){
+                        list.add(new int[]{i, j});
+                    }
+                    j++;
+                }
+            }
+            int[][] result = new int[list.size()][2];
+            for (int i = 0; i < list.size(); i++){
+                result[i] = list.get(i);
+            }
+            return result;
+        }
+        class TrieNode{
+            TrieNode[] children;
+            boolean isCompleteWord;
+            public TrieNode(){
+                children = new TrieNode[26];
+                isCompleteWord = false;
+            }
+        }
+    }
 }
