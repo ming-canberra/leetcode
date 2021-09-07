@@ -76,4 +76,39 @@ public class FindKClosestElements658 {
         }
         return r;
     }
+
+    /***
+     * heap, N*log(k)
+     */
+    class Solution {
+        public List<Integer> findClosestElements(int[] arr, int k, int x) {
+            PriorityQueue<Integer> heap = new PriorityQueue<Integer>( new MyCom(x)  );
+            for (int a : arr){
+                heap.add(a);
+                if (heap.size() > k){
+                    heap.poll();
+                }
+            }
+            List<Integer> result = new ArrayList<>(heap);
+            Collections.sort(result);
+            return result;
+        }
+        class MyCom implements Comparator<Integer>{
+            private int target;
+            public MyCom(int t){
+                target = t;
+            }
+            @Override
+            public int compare(Integer a, Integer b){
+                int aDiff = Math.abs(a - target);
+                int bDiff = Math.abs(b - target);
+                if (aDiff == bDiff){
+                    return Integer.compare(b, a);
+                }
+                else{
+                    return Integer.compare(bDiff, aDiff);
+                }
+            }
+        }
+    }
 }
