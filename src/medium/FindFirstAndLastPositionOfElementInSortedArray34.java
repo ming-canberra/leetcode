@@ -72,4 +72,42 @@ public class FindFirstAndLastPositionOfElementInSortedArray34 {
             return new int[]{-1, -1};
         }
     }
+
+    class Solution2 {
+        public int[] searchRange(int[] nums, int target) {
+            if (nums == null || nums.length == 0){
+                return new int[]{-1, -1};
+            }
+            int l = -1;
+            int r = nums.length;
+            int index = -1;
+            while(l + 1 < r){
+                int m = l + (r - l) / 2;
+                if (nums[m] < target){
+                    l = m;
+                }
+                else if (nums[m] > target){
+                    r = m;
+                }
+                else{
+                    index = m;
+                    break;
+                }
+            }
+            if (index != -1){
+                int left = index;
+                while(left >= 0 && nums[left] == target){
+                    left--;
+                }
+                left++;
+                int right = index;
+                while(right < nums.length && nums[right] == target){
+                    right++;
+                }
+                right--;
+                return new int[]{left, right};
+            }
+            return new int[]{-1, -1};
+        }
+    }
 }
