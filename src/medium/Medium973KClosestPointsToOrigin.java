@@ -2,7 +2,7 @@ package medium;
 
 import java.util.*;
 
-public class KClosestPointsToOrigin {
+public class Medium973KClosestPointsToOrigin {
 
     public int[][] kClosest(int[][] points, int k) {
         int[][] result = new int[k][2];
