@@ -136,4 +136,19 @@ public class MaximumProductSubarray152 {
             return result;
         }
     }
+    class Solution2 {
+        public int maxProduct(int[] nums) {
+            int result = nums[0];
+            int max = nums[0];
+            int min = nums[0];
+            for (int i = 1; i < nums.length; i++){
+                int curMax = Math.max( Math.max(max * nums[i], nums[i]), min * nums[i] );
+                int curMin = Math.min( Math.min(max * nums[i], nums[i]), min * nums[i] );
+                max = curMax;
+                min = curMin;
+                result = Math.max(max, result);
+            }
+            return result;
+        }
+    }
 }
