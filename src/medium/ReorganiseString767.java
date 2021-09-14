@@ -90,4 +90,51 @@ public class ReorganiseString767 {
             return sb.toString();
         }
     }
+
+    class Solution1 {
+        public String reorganizeString(String s) {
+            Map<Character, Integer> map = new HashMap<>();
+            PriorityQueue<Pair> heap = new PriorityQueue<Pair>( (a, b)-> a.count == b.count ? b.key - a.key : b.count - a.count  );
+            for (char cc : s.toCharArray()){
+                map.put(cc,  map.getOrDefault(cc, 0) + 1 );
+            }
+            for (Character key : map.keySet()){
+                heap.add(new Pair(key, map.get(key)));
+            }
+            int len = s.length();
+            int charMaxLen = heap.peek().count;
+            if (charMaxLen -1 <= len - charMaxLen)
+            {
+                StringBuilder sb = new StringBuilder();
+                while(heap.size() > 0){
+                    Pair maxPair = heap.poll();
+                    sb.append(maxPair.key);
+                    maxPair.count--;
+                    if (heap.size() > 0){
+                        Pair secondPair = heap.poll();
+                        sb.append(secondPair.key);
+                        secondPair.count--;
+                        if (secondPair.count > 0){
+                            heap.add(secondPair);
+                        }
+                    }
+                    if (maxPair.count > 0){
+                        heap.add(maxPair);
+                    }
+                }
+                return sb.toString();
+            }
+            else{
+                return "";
+            }
+        }
+        class Pair{
+            Character key;
+            Integer count;
+            public Pair(Character k, Integer c){
+                key = k;
+                count = c;
+            }
+        }
+    }
 }
