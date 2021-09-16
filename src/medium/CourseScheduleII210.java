@@ -105,4 +105,41 @@ public class CourseScheduleII210 {
             }
         }
     }
+    class Solution1 {
+        public int[] findOrder(int numCourses, int[][] prerequisites) {
+            int[] inDe = new int[numCourses];
+            Map<Integer, List<Integer>> map = new HashMap<>();
+            for (int i = 0; i < prerequisites.length; i++){
+                inDe[prerequisites[i][0]]++;
+                List<Integer> newList = new ArrayList<>();
+                List<Integer> tmpList = map.getOrDefault(prerequisites[i][1], newList);
+                tmpList.add(prerequisites[i][0]);
+                map.put(prerequisites[i][1], tmpList);
+            }
+            Queue<Integer> queue = new LinkedList<>();
+            for (int i = 0; i < inDe.length; i++){
+                if (inDe[i] == 0){
+                    queue.add(i);
+                }
+            }
+            int index = 0;
+            int[] result = new int[numCourses];
+            while(!queue.isEmpty()){
+                int top = queue.poll();
+                result[index++] = top;
+                if (map.containsKey(top)){
+                    for (int i : map.get(top)){
+                        inDe[i]--;
+                        if (inDe[i] == 0){
+                            queue.add(i);
+                        }
+                    }
+                }
+            }
+            if (index == numCourses){
+                return result;
+            }
+            return new int[0];
+        }
+    }
 }
