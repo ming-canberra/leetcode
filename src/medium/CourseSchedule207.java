@@ -1,9 +1,6 @@
 package medium;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class CourseSchedule207 {
     public static void main(String[] args) {
@@ -60,5 +57,41 @@ public class CourseSchedule207 {
         visited[node] = false;
         checked[node] = true;
         return false;
+    }
+    class Solution {
+        public boolean canFinish(int numCourses, int[][] prerequisites) {
+            int[] inDe = new int[numCourses];
+            Map<Integer, List<Integer>> map = new HashMap<>();
+            for (int i = 0; i < prerequisites.length; i++){
+                inDe[prerequisites[i][1]]++;
+                List<Integer> newList = new ArrayList<>();
+                List<Integer> tmpList = map.getOrDefault(prerequisites[i][0], newList);
+                tmpList.add(prerequisites[i][1]);
+                map.put(prerequisites[i][0], tmpList);
+            }
+            Queue<Integer> queue = new LinkedList<>();
+            for (int i = 0; i < inDe.length; i++){
+                if(inDe[i] == 0 ){
+                    queue.add(i);
+                }
+            }
+            while(!queue.isEmpty()){
+                int top = queue.poll();
+                if (map.containsKey(top)){
+                    for(int i : map.get(top)){
+                        inDe[i]--;
+                        if (inDe[i] == 0){
+                            queue.add(i);
+                        }
+                    }
+                }
+            }
+            for (int i = 0; i < inDe.length; i++){
+                if(inDe[i]!= 0 ){
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }
