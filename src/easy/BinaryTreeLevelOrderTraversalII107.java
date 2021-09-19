@@ -50,4 +50,31 @@ public class BinaryTreeLevelOrderTraversalII107 {
         }
         return;
     }
+
+    class Solution {
+        public List<List<Integer>> levelOrderBottom(TreeNode root) {
+            List<List<Integer>> result = new ArrayList<>();
+            if (root == null){
+                return result;
+            }
+            Queue<TreeNode> q = new LinkedList<>();
+            q.add(root);
+            while(!q.isEmpty()){
+                List<Integer> curList = new ArrayList<>();
+                for (int i = q.size(); i > 0; i--){
+                    TreeNode top = q.poll();
+                    curList.add(top.val);
+                    if (top.left != null){
+                        q.add(top.left);
+                    }
+                    if (top.right != null){
+                        q.add(top.right);
+                    }
+                }
+                result.add(curList);
+            }
+            Collections.reverse(result);
+            return result;
+        }
+    }
 }
