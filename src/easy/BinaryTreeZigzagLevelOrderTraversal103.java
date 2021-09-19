@@ -83,4 +83,35 @@ public class BinaryTreeZigzagLevelOrderTraversal103 {
 
         return result;
     }
+
+    class Solution {
+        public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+            List<List<Integer>> result = new ArrayList<>();
+            if (root == null){
+                return result;
+            }
+            Queue<TreeNode> q = new LinkedList<>();
+            q.add(root);
+            boolean reverseList = false;
+            while(!q.isEmpty()){
+                List<Integer> curList = new ArrayList<>();
+                for (int i = q.size(); i > 0; i--){
+                    TreeNode top = q.poll();
+                    curList.add(top.val);
+                    if (top.left != null){
+                        q.add(top.left);
+                    }
+                    if (top.right != null){
+                        q.add(top.right);
+                    }
+                }
+                if (reverseList){
+                    Collections.reverse(curList);
+                }
+                result.add(curList);
+                reverseList = !reverseList;
+            }
+            return result;
+        }
+    }
 }
