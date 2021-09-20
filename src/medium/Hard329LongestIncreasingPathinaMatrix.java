@@ -61,4 +61,58 @@ public class Hard329LongestIncreasingPathinaMatrix {
             return false;
         }
     }
+
+    class Solution1 {
+        int[][] dp;//length of LIP ending at (i, j);
+        int m;
+        int n;
+        int[][] dirs = new int[][]{new int[]{-1, 0}, new int[]{1, 0}, new int[]{0, 1}, new int[]{0, -1}};
+        public int longestIncreasingPath(int[][] matrix) {
+            m = matrix.length;
+            n = matrix[0].length;
+            dp = new int[m][n];
+            int result = 1;
+            for (int i = 0; i < m; i++){
+                for (int j = 0; j < n; j++){
+                    result = Math.max(result, dfs(i, j, matrix));
+                }
+            }
+            return result;
+        }
+        private int dfs(int row, int col, int[][] matrix){
+            if(dp[row][col] != 0){
+                return dp[row][col];
+            }
+            // this one is the smallest among all neighbors, then dp[row][col] = 1;
+            // base case
+            boolean iAmTheSmallest = true;
+            for (int i = 0; i < dirs.length; i++){
+                int x = row + dirs[i][0];
+                int y = col + dirs[i][1];
+                if (x >= 0 && x < m && y >= 0 && y < n){
+                    if (matrix[x][y] < matrix[row][col]){
+                        iAmTheSmallest = false;
+                        break;
+                    }
+                }
+            }
+            if (iAmTheSmallest){
+                dp[row][col] = 1;
+                return dp[row][col];
+            }
+            // find all dp[x][y] for neighbors smaller than me, Max(dp[x][y]) + 1
+            int max = 1;
+            for (int i = 0; i < dirs.length; i++){
+                int x = row + dirs[i][0];
+                int y = col + dirs[i][1];
+                if (x >= 0 && x < m && y >= 0 && y < n){
+                    if (matrix[x][y] < matrix[row][col]){
+                        max = Math.max(max, dfs(x, y, matrix));
+                    }
+                }
+            }
+            dp[row][col] = max + 1;
+            return dp[row][col];
+        }
+    }
 }
