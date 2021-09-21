@@ -1,6 +1,6 @@
 package medium;
 
-import java.util.Arrays;
+import java.util.*;
 
 public class Medium494TargetSum {
     public int findTargetSumWays(int[] nums, int S) {
@@ -56,6 +56,28 @@ public class Medium494TargetSum {
                 }
             }
             return dp[nums.length - 1][target + sum];
+        }
+    }
+
+    class Solution1 {
+        public int findTargetSumWays(int[] nums, int target) {
+            int[][] dp = new int[nums.length][2001];// col represents number of expressions that sums to col
+            Set<Integer> set = new HashSet<>();
+            dp[0][nums[0] + 1000]++;
+            dp[0][-nums[0] + 1000]++;
+            set.add(nums[0] + 1000);
+            set.add(-nums[0] + 1000);
+            for (int i = 1; i < dp.length; i++){
+                Set<Integer> tmpSet = new HashSet<>();
+                for (int j : set){
+                    dp[i][j + nums[i]] += dp[i - 1][j];
+                    dp[i][j - nums[i]] += dp[i - 1][j];
+                    tmpSet.add(j + nums[i]);
+                    tmpSet.add(j - nums[i]);
+                }
+                set = tmpSet;
+            }
+            return dp[nums.length - 1][target + 1000];
         }
     }
 }
