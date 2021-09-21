@@ -1,9 +1,6 @@
 package medium;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 public class AllNodesDistanceKInBinaryTree {
     public static void main(String[] args) {
@@ -61,6 +58,42 @@ public class AllNodesDistanceKInBinaryTree {
             if (root.right != null){
                 map.put(root.right, root);
                 fillMap(root.right, map);
+            }
+        }
+    }
+
+    class Solution {
+        List<Integer> result = new ArrayList<>();
+        public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
+            Map<TreeNode, TreeNode> parent = new HashMap<>();
+            traverseForParent(root, parent);
+            Set<TreeNode> visited = new HashSet<>();
+            traverseK(target, parent, k, visited);
+            return result;
+        }
+        private void traverseK(TreeNode node, Map<TreeNode, TreeNode> map, int k, Set<TreeNode> visited){
+            if (node != null && !visited.contains(node)){
+                visited.add(node);
+                if (k == 0){
+                    result.add(node.val);
+                }
+                else{
+                    traverseK(map.getOrDefault(node, null), map, k - 1, visited);
+                    traverseK(node.left, map, k - 1, visited);
+                    traverseK(node.right, map, k - 1, visited);
+                }
+            }
+        }
+        private void traverseForParent(TreeNode root, Map<TreeNode, TreeNode> parent){
+            if (root != null){
+                if (root.left != null){
+                    parent.put(root.left, root);
+                }
+                if (root.right != null){
+                    parent.put(root.right, root);
+                }
+                traverseForParent(root.right, parent);
+                traverseForParent(root.left, parent);
             }
         }
     }
