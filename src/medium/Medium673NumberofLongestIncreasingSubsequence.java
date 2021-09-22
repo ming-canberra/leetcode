@@ -7,10 +7,8 @@ public class Medium673NumberofLongestIncreasingSubsequence {
         public int findNumberOfLIS(int[] nums) {
             int len = nums.length;
             int[][] dp = new int[len][2]; //  the number of elements longest increasing ending with ith element, 0th for lenLis
-            dp[0][0] = 1;
-            dp[0][1] = 1;
             int lenLis = 1;
-            for (int i = 1; i < len; i++){
+            for (int i = 0; i < len; i++){
                 for (int j = 0; j < i; j++){
                     if (nums[i] > nums[j]){
                         int localCur = dp[j][0] + 1;
