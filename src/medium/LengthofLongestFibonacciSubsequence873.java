@@ -60,4 +60,29 @@ public class LengthofLongestFibonacciSubsequence873 {
             return result == 2 ? 0 : result;
         }
     }
+
+    class Solution2 {
+        public int lenLongestFibSubseq(int[] arr) {
+            Map<Integer, Integer> map = new HashMap<>();
+            int len = arr.length;
+            int[][] dp = new int[len][len];
+            int result = 2;
+            for (int i = 0; i < len; i++){
+                for (int j = 0; j < len; j++){
+                    dp[i][j] = 2;
+                }
+            }
+            for (int i = 1; i < len - 1; i++){
+                map.put(arr[i - 1], i - 1);
+                for (int j = i + 1; j < len; j++){
+                    int firstValue = arr[j] - arr[i];
+                    if (map.containsKey(firstValue)){
+                        dp[i][j] = dp[map.get(firstValue)][i] + 1;
+                        result = Math.max(result, dp[i][j]);
+                    }
+                }
+            }
+            return result == 2 ? 0 : result;
+        }
+    }
 }
