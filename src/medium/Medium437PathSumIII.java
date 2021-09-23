@@ -1,12 +1,9 @@
 package medium;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
-public class PathSumIII {
+public class Medium437PathSumIII {
     public static void main(String[] args) {
-        PathSumIII thisClass = new PathSumIII();
+        Medium437PathSumIII thisClass = new Medium437PathSumIII();
     }
 
 
@@ -43,5 +40,31 @@ public class PathSumIII {
         }
         // we would like to reuse thie map,
         map.put(sum, map.get(sum) - 1);
+    }
+
+    class Solution {
+        int result = 0;
+        public int pathSum(TreeNode root, int targetSum) {
+            traverse(root, targetSum, 0, new HashMap<>());
+            return result;
+        }
+        private void traverse(TreeNode node, int targetSum, int sum, Map<Integer, Integer> map){
+            if (node == null){
+                return;
+            }
+            sum += node.val;
+            // the path from root to me
+            if (sum == targetSum){
+                result++;
+            }
+            if (map.containsKey(sum - targetSum)){
+                result += map.get(sum - targetSum);
+            }
+            // add sum to the map
+            map.put(sum, map.getOrDefault(sum, 0) + 1);
+            traverse(node.left, targetSum, sum, map);
+            traverse(node.right, targetSum, sum, map);
+            map.put(sum, map.get(sum) - 1);
+        }
     }
 }
