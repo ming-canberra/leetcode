@@ -61,4 +61,24 @@ public class PathSumII {
             currResult.remove(currResult.size() - 1);
         }
     }
+    class Solution {
+        private List<List<Integer>> result = new ArrayList<>();
+        public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
+            traverse(root, targetSum, new ArrayList<>(), 0);
+            return result;
+        }
+        private void traverse(TreeNode node, int target, List<Integer> list, int sum){
+            if (node == null){
+                return;
+            }
+            list.add(node.val);
+            sum += node.val;
+            if (node.left == null && node.right == null && sum == target){
+                result.add(new ArrayList<>(list));
+            }
+            traverse(node.left, target, list, sum);
+            traverse(node.right, target, list, sum);
+            list.remove(list.size() - 1);
+        }
+    }
 }
