@@ -2,7 +2,7 @@ package medium;
 
 import java.util.HashSet;
 
-public class LowestCommonAncestorOfABinaryTree236 {
+public class Medium0236LowestCommonAncestorOfABinaryTree {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         TreeInfo result = generateTreeInfo(root, p, q);
         return result.lca;
@@ -82,6 +82,36 @@ public class LowestCommonAncestorOfABinaryTree236 {
                 numResult = Math.max(numResult, Math.max(numL, numR));
             }
             return numResult;
+        }
+    }
+
+    class Solution1 {
+        TreeNode result = null;
+        public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+            numberOfMatches(root, p, q);
+            return result;
+        }
+        private int numberOfMatches(TreeNode root, TreeNode p, TreeNode q){
+            if (result != null || root == null){
+                return 0;
+            }
+            int leftResult = numberOfMatches(root.left, p, q);
+            int rightResult = numberOfMatches(root.right, p, q);
+            if (leftResult + rightResult == 2){
+                result = root;
+                return 0;
+            }
+            else if (rightResult == 1 || leftResult == 1){
+                if (root == p || root == q){
+                    result = root;
+                    return 0;
+                }
+                return 1;
+            }
+            if (root == p || root == q){
+                return 1;
+            }
+            return 0;
         }
     }
 }
