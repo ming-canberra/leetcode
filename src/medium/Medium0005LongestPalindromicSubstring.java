@@ -1,6 +1,6 @@
 package medium;
 
-public class LongestPalindromicSubstring5 {
+public class Medium0005LongestPalindromicSubstring {
     class Solution {
         private int max;
         private String result;
@@ -72,6 +72,41 @@ public class LongestPalindromicSubstring5 {
                 }
             }
             return s.substring(i, j + 1);
+        }
+    }
+    class Solution3 {
+        public String longestPalindrome(String s) {
+            int len = s.length();
+            if (len == 1){
+                return s;
+            }
+            String result = s.substring(0, 1);
+            int max = 1;
+            for (int i = 0; i < len - 1; i++){
+                // i is in the middle
+                int left = i - 1;
+                int right = i + 1;
+                while(left >= 0 && right < len && s.charAt(left) == s.charAt(right)){
+                    if (right - left + 1 > max){
+                        max = right - left + 1;
+                        result = s.substring(left, left + max);
+                    }
+                    left--;
+                    right++;
+                }
+                // ith char is at center left
+                left = i;
+                right = i + 1;
+                while(left >= 0 && right < len && s.charAt(left) == s.charAt(right)){
+                    if (right - left + 1 > max){
+                        max = right - left + 1;
+                        result = s.substring(left, left + max);
+                    }
+                    left--;
+                    right++;
+                }
+            }
+            return result;
         }
     }
 }
