@@ -3,15 +3,7 @@ package medium;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PerfectSquares279 {
-    public static void main(String[] args) {
-        PerfectSquares279 thisClass = new PerfectSquares279();
-
-        int res = thisClass.numSquares(12);
-        System.out.println(res);
-    }
-
-
+public class Medium0279PerfectSquares {
     public int numSquares(int n) {
         int currentSquareRoot = 1;
         int[] dp = new int[n + 1];
@@ -59,6 +51,22 @@ public class PerfectSquares279 {
                 }
             }
 
+            return dp[n];
+        }
+    }
+
+    class Solution1 {
+        public int numSquares(int n) {
+            int[] dp = new int[n + 1];
+            dp[0] = 0;
+            dp[1] = 1;
+            for (int i = 2; i < n + 1; i++){
+                int min = Integer.MAX_VALUE;
+                for (int j = 1; i >= j * j; j++){
+                    min = Math.min(min, 1 + dp[i - j * j]);
+                }
+                dp[i] = min;
+            }
             return dp[n];
         }
     }
