@@ -2,7 +2,7 @@ package medium;
 
 import java.util.*;
 
-public class Medium208ImplementTrie {
+public class Medium0208ImplementTrie {
     class Trie {
         Trie[] children;
         boolean isWord;
