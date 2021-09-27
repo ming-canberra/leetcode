@@ -1,6 +1,6 @@
 package medium;
 
-public class SubarrayProductLessThanK713 {
+public class Medium0713SubarrayProductLessThanK {
     class Solution {
         public int numSubarrayProductLessThanK(int[] nums, int k) {
             int result = 0;
@@ -38,6 +38,26 @@ public class SubarrayProductLessThanK713 {
                     left++;
                 }
                 result += right - left + 1;
+            }
+            return result;
+        }
+    }
+
+    class Solution2 {
+        public int numSubarrayProductLessThanK(int[] nums, int k) {
+            if (k <= 1){
+                return 0;
+            }
+            int left = 0;
+            int prod = 1;
+            int result = 0;
+            for (int i = 0; i < nums.length; i++){
+                prod *= nums[i];
+                while (prod >= k){
+                    prod = prod / nums[left];
+                    left++;
+                }
+                result += i - left + 1;
             }
             return result;
         }
