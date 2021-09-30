@@ -2,7 +2,7 @@ package medium;
 
 import java.util.*;
 
-public class Medium179LargestNumber {
+public class Medium0179LargestNumber {
     class Solution {
         public String largestNumber(int[] nums) {
             Integer[] integers = new Integer[nums.length];
@@ -41,6 +41,30 @@ public class Medium179LargestNumber {
                     return 1;
                 }
                 return 0;
+            }
+        }
+    }
+
+    class Solution1 {
+        public String largestNumber(int[] nums) {
+            String[] strs = new String[nums.length];
+            for (int i = 0; i < nums.length; i++){
+                strs[i] = new Integer(nums[i]).toString();
+            }
+            Arrays.sort(strs, new MyCom());
+            StringBuilder sb = new StringBuilder();
+            for (int i = nums.length - 1; i >= 0; i--){
+                if ( "0".equals(strs[i]) && "0".equals(sb.toString()) ){
+                    continue;
+                }
+                sb.append(strs[i]);
+            }
+            return sb.toString();
+        }
+        class MyCom implements Comparator<String>{
+            @Override
+            public int compare(String a, String b){
+                return (a + b).compareTo(b + a);
             }
         }
     }
