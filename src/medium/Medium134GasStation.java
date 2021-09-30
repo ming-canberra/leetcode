@@ -29,4 +29,34 @@ public class Medium134GasStation {
             return -1;
         }
     }
+
+    class Solution1 {
+        public int canCompleteCircuit(int[] gas, int[] cost) {
+            int gasSum = 0;
+            int costSum = 0;
+            int n = gas.length;
+            for (int i = 0; i < n; i++){
+                gasSum += gas[i];
+                costSum += cost[i];
+            }
+            if (gasSum < costSum){
+                return -1;
+            }
+            int[] dp = new int[n];
+            dp[0] = gas[n - 1] - cost[n - 1];
+            int min = dp[0];
+            int result = 0;
+            for (int i = 1; i < n; i++){
+                dp[i] = dp[i - 1] + gas[i - 1] - cost[i - 1];
+                if (gas[i] >= cost[i]){
+                    if (dp[i] < min){
+                        result = i;
+                        min = dp[i];
+                    }
+                }
+
+            }
+            return result;
+        }
+    }
 }
