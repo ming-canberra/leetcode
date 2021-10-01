@@ -2,7 +2,7 @@ package medium;
 
 import java.util.*;
 
-public class Medium648ReplaceWords {
+public class Medium0648ReplaceWords {
     class Solution {
         public String replaceWords(List<String> dictionary, String sentence) {
             TrieNode trie = new TrieNode("");
@@ -54,6 +54,54 @@ public class Medium648ReplaceWords {
             String word;
             public TrieNode(String input){
                 word = input;
+            }
+        }
+    }
+
+    class Solution1 {
+        public String replaceWords(List<String> dictionary, String sentence) {
+            TrieNode root = new TrieNode("");
+            for (String word : dictionary){
+                TrieNode cur = root;
+                for (char c : word.toCharArray()){
+                    if (cur.children[c - 'a'] == null){
+                        cur.children[c - 'a'] = new TrieNode(cur.word + c);
+                    }
+                    cur = cur.children[c - 'a'];
+                }
+                cur.isWord = true;
+            }
+            String[] splits = sentence.split(" ");
+            StringBuilder sb = new StringBuilder();
+            for (String word : splits){
+                TrieNode cur = root;
+                for (char c : word.toCharArray()){
+                    if (cur.children[c - 'a'] == null){
+                        cur = null;
+                        break;
+                    }
+                    cur = cur.children[c - 'a'];
+                    //found the shortest root;
+                    if (cur.isWord){
+                        break;
+                    }
+                }
+                if (cur != null && cur.isWord){
+                    sb.append(cur.word + " ");
+                }
+                else{
+                    sb.append(word + " ");
+                }
+            }
+            String result = sb.toString();
+            return result.substring(0, result.length() - 1);
+        }
+        class TrieNode{
+            TrieNode[] children = new TrieNode[26];
+            boolean isWord = false;
+            String word = "";
+            public TrieNode(String w){
+                word = w;
             }
         }
     }
