@@ -166,5 +166,63 @@ public class Medium1804ImplementTrieIIPrefixTree {
             }
         }
     }
+    class Trie3 {
+        TrieNode root = new TrieNode();
+        public Trie3() {
+        }
+        public void insert(String word) {
+            TrieNode curTrie = root;
+            for (char c : word.toCharArray()){
+                if (curTrie.children[c - 'a'] == null){
+                    curTrie.children[c - 'a'] = new TrieNode();
+                }
+                curTrie = curTrie.children[c - 'a'];
+            }
+            curTrie.count++;
+        }
+        public int countWordsEqualTo(String word) {
+            TrieNode curTrie = root;
+            for (char c : word.toCharArray()){
+                if (curTrie.children[c - 'a'] == null){
+                    return 0;
+                }
+                curTrie = curTrie.children[c - 'a'];
+            }
+            return curTrie.count;
+        }
+        public int countWordsStartingWith(String prefix) {
+            TrieNode curTrie = root;
+            for (char c : prefix.toCharArray()){
+                if (curTrie.children[c - 'a'] == null){
+                    return 0;
+                }
+                curTrie = curTrie.children[c - 'a'];
+            }
+            return traverse(curTrie);
+        }
+        private int traverse(TrieNode node){
+            if (node == null){
+                return 0;
+            }
+            int result = node.count;
+            for (TrieNode child : node.children){
+                result += traverse(child);
+            }
+            return result;
+        }
+        public void erase(String word) {
+            TrieNode curTrie = root;
+            for (char c : word.toCharArray()){
+                curTrie = curTrie.children[c - 'a'];
+            }
+            curTrie.count--;
+        }
+        class TrieNode{
+            TrieNode[] children = new TrieNode[26];
+            int count = 0;
+            public TrieNode(){
+            }
+        }
+    }
 
 }
