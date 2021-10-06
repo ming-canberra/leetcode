@@ -52,4 +52,45 @@ public class Hard0025ReverseNodesInKGroup {
         }
         return cur;
     }
+
+    class Solution {
+        public ListNode reverseKGroup(ListNode head, int k) {
+            if (k == 1){
+                return head;
+            }
+            ListNode dummy = new ListNode();
+            dummy.next = head;
+            ListNode cur = head;
+            ListNode curGroupHead = cur;
+            ListNode lastGroupTail = dummy;
+            int counter = k;
+            while(cur != null && cur.next != null){
+                counter--;
+                cur = cur.next;
+                ListNode tmp = cur.next;
+                if (counter == 1){
+                    lastGroupTail.next = null;
+                    cur.next = null;
+                    reverse(curGroupHead);
+                    curGroupHead.next = tmp;
+                    lastGroupTail.next = cur;
+                    cur = tmp;
+                    lastGroupTail = curGroupHead;
+                    curGroupHead = cur;
+                    counter = k;
+                }
+            }
+            return dummy.next;
+        }
+        private void reverse(ListNode head){
+            ListNode cur = head;
+            ListNode newHead = null;
+            while(cur != null){
+                ListNode curNext = cur.next;
+                cur.next = newHead;
+                newHead = cur;
+                cur = curNext;
+            }
+        }
+    }
 }
