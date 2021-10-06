@@ -2,9 +2,9 @@ package hard;
 
 import java.util.*;
 
-public class ReverseNodesInKGroup25 {
+public class Hard0025ReverseNodesInKGroup {
     public static void main(String[] args) {
-        ReverseNodesInKGroup25 thisClass = new ReverseNodesInKGroup25();
+        Hard0025ReverseNodesInKGroup thisClass = new Hard0025ReverseNodesInKGroup();
     }
 
     public ListNode reverseKGroup(ListNode head, int k) {
