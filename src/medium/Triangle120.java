@@ -53,4 +53,31 @@ public class Triangle120 {
             return array[0];
         }
     }
+
+    class Solution2 {
+        public int minimumTotal(List<List<Integer>> triangle) {
+            int size = triangle.size();
+            int[][] dp = new int[size][size];
+            dp[0][0] = triangle.get(0).get(0);
+            int result = dp[0][0];
+            for (int i = 1; i < size; i++){
+                dp[i][0] = dp[i - 1][0] + triangle.get(i).get(0);
+                if (i == size - 1){
+                    result = dp[i][0];
+                }
+                for (int j = 1; j <= i; j++){
+                    if (j == i){
+                        dp[i][j] = triangle.get(i).get(j) + dp[i - 1][j - 1];
+                    }
+                    else{
+                        dp[i][j] = triangle.get(i).get(j) + Math.min(dp[i - 1][j - 1], dp[i - 1][j]);
+                    }
+                    if (i == size - 1){
+                        result = Math.min(result, dp[i][j]);
+                    }
+                }
+            }
+            return result;
+        }
+    }
 }
