@@ -67,4 +67,30 @@ public class PredictTheWinner486 {
             return  dp[0][n - 1] >= 0;
         }
     }
+
+    class Solution3 {
+        int[][] memo;
+        public boolean PredictTheWinner(int[] nums) {
+            int len = nums.length;
+            memo = new int[len][len];
+            for (int i = 0; i < len; i++){
+                for (int j = 0; j < len; j++){
+                    memo[i][j] = -1;
+                }
+            }
+            return maxScore(nums, 0, len - 1) >= 0;
+        }
+        private int maxScore(int[] nums, int start, int end){
+            if (memo[start][end] != -1){
+                return memo[start][end];
+            }
+
+            if (start == end){
+                memo[start][end] = nums[start];
+                return memo[start][end];
+            }
+            memo[start][end] = Math.max( nums[start] - maxScore(nums, start + 1, end), nums[end] - maxScore(nums, start, end - 1) );
+            return memo[start][end];
+        }
+    }
 }
