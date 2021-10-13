@@ -1,13 +1,8 @@
 package medium;
 
-import easy.ListNode;
-
-import java.util.ArrayList;
-import java.util.List;
-
-public class PalindromicSubstrings647 {
+public class Medium0647PalindromicSubstrings {
     public static void main(String[] args) {
-        PalindromicSubstrings647 thisClass = new PalindromicSubstrings647();
+        Medium0647PalindromicSubstrings thisClass = new Medium0647PalindromicSubstrings();
         System.out.println (thisClass.countSubstrings(null));
     }
     public int countSubstrings2(String s) {
@@ -67,6 +62,30 @@ public class PalindromicSubstrings647 {
                 break;
             }
             n++;
+        }
+    }
+
+    class Solution {
+        public int countSubstrings(String s) {
+            int len = s.length();
+            int result = 0;
+            for (int i = 0; i < len; i++){
+                int count = 0;
+                while( i + count < len && i - count >= 0 && s.charAt(i + count) == s.charAt(i - count) )
+                {
+                    result++;
+                    count++;
+                }
+            }
+            for (int i = 0; i < len - 1; i++){
+                int count = 0;
+                while( i + count + 1 < len && i - count >= 0 && s.charAt(i + count + 1) == s.charAt(i - count) )
+                {
+                    result++;
+                    count++;
+                }
+            }
+            return result;
         }
     }
 }
