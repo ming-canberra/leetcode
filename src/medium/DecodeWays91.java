@@ -40,4 +40,24 @@ public class DecodeWays91 {
             return dp[n - 1];
         }
     }
+
+    class Solution1 {
+        public int numDecodings(String s) {
+            int len = s.length();
+            Set<String> set = new HashSet<>();
+            for (int i = 1; i <= 26; i++){
+                set.add(String.valueOf(i));
+            }
+            int[]dp = new int[len + 1];
+            dp[0] = 1;
+            dp[1] = set.contains(s.substring(0, 1)) ? 1 : 0;
+            for (int i = 2; i < len + 1; i++){
+                int a = dp[i - 2] * (set.contains(s.substring(i - 2, i)) ? 1 : 0);
+                int b = dp[i - 1] * (set.contains(s.substring(i - 1, i)) ? 1 : 0);
+                dp[i] = a + b;
+
+            }
+            return dp[len];
+        }
+    }
 }
