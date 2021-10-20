@@ -1,7 +1,7 @@
 package medium;
 
 import java.util.*;
-public class Medium128LongestConsecutiveSequence {
+public class Medium0128LongestConsecutiveSequence {
     class Solution {
         public int longestConsecutive(int[] nums) {
             int result = 0;
