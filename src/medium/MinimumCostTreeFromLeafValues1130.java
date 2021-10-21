@@ -38,4 +38,37 @@ public class MinimumCostTreeFromLeafValues1130 {
             return result;
         }
     }
+    /**
+     *  O(N*N*N)
+     * */
+    class Solution1 {
+        int[][][] memo;
+        public int mctFromLeafValues(int[] arr) {
+            int len = arr.length;
+            memo = new int[len][len][2];// 0th to store sum, 1th to store max leaf value
+            int[] result = minSum(arr, 0, len - 1);
+            return result[0];
+        }
+        private int[] minSum(int[] arr, int start, int end){
+            if (start == end){
+                memo[start][end][0] = 0;
+                memo[start][end][1] = arr[end];
+                return memo[start][end];
+            }
+            if (memo[start][end][0] != 0){
+                return memo[start][end];
+            }
+            int minResult = Integer.MAX_VALUE;
+            int maxValue = arr[start];
+            for (int i = 0; i < end - start; i++){
+                int[] aResult = minSum(arr, start, start + i);
+                int[] bResult = minSum(arr, start + i + 1, end);
+                minResult = Math.min(minResult, aResult[0] + bResult[0] + aResult[1] * bResult[1]);
+                maxValue = Math.max(aResult[1], bResult[1] );
+            }
+            memo[start][end][0] = minResult;
+            memo[start][end][1] = maxValue;
+            return memo[start][end];
+        }
+    }
 }
