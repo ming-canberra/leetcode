@@ -2,7 +2,7 @@ package medium;
 
 import java.util.*;
 
-public class SubsetsII90 {
+public class Medium0090SubsetsII {
     class Solution {
         List<List<Integer>> result;
         public List<List<Integer>> subsetsWithDup(int[] nums) {
@@ -56,6 +56,29 @@ public class SubsetsII90 {
                 list.remove(list.size() - 1);
                 used[index] = false;
             }
+        }
+    }
+
+    class Solution2 {
+        List<List<Integer>> result = new ArrayList<>();
+        public List<List<Integer>> subsetsWithDup(int[] nums) {
+            Arrays.sort(nums);
+            dfs(nums, 0, new ArrayList<>());
+            return result;
+        }
+        private void dfs(int[] nums, int index, List<Integer> list){
+            if (index == nums.length){
+                result.add(new ArrayList<>(list));
+                return;
+            }
+            if (index >= 1 && nums[index] == nums[index - 1] && list.size() > 0 && nums[index] == list.get(list.size() - 1) ){
+            }
+            else{
+                dfs(nums, index + 1, list);
+            }
+            list.add(nums[index]);
+            dfs(nums, index + 1, list);
+            list.remove(list.size() - 1);
         }
     }
 }
