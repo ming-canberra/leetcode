@@ -115,4 +115,41 @@ public class Hard329LongestIncreasingPathinaMatrix {
             return dp[row][col];
         }
     }
+
+    class Solution2 {
+        private int M;
+        private int N;
+        private int[][] DIRS = new int[][]{new int[]{-1, 0}, new int[]{1, 0}, new int[]{0, 1}, new int[]{0, -1}};
+        private int[][] memo;
+        public int longestIncreasingPath(int[][] matrix) {
+            M = matrix.length;
+            N = matrix[0].length;
+            memo = new int[M][N];
+            int result = 1;
+            for (int i = 0; i < M; i++){
+                for (int j = 0; j < N; j++){
+                    result = Math.max(result, dfs(matrix, i, j));
+                }
+            }
+            return result;
+        }
+        private int dfs(int[][] matrix, int rIdx, int cIdx){
+            if (memo[rIdx][cIdx] > 0){
+                return memo[rIdx][cIdx];
+            }
+            int curMax = 1;
+            for (int i = 0; i < 4; i++){
+                int rIdxNew = rIdx + DIRS[i][0];
+                int cIdxNew = cIdx + DIRS[i][1];
+                if (rIdxNew < 0 || rIdxNew >= M || cIdxNew < 0 || cIdxNew >= N){
+                    continue;
+                }
+                if (matrix[rIdxNew][cIdxNew] > matrix[rIdx][cIdx]){
+                    curMax = Math.max(curMax, 1 + dfs(matrix, rIdxNew, cIdxNew));
+                }
+            }
+            memo[rIdx][cIdx] = curMax;
+            return curMax;
+        }
+    }
 }
