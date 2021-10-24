@@ -38,4 +38,51 @@ public class Medium1191KConcatenationMaximumSum {
             }
         }
     }
+    class Solution1 {
+        public int kConcatenationMaxSum(int[] arr, int k) {
+            int mod = (int)Math.pow(10, 9) + 7;
+            int result = 0;
+            int sum1 = 0;
+            int sum = 0;
+            for (int i : arr){
+                sum += i;
+                sum1 += i;
+                if (sum1 < 0){
+                    sum1 = 0;
+                }
+                result = Math.max(result, sum1);
+            }
+            if (k == 1){
+                return result;
+            }
+            else{
+                int[] arr2 = new int[arr.length * 2];
+                for (int i = 0; i < arr.length; i++){
+                    arr2[i] = arr[i];
+                    arr2[i + arr.length] = arr[i];
+                }
+
+                int sum2 = 0;
+                result = 0;
+                for (int i : arr2){
+                    sum2 += i;
+                    if (sum2 < 0){
+                        sum2 = 0;
+                    }
+                    result = Math.max(result, sum2);
+                }
+                sum2 = result;
+                if (sum <= 0){
+                    return sum2 % mod;
+                }
+                else{
+                    result = sum2;
+                    for (int i = 1; i <= k - 2; i++){
+                        result = (sum + result) % mod;
+                    }
+                    return result % mod;
+                }
+            }
+        }
+    }
 }
