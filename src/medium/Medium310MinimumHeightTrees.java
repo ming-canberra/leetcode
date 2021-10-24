@@ -126,4 +126,42 @@ public class Medium310MinimumHeightTrees {
             return new ArrayList<>(result);
         }
     }
+    class Solution3 {
+        public List<Integer> findMinHeightTrees(int n, int[][] edges) {
+            Set<Integer> resultSet = new HashSet<>();
+            List<Set<Integer>> vertexList = new ArrayList<>();
+            for (int i = 0; i < n; i++){
+                resultSet.add(i);
+                vertexList.add(new HashSet<>());
+            }
+            if (resultSet.size() < 3){
+                return new ArrayList<>(resultSet);
+            }
+            for (int[] edge : edges){
+                vertexList.get(edge[0]).add(edge[1]);
+                vertexList.get(edge[1]).add(edge[0]);
+            }
+            Queue<Integer> queue = new LinkedList<>();
+            for (int i = 0; i < n; i++){
+                Set<Integer> set = vertexList.get(i);
+                if (set.size() == 1){
+                    queue.add(i);
+                    resultSet.remove(i);
+                }
+            }
+            while(resultSet.size() > 2){
+                for (int size = queue.size(); size > 0; size--){
+                    int top = queue.poll();
+                    Set<Integer> singleValueSet = vertexList.get(top);
+                    int secondV = (new ArrayList<>(singleValueSet)).get(0);
+                    vertexList.get(secondV).remove(top);
+                    if (vertexList.get(secondV).size() == 1){
+                        queue.add(secondV);
+                        resultSet.remove(secondV);
+                    }
+                }
+            }
+            return new ArrayList<>(resultSet);
+        }
+    }
 }
