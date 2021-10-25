@@ -2,9 +2,9 @@ package medium;
 
 import java.util.*;
 
-public class AllNodesDistanceKInBinaryTree {
+public class Medium1863AllNodesDistanceKInBinaryTree {
     public static void main(String[] args) {
-        AllNodesDistanceKInBinaryTree thisClass = new AllNodesDistanceKInBinaryTree();
+        Medium1863AllNodesDistanceKInBinaryTree thisClass = new Medium1863AllNodesDistanceKInBinaryTree();
     }
 
     public List<Integer> distanceK(TreeNode root, TreeNode target, int K) {
@@ -94,6 +94,51 @@ public class AllNodesDistanceKInBinaryTree {
                 }
                 traverseForParent(root.right, parent);
                 traverseForParent(root.left, parent);
+            }
+        }
+    }
+    class Solution1 {
+        public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
+            Map<TreeNode, TreeNode> map = new HashMap<>();// child to parent;
+            traverse(root, map);
+            Queue<TreeNode> queue = new LinkedList<>();
+            queue.add(target);
+
+            Set<TreeNode> visited = new HashSet<>();
+            visited.add(target);
+
+            while(!queue.isEmpty() && k != 0){
+                k--;
+                for (int size = queue.size(); size > 0; size--){
+                    TreeNode top = queue.poll();
+                    if (top.left != null && !visited.contains(top.left)){
+                        visited.add(top.left);
+                        queue.add(top.left);
+                    }
+                    if (top.right != null && !visited.contains(top.right)){
+                        visited.add(top.right);
+                        queue.add(top.right);
+                    }
+                    if (map.containsKey(top) && !visited.contains(map.get(top))){
+                        visited.add(map.get(top));
+                        queue.add(map.get(top));
+                    }
+                }
+            }
+            List<Integer> result = new ArrayList<>();
+            while(!queue.isEmpty()){
+                result.add(queue.poll().val);
+            }
+            return result;
+        }
+        private void traverse(TreeNode root, Map<TreeNode, TreeNode> map){
+            if (root.left != null){
+                map.put(root.left, root);
+                traverse(root.left, map);
+            }
+            if (root.right != null){
+                map.put(root.right, root);
+                traverse(root.right, map);
             }
         }
     }
