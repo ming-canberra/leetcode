@@ -37,4 +37,37 @@ public class Medium673NumberofLongestIncreasingSubsequence {
             return result;
         }
     }
+    class Solution1 {
+        public int findNumberOfLIS(int[] nums) {
+            int len = nums.length;
+            int[][] dp = new int[len][2]; // 0th for max length, 1th for number of max length
+            int maxLength = 0;
+            int count = 0;
+            for (int i = 0; i < len; i++){
+                int curMaxLength = 0;
+                int curCount = 0;
+                for (int j = 0; j < i; j++){
+                    if (nums[i] > nums[j]){
+                        if (dp[j][0] + 1 > curMaxLength){
+                            curMaxLength = dp[j][0] + 1;
+                            curCount = dp[j][1];
+                        }
+                        else if (dp[j][0] + 1 == curMaxLength){
+                            curCount += dp[j][1];
+                        }
+                    }
+                }
+                dp[i][0] = curMaxLength == 0 ? 1 : curMaxLength;
+                dp[i][1] = curMaxLength == 0 ? 1 : curCount;
+                if (dp[i][0] > maxLength){
+                    maxLength = dp[i][0];
+                    count = dp[i][1];
+                }
+                else if (dp[i][0] == maxLength){
+                    count += dp[i][1];
+                }
+            }
+            return count;
+        }
+    }
 }
