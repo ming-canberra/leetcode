@@ -25,4 +25,34 @@ public class Hard0044WildcardMatching {
             return dp[lenS][lenP];
         }
     }
+
+    class Solution1 {
+        public boolean isMatch(String s, String p) {
+            int m = s.length();
+            int n = p.length();
+            boolean[][] dp = new boolean[m + 1][n + 1];
+            for (int i = 0; i < m + 1; i++){
+                for (int j = 0; j < n + 1; j++){
+                    if (i == 0 && j == 0){
+                        dp[i][j] = true;
+                    }
+                    else if (j == 0){
+                        dp[i][j] = false;
+                    }
+                    else if (i == 0){
+                        dp[i][j] = dp[i][j - 1] && (p.charAt(j - 1) == '*');
+                    }
+                    else{
+                        if (s.charAt(i - 1) == p.charAt(j - 1) || p.charAt(j - 1) == '?' ){
+                            dp[i][j] = dp[i - 1][j - 1];
+                        }
+                        else if (p.charAt(j - 1) == '*'){
+                            dp[i][j] = dp[i - 1][j - 1] || dp[i - 1][j] || dp[i][j - 1];
+                        }
+                    }
+                }
+            }
+            return dp[m][n];
+        }
+    }
 }
