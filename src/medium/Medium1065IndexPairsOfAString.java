@@ -106,4 +106,33 @@ public class Medium1065IndexPairsOfAString {
             return result;
         }
     }
+
+    class Solution3 {
+        public int[][] indexPairs(String text, String[] words) {
+            List<Pair> result = new ArrayList<>();
+            for (int i = 0; i < text.length(); i++){
+                String subString = text.substring(i);
+                for (int j = 0; j < words.length; j++){
+                    if ( subString.startsWith(words[j]) ){
+                        result.add(new Pair(i, i + words[j].length() - 1));
+                    }
+                }
+            }
+            Collections.sort(result, (a, b)-> a.x == b.x ? a.y - b.y : a.x - b.x );
+            int[][] tmp = new int[result.size()][2];
+            for (int i = 0; i < tmp.length; i++){
+                tmp[i][0] = result.get(i).x;
+                tmp[i][1] = result.get(i).y;
+            }
+            return tmp;
+        }
+        class Pair{
+            int x;
+            int y;
+            Pair(int xInput, int yInput){
+                x = xInput;
+                y = yInput;
+            }
+        }
+    }
 }
