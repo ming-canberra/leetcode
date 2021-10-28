@@ -68,4 +68,43 @@ public class Medium0179LargestNumber {
             }
         }
     }
+    class Solution2 {
+        public String largestNumber(int[] nums) {
+            Integer[] iNums = new Integer[nums.length];
+            for (int i = 0; i < nums.length; i++){
+                iNums[i] = nums[i];
+            }
+            Arrays.sort(iNums, new MyCom());
+            if (iNums[iNums.length - 1] == 0){
+                return "0";
+            }
+            else{
+                StringBuilder sb = new StringBuilder();
+                for (int i = nums.length - 1; i >= 0; i--){
+                    sb.append(iNums[i]);
+                }
+                return sb.toString();
+            }
+        }
+        class MyCom implements Comparator<Integer>{
+            @Override
+            public int compare(Integer a, Integer b){
+                return compareString(String.valueOf(a), String.valueOf(b));
+            }
+            private int compareString(String a, String b){
+                if (a.equals(b)){
+                    return 0;
+                }
+                else if (a.startsWith(b)){
+                    return compareString(a.substring(b.length()), b);
+                }
+                else if (b.startsWith(a)){
+                    return compareString(a, b.substring(a.length()));
+                }
+                else{
+                    return a.compareTo(b);
+                }
+            }
+        }
+    }
 }
