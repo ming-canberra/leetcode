@@ -70,4 +70,26 @@ public class Medium0279PerfectSquares {
             return dp[n];
         }
     }
+
+    class Solution2 {
+        public int numSquares(int n) {
+            int[] dp = new int[n + 1];
+            int sRoot = 1;
+            dp[1] = 1;
+            for (int i = 2; i < n + 1; i++){
+                if( ( (sRoot + 1) * (sRoot + 1) ) == i ){
+                    dp[i] = 1;
+                    sRoot++;
+                }
+                else{
+                    int min = Integer.MAX_VALUE;
+                    for (int j = 1; j <= sRoot; j++){
+                        min = Math.min(min, 1 + dp[i - j * j]);
+                    }
+                    dp[i] = min;
+                }
+            }
+            return dp[n];
+        }
+    }
 }
