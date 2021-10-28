@@ -19,7 +19,6 @@ public class Medium0216CombinationSumIII {
             if (target <= sum){
                 return;
             }
-
             if (curNum + sum > target){
                 return;
             }
