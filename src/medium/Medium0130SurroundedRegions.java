@@ -92,4 +92,79 @@ public class Medium0130SurroundedRegions {
             }
         }
     }
+
+    class Solution2 {
+        int rNum;
+        int cNum;
+        char BIGO = 'O';
+        char BIG1 = '1';
+        char BIGX = 'X';
+        public void solve(char[][] board) {
+            rNum = board.length;
+            cNum = board[0].length;
+            boolean[][] visited = new boolean[rNum][cNum];
+            // flip all boundary connected O to 1
+            for (int i = 0; i < rNum; i++){
+                for (int j = 0; j < cNum; j++){
+                    if (i == 0 || j == 0 || i == rNum - 1 || j == cNum - 1){
+                        if (board[i][j] == BIGO){
+                            bfs(board, new Pair(i, j), visited);
+                        }
+                    }
+                }
+            }
+            // flip all O to X
+            for (int i = 0; i < rNum; i++){
+                for (int j = 0; j < cNum; j++){
+                    if (board[i][j] == BIGO){
+                        board[i][j] = BIGX;
+                    }
+                    else if (board[i][j] == BIG1){
+                        board[i][j] = BIGO;
+                    }
+                }
+            }
+        }
+        private void bfs(char[][] board, Pair pair, boolean[][] visited){
+            Queue<Pair> queue = new LinkedList<>();
+            queue.add(pair);
+            while(!queue.isEmpty()){
+                Pair top = queue.poll();
+                int rIdx = top.x;
+                int cIdx = top.y;
+                if (rIdx < 0 || cIdx < 0 || rIdx >= rNum || cIdx >= cNum){
+                    continue;
+                }
+
+                if (visited[rIdx][cIdx]){
+                    continue;
+                }
+                else{
+                    visited[rIdx][cIdx] = true;
+                }
+
+                if (board[rIdx][cIdx] == BIGO){
+                    if (rIdx == 0 || cIdx == 0 || rIdx == rNum - 1 || cIdx == cNum - 1){
+                        board[rIdx][cIdx] = BIG1;
+                    }
+                    else if (board[rIdx - 1][cIdx] == BIG1 || board[rIdx + 1][cIdx] == BIG1 || board[rIdx][cIdx - 1] == BIG1 || board[rIdx][cIdx + 1] == BIG1){
+                        board[rIdx][cIdx] = BIG1;
+                    }
+                    queue.add(new Pair(rIdx + 1, cIdx));
+                    queue.add(new Pair(rIdx - 1, cIdx));
+                    queue.add(new Pair(rIdx, cIdx + 1));
+                    queue.add(new Pair(rIdx, cIdx - 1));
+                }
+            }
+        }
+
+        class Pair{
+            int x;
+            int y;
+            Pair(int xInput, int yInput){
+                x = xInput;
+                y = yInput;
+            }
+        }
+    }
 }
