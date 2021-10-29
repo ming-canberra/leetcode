@@ -67,4 +67,78 @@ public class Medium616AddBoldTaginString {
             return sb.toString();
         }
     }
+    class Solution2 {
+        public String addBoldTag(String s, String[] words) {
+            TrieNode root = new TrieNode();
+            // init the dictionary
+            for (String word : words){
+                TrieNode cur = root;
+                for (char c : word.toCharArray()){
+                    if (cur.children[c] == null){
+                        cur.children[c] = new TrieNode();
+                    }
+                    cur = cur.children[c];
+                }
+                cur.isWord = true;
+            }
+
+            boolean[] boldPositions = new boolean[s.length()];
+
+            for (int i = 0; i < s.length(); i++){
+                TrieNode cur = root;
+                Integer endIndex = null;
+
+                String subString = s.substring(i);
+                int tmpCounter = 0;
+                for (char c : subString.toCharArray()){
+                    if (cur.children[c] == null){
+                        break;
+                    }
+                    tmpCounter++;
+                    cur = cur.children[c];
+                    if (cur.isWord){
+                        endIndex = i + tmpCounter - 1;
+                    }
+                }
+                if (endIndex != null){
+                    for (int j = i; j <= endIndex; j++){
+                        boldPositions[j] = true;
+                    }
+                }
+            }
+            // process boldPositions
+            StringBuilder sb = new StringBuilder();
+            boolean addOpening = true;
+
+            for (int i = 0; i < s.length(); i++){
+                if (addOpening){
+                    if (boldPositions[i]){
+                        sb.append("<b>");
+                        addOpening = false;
+                    }
+                }
+                else{
+                    if (!boldPositions[i]){
+                        sb.append("</b>");
+                        addOpening = true;
+                    }
+                }
+
+                sb.append(s.charAt(i));
+
+                if (i == s.length() - 1 && !addOpening){
+                    sb.append("</b>");
+                }
+            }
+            return sb.toString();
+        }
+
+        class TrieNode{
+            TrieNode[] children = new TrieNode[256];
+            boolean isWord = false;
+            TrieNode(){
+
+            }
+        }
+    }
 }
