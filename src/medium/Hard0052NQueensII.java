@@ -30,4 +30,32 @@ public class Hard0052NQueensII {
             }
         }
     }
+    class Solution1 {
+        int count = 0;
+        Set<Integer> colSet = new HashSet<>();
+        Set<Integer> dSet = new HashSet<>();
+        Set<Integer> dSetReverse = new HashSet<>();
+        public int totalNQueens(int n) {
+            backtrack(0, n);
+            return count;
+        }
+        private void backtrack(int rIndex, int n){
+            if (rIndex == n){
+                count++;
+                return;
+            }
+            for (int i = 0; i < n; i++){
+                // calculate
+                if (!colSet.contains(i) && !dSet.contains(i + rIndex) &&  !dSetReverse.contains(i - rIndex)  ){
+                    colSet.add(i);
+                    dSet.add(rIndex + i);
+                    dSetReverse.add(i - rIndex);
+                    backtrack(rIndex + 1, n);
+                    colSet.remove(i);
+                    dSet.remove(rIndex + i);
+                    dSetReverse.remove(i - rIndex);
+                }
+            }
+        }
+    }
 }
