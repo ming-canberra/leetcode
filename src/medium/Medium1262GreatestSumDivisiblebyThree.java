@@ -48,4 +48,65 @@ public class Medium1262GreatestSumDivisiblebyThree {
             return dp[len][0];
         }
     }
+    /**
+     *  N*LOG(N)
+    * */
+    class Solution1 {
+        public int maxSumDivThree(int[] nums) {
+            Arrays.sort(nums);
+            int sum = 0;
+            int minMod1First = 0;
+            int minMod1Second = 0;
+            int minMod2First = 0;
+            int minMod2Second = 0;
+            for (int i : nums){
+                if (i % 3 == 1 && minMod1First == 0){
+                    minMod1First = i;
+                }
+                else if (i % 3 == 2 && minMod2First == 0){
+                    minMod2First = i;
+                }
+                else if (i % 3 == 1 && minMod1First != 0 && minMod1Second == 0){
+                    minMod1Second = i;
+                }
+                else if (i % 3 == 2 && minMod2First != 0 && minMod2Second == 0){
+                    minMod2Second = i;
+                }
+                sum += i;
+            }
+            if (sum % 3 == 0){
+                return sum;
+            }
+            else if (sum % 3 == 1){
+                int min = Integer.MAX_VALUE;
+                if (minMod1First > 0){
+                    min = minMod1First;
+                }
+                if (minMod2First > 0 && minMod2Second > 0){
+                    min = Math.min(min, minMod2First + minMod2Second);
+                }
+                if (min == Integer.MAX_VALUE){
+                    return 0;
+                }
+                else{
+                    return sum - min;
+                }
+            }
+            else{
+                int min = Integer.MAX_VALUE;
+                if (minMod2First > 0){
+                    min = minMod2First;
+                }
+                if (minMod1First > 0 && minMod1Second > 0){
+                    min = Math.min(min, minMod1First + minMod1Second);
+                }
+                if (min == Integer.MAX_VALUE){
+                    return 0;
+                }
+                else{
+                    return sum - min;
+                }
+            }
+        }
+    }
 }
