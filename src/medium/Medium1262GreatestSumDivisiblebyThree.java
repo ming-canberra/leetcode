@@ -109,4 +109,31 @@ public class Medium1262GreatestSumDivisiblebyThree {
             }
         }
     }
+
+    /**
+     * O(N)
+     */
+    class Solution2 {
+        public int maxSumDivThree(int[] nums) {
+            int[] modsum = new int[3];
+            for (int numValue : nums){
+                int[] modsumAdded = new int[3];
+                for (int j = 0; j < 3; j++){
+                    modsumAdded[j] = modsum[j] + numValue;
+                }
+                for (int i = 0; i < 3; i++){
+                    if (modsumAdded[i] % 3 == 0){
+                        modsum[0] = Math.max(modsum[0], modsumAdded[i]);
+                    }
+                    else if (modsumAdded[i] % 3 == 1){
+                        modsum[1] = Math.max(modsum[1], modsumAdded[i]);
+                    }
+                    else if (modsumAdded[i] % 3 == 2){
+                        modsum[2] = Math.max(modsum[2], modsumAdded[i]);
+                    }
+                }
+            }
+            return modsum[0];
+        }
+    }
 }
