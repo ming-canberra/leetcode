@@ -41,5 +41,37 @@ public class PalindromePartitioning131 {
             return true;
         }
     }
-
+    class Solution1 {
+        List<List<String>> result = new ArrayList<>();
+        public List<List<String>> partition(String s) {
+            dfs(s, new ArrayList<>());
+            return result;
+        }
+        private void dfs(String s, List<String> list){
+            if (s.length() == 0){
+                result.add(new ArrayList<>(list));
+                return;
+            }
+            for (int i = 0; i < s.length(); i++){
+                String curSub = s.substring(0, i + 1);
+                if(isPalindrome(curSub)){
+                    list.add(curSub);
+                    dfs(s.substring(i + 1), list);
+                    list.remove(list.size() - 1);
+                }
+            }
+        }
+        private boolean isPalindrome(String s){
+            int left = 0;
+            int right = s.length() - 1;
+            while(left < right){
+                if(s.charAt(left) != s.charAt(right)){
+                    return false;
+                }
+                left++;
+                right--;
+            }
+            return true;
+        }
+    }
 }
