@@ -51,4 +51,39 @@ public class Hard0632SmallestRangeCoveringElementsfromKLists {
             }
         }
     }
+
+    class Solution1 {
+        public int[] smallestRange(List<List<Integer>> nums) {
+            PriorityQueue<Pair> heap = new PriorityQueue<>( (a, b)-> nums.get(a.lIndex).get(a.eIndex) -  nums.get(b.lIndex).get(b.eIndex) );
+            int max = Integer.MIN_VALUE;
+            for (int i = 0; i < nums.size(); i++){
+                max = Math.max(max, nums.get(i).get(0) );
+                heap.add(new Pair(i, 0));
+            }
+
+            int[] result = new int[]{nums.get(heap.peek().lIndex).get(heap.peek().eIndex), max};
+
+            while ( nums.get(heap.peek().lIndex).size() - 1 != heap.peek().eIndex ){
+                Pair top = heap.poll();
+
+                Pair newPair = new Pair( top.lIndex, top.eIndex + 1 );
+                max = Math.max(max, nums.get(newPair.lIndex).get(newPair.eIndex) );
+                heap.add(newPair);
+
+                int curMin = nums.get(heap.peek().lIndex).get(heap.peek().eIndex);
+                if (max - curMin < result[1] - result[0]){
+                    result = new int[]{curMin, max};
+                }
+            }
+            return result;
+        }
+        class Pair{
+            int lIndex;
+            int eIndex;
+            Pair(int l, int e){
+                lIndex = l;
+                eIndex = e;
+            }
+        }
+    }
 }
