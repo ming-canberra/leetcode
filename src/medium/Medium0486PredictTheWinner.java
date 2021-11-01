@@ -2,7 +2,7 @@ package medium;
 
 import java.util.Arrays;
 
-public class PredictTheWinner486 {
+public class Medium0486PredictTheWinner {
 
     /**
      * recursion
