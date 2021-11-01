@@ -71,4 +71,53 @@ public class StoneGameII1140 {
             return memo[start][m];
         }
     }
+
+    class Solution2 {
+        Integer[][] memo;
+        int[] sums;
+        public int stoneGameII(int[] piles) {
+
+            memo = new Integer[100][100];
+
+            sums = new int[piles.length];
+            int total = 0;
+            for (int i = 0; i < piles.length; i++){
+                total += piles[i];
+                sums[i] = total;
+            }
+
+            int diff = getMax(piles, 0, 1);
+
+            return (total + diff) / 2;
+        }
+
+        private int getMax(int[] piles, int start, int m){
+            if (m * 2 + start >= piles.length){
+                return sum(piles.length - 1) - sum(start - 1);
+            }
+
+            if (memo[start][m] != null){
+                return memo[start][m];
+            }
+
+            int max = Integer.MIN_VALUE;
+            for (int i = start; i < start + m * 2; i++){
+
+                max = Math.max(max,  sum(i) - sum(start - 1) - getMax(piles, i + 1,  Math.max(m, i + 1 - start)) );
+
+            }
+
+            memo[start][m] = max;
+
+            return memo[start][m];
+        }
+
+        private int sum(int index){
+            if (index == -1){
+                return 0;
+            }
+
+            return sums[index];
+        }
+    }
 }
