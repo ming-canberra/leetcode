@@ -27,4 +27,31 @@ public class Hard0630CourseScheduleIII {
             return heap.size();
         }
     }
+
+    class Solution1 {
+        public int scheduleCourse(int[][] courses) {
+            // 0th duration, 1th last day
+            Arrays.sort(courses, (a, b)-> a[1] == b[1] ? a[0] - b[0] : a[1] - b[1] );
+            int sumDays = 0;
+            PriorityQueue<Integer> heap = new PriorityQueue<Integer>(  (a, b) -> b - a );// max heap
+            for (int i = 0; i < courses.length; i++){
+                int[] course = courses[i];
+                if (sumDays + course[0] <= course[1]){
+                    heap.add(course[0]);
+                    sumDays += course[0];
+                }
+                // can not add current course directly
+                else{
+                    if (!heap.isEmpty()){
+                        if (course[0] < heap.peek()){
+                            int prevMax = heap.poll();
+                            heap.add(course[0]);
+                            sumDays = sumDays - prevMax + course[0];
+                        }
+                    }
+                }
+            }
+            return heap.size();
+        }
+    }
 }
