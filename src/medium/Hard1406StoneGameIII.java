@@ -42,4 +42,45 @@ public class Hard1406StoneGameIII {
             return result;
         }
     }
+
+    class Solution1 {
+        public String stoneGameIII(int[] stoneValue) {
+            int len = stoneValue.length;
+            int diff = getMaxDiff(stoneValue, 0, new Integer[len]);
+            if (diff == 0){
+                return "Tie";
+            }
+            else if (diff > 0){
+                return "Alice";
+            }
+            else{
+                return "Bob";
+            }
+        }
+        private int getMaxDiff(int[] stones, int start, Integer[] memo){
+            int len = stones.length;
+            if (start == len - 1){
+                return stones[start];
+            }
+            if (start > len - 1){
+                return 0;
+            }
+            if (memo[start] != null){
+                return memo[start];
+            }
+            int max = Integer.MIN_VALUE;
+            int firstStoneValue = 0;
+            for (int i = 0; i <= 2; i++){
+                if (start + i < len){
+                    firstStoneValue += stones[start + i];
+                    max = Math.max(max, firstStoneValue - getMaxDiff(stones, start + i + 1, memo) );
+                }
+                else{
+                    break;
+                }
+            }
+            memo[start] = max;
+            return memo[start];
+        }
+    }
 }
