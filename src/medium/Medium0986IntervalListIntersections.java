@@ -3,6 +3,9 @@ package medium;
 import java.util.*;
 
 public class Medium0986IntervalListIntersections {
+    /**
+     * O( (M + N) * log(M + N) );
+     */
     class Solution {
         public int[][] intervalIntersection(int[][] firstList, int[][] secondList) {
             List<int[]> result = new ArrayList<>();
@@ -38,4 +41,39 @@ public class Medium0986IntervalListIntersections {
             return tmp;
         }
     }
+
+    /**
+     * O(M + N);
+     */
+    class Solution1{
+        public int[][] intervalIntersection(int[][] firstList, int[][] secondList) {
+            int fIndex = 0;
+            int sIndex = 0;
+            List<int[]> result = new ArrayList<>();
+            while(fIndex < firstList.length && sIndex < secondList.length){
+                if (firstList[fIndex][0] > secondList[sIndex][1]){
+                    sIndex++;
+                }
+                else if (secondList[sIndex][0] > firstList[fIndex][1]){
+                    fIndex++;
+                }
+                else{
+                    result.add(new int[]{Math.max(firstList[fIndex][0], secondList[sIndex][0]), Math.min(secondList[sIndex][1], firstList[fIndex][1])});
+                    if (firstList[fIndex][1] < secondList[sIndex][1]){
+                        fIndex++;
+                    }
+                    else{
+                        sIndex++;
+                    }
+                }
+            }
+            int[][] rArray = new int[result.size()][2];
+            int tmpIdx = 0;
+            for (int[] item : result){
+                rArray[tmpIdx++] = item;
+            }
+            return rArray;
+        }
+    }
+
 }
