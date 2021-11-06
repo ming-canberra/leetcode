@@ -41,5 +41,48 @@ public class BasicCalculatorII227 {
         }
     }
 
+    class Solution1 {
+        public int calculate(String s) {
+            char operator = '+';
+            StringBuilder sb = new StringBuilder();
+            Stack<Integer> stack = new Stack<>();
 
+            for (int index = 0; index < s.length(); index++){
+                if (s.charAt(index) == ' '){
+
+                }
+                else if ( Character.isDigit(s.charAt(index)) ){
+                    sb.append(s.charAt(index));
+                }
+
+                if (index == s.length() - 1 || s.charAt(index) == '+' || s.charAt(index) == '-' || s.charAt(index) == '*' || s.charAt(index) == '/' ){
+                    int curInt = Integer.valueOf(sb.toString());
+                    if (operator == '+'){
+                        stack.push(curInt);
+                    }
+                    else if (operator == '-'){
+                        stack.push(-1 * curInt);
+                    }
+                    else if (operator == '*'){
+                        stack.add(stack.pop() * curInt);
+                    }
+                    else if (operator == '/'){
+                        stack.add(stack.pop() / curInt);
+                    }
+                    sb = new StringBuilder();
+
+                    operator = s.charAt(index);
+                }
+            }
+
+            int result = 0;
+
+            while(!stack.isEmpty()){
+                result += stack.pop();
+            }
+
+
+            return result;
+        }
+    }
 }
