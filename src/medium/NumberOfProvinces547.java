@@ -69,4 +69,33 @@ public class NumberOfProvinces547 {
             return a;
         }
     }
+
+    class Solution1 {
+        public int findCircleNum(int[][] isConnected) {
+            int len = isConnected.length;
+            int result = 0;
+            boolean[] used = new boolean[len];
+            for (int i = 0; i < len; i++){
+                if (!used[i]){
+                    result++;
+                    dfs(isConnected, used, i);
+                }
+            }
+            return result;
+        }
+        private void dfs(int[][] isConnected, boolean[] used, int idx){
+            if (used[idx]){
+                return;
+            }
+            used[idx] = true;
+            for (int i = 0; i < isConnected.length; i++){
+                if (i == idx){
+                    continue;
+                }
+                if (isConnected[idx][i] == 1){
+                    dfs(isConnected, used, i);
+                }
+            }
+        }
+    }
 }
