@@ -37,4 +37,47 @@ public class BinaryTreeMaximumPathSum124 {
 
         return tmp;
     }
+
+    class Solution {
+        int result = Integer.MIN_VALUE;
+        public int maxPathSum(TreeNode root) {
+            traverse(root);
+            return result;
+        }
+        private int traverse(TreeNode root){
+            result = Math.max(result, root.val);
+            if (root.left == null && root.right == null){
+                return root.val;
+            }
+            else if (root.left == null){
+                int rMax = traverse(root.right);
+
+                result = Math.max(result, rMax);
+                int tmp = Math.max(root.val + rMax, root.val);
+                result = Math.max(result, tmp);
+                return  tmp;
+            }
+            else if (root.right == null){
+                int lMax = traverse(root.left);
+
+                result = Math.max(result, lMax);
+                int tmp = Math.max(root.val + lMax, root.val);
+                result = Math.max(result, tmp);
+                return  tmp;
+            }
+            else{
+                int lMax = traverse(root.left);
+                int rMax = traverse(root.right);
+                result = Math.max(result, lMax);
+                result = Math.max(result, rMax);
+
+                int tmp = Math.max( root.val + lMax + rMax, Math.max(root.val + rMax, root.val + lMax) );
+                result = Math.max(result, tmp);
+
+                return Math.max( root.val,  Math.max(root.val + rMax, root.val + lMax) );
+            }
+
+
+        }
+    }
 }
