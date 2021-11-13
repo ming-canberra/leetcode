@@ -1,10 +1,8 @@
 package medium;
 
-import java.util.*;
-
-public class NextPermutation31 {
+public class Medium0031NextPermutation {
     public static void main(String[] args) {
-        NextPermutation31 thisClass = new NextPermutation31();
+        Medium0031NextPermutation thisClass = new Medium0031NextPermutation();
     }
     public void nextPermutation(int[] nums) {
         int length = nums.length;
@@ -67,6 +65,47 @@ public class NextPermutation31 {
                 int leftValue = nums[left];
                 nums[left] = nums[right];
                 nums[right] = leftValue;
+                left++;
+                right--;
+            }
+        }
+    }
+
+    class Solution1 {
+        public void nextPermutation(int[] nums) {
+            int len = nums.length;
+            if (len == 1){
+                return;
+            }
+
+            for (int i = len - 2; i >= 0; i--){
+                int leftValue = nums[i];
+                int rightValue = nums[i + 1];
+
+                if (leftValue - rightValue < 0){
+                    for (int tIdx = len - 1; tIdx > i; tIdx--){
+                        if (leftValue - nums[tIdx] < 0){
+                            swap(nums, i, tIdx);
+                            revers(nums, i + 1);
+                            return;
+                        }
+                    }
+                }
+            }
+            revers(nums, 0);
+        }
+
+        private void swap(int[] nums, int i, int j){
+            int tmp = nums[i];
+            nums[i] = nums[j];
+            nums[j] = tmp;
+        }
+
+        private void revers(int[] nums, int start){
+            int left = start;
+            int right = nums.length - 1;
+            while(left < right){
+                swap(nums, left, right);
                 left++;
                 right--;
             }
