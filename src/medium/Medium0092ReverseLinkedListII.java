@@ -48,7 +48,7 @@ public class Medium0092ReverseLinkedListII {
             ListNode dummyHead = new ListNode();
             dummyHead.next = head;
             ListNode leftPrevious = dummyHead;
-            while(left != 1){
+            while (left != 1) {
                 leftPrevious = leftPrevious.next;
                 left--;
             }
@@ -56,7 +56,7 @@ public class Medium0092ReverseLinkedListII {
             ListNode leftNode = leftPrevious.next;
 
             ListNode rightNode = dummyHead.next;
-            while(right != 1){
+            while (right != 1) {
                 rightNode = rightNode.next;
                 right--;
             }
@@ -73,10 +73,10 @@ public class Medium0092ReverseLinkedListII {
             return dummyHead.next;
         }
 
-        private ListNode reverse(ListNode head){
+        private ListNode reverse(ListNode head) {
             ListNode cur = head;
             ListNode newHead = null;
-            while(cur != null){
+            while (cur != null) {
                 ListNode next = cur.next;
                 cur.next = newHead;
                 newHead = cur;
@@ -84,4 +84,5 @@ public class Medium0092ReverseLinkedListII {
             }
             return newHead;
         }
+    }
 }
