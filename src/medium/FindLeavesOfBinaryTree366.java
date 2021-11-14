@@ -60,4 +60,68 @@ public class FindLeavesOfBinaryTree366 {
             traverse(node.right, childParentMap, nodeNumMap, leavesList);
         }
     }
+    /**
+     * topological sort
+     *
+     * too much coding
+     *
+     * * */
+    class Solution {
+        public List<List<Integer>> findLeaves(TreeNode root) {
+
+            Map<TreeNode, TreeNode> childToParent = new HashMap<>();
+            Map<TreeNode, Integer> inDegrees = new HashMap<>();
+
+            traverse(root, childToParent, inDegrees);
+
+            Queue<TreeNode> queue = new LinkedList<>();
+
+            List<List<Integer>> result = new ArrayList<>();
+
+            for (TreeNode node : inDegrees.keySet()){
+                if (inDegrees.get(node) == 0){
+                    queue.add(node);
+                }
+            }
+
+            while(!queue.isEmpty()){
+                List<Integer> curList = new ArrayList<>();
+
+                for(int size = queue.size(); size > 0; size--){
+                    TreeNode top = queue.poll();
+
+                    curList.add(top.val);
+                    if (childToParent.containsKey(top)){
+                        TreeNode theParent = childToParent.get(top);
+                        inDegrees.put(theParent, inDegrees.get(theParent) - 1);
+
+                        if (inDegrees.get(theParent) == 0){
+                            queue.add(theParent);
+                        }
+                    }
+                }
+
+                result.add(curList);
+            }
+
+            return result;
+        }
+
+        private void traverse(TreeNode root, Map<TreeNode, TreeNode> childToParent,  Map<TreeNode, Integer> inDegrees){
+            if (root != null){
+                inDegrees.put(root, 0);
+                if (root.left != null){
+                    childToParent.put(root.left, root);
+                    inDegrees.put(root, inDegrees.get(root) + 1);
+                    traverse(root.left, childToParent, inDegrees);
+                }
+
+                if (root.right != null){
+                    childToParent.put(root.right, root);
+                    inDegrees.put(root, inDegrees.get(root) + 1);
+                    traverse(root.right, childToParent, inDegrees);
+                }
+            }
+        }
+    }
 }
