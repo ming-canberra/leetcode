@@ -38,5 +38,30 @@ public class Hard1326MinimumNumberofTapstoOpentoWateraGarden {
             return count;
         }
     }
-
+    class Solution1 {
+        public int minTaps(int n, int[] ranges) {
+            int len = n + 1;
+            int[][] tapRange = new int[len][2];
+            for (int i = 0; i < len; i++){
+                tapRange[i] = new int[]{i - ranges[i] < 0 ? 0 : i - ranges[i],  i + ranges[i]};
+            }
+            Arrays.sort( tapRange, (a, b) -> Integer.compare(a[0], b[0]) );
+            int counter = 0;
+            int coveredEndPos = 0;
+            int tapRangeIdx = 0;
+            while(coveredEndPos < n){
+                int canReach = -1;
+                while(tapRangeIdx < len && tapRange[tapRangeIdx][0] <=  coveredEndPos){
+                    canReach = Math.max(canReach, tapRange[tapRangeIdx][1]);
+                    tapRangeIdx++;
+                }
+                if (canReach <= coveredEndPos){
+                    return -1;
+                }
+                coveredEndPos = canReach;
+                counter++;
+            }
+            return counter;
+        }
+    }
 }
