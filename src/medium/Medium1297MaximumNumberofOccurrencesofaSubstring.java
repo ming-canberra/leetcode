@@ -61,4 +61,40 @@ public class Medium1297MaximumNumberofOccurrencesofaSubstring {
             return result;
         }
     }
+
+    class Solution1 {
+        public int maxFreq(String s, int maxLetters, int minSize, int maxSize) {
+            Map<String, Integer> subOccurences = new HashMap<>();
+            int left = 0;
+            Map<Character, Integer> slidingWindow = new HashMap<>();
+            int result = 0;
+            for (int i = 0; i < s.length(); i++){
+                char curChar = s.charAt(i);
+                slidingWindow.putIfAbsent(curChar, 0);
+                slidingWindow.put(curChar, slidingWindow.get(curChar) + 1);
+                // move left pointer until, the map.size() == maxLetters
+                while(slidingWindow.size() > maxLetters){
+                    helper(s, left++, slidingWindow);
+                }
+                if (i - left + 1 > minSize){
+                    helper(s, left++, slidingWindow);
+                }
+                if (i - left + 1 == minSize){
+                    String subString = s.substring(left, i + 1);
+                    subOccurences.putIfAbsent(subString, 0);
+                    subOccurences.put(subString, subOccurences.get(subString) + 1);
+                    result = Math.max(result, subOccurences.get(subString));
+                }
+            }
+            return result;
+        }
+        private void helper(String s, int left, Map<Character, Integer> slidingWindow){
+            if (slidingWindow.get( s.charAt(left) ) == 1 ){
+                slidingWindow.remove( s.charAt(left) );
+            }
+            else{
+                slidingWindow.put( s.charAt(left), slidingWindow.get( s.charAt(left) ) - 1);
+            }
+        }
+    }
 }
