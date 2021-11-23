@@ -2,9 +2,9 @@ package medium;
 
 import java.util.*;
 
-public class TimeBasedKeyValueStore981 {
+public class Medium0981TimeBasedKeyValueStore {
     public static void main(String[] args) {
-        TimeBasedKeyValueStore981 thisClass = new TimeBasedKeyValueStore981();
+        Medium0981TimeBasedKeyValueStore thisClass = new Medium0981TimeBasedKeyValueStore();
     }
     class TimeMap {
         class Info{
@@ -76,6 +76,47 @@ public class TimeBasedKeyValueStore981 {
         }
 
     }
+    class TimeMap1 {
+        public TimeMap1() {
+        }
+        Map<String, List<Pair>> map = new HashMap<>();
+        public void set(String key, String value, int timestamp) {
+            map.putIfAbsent(key, new ArrayList<>());
+            map.get(key).add(new Pair(timestamp, value) );
+        }
+        public String get(String key, int timestamp) {
+            if (map.containsKey(key)){
+                List<Pair> list = map.get(key);
+                int left = -1;
+                int right = list.size();
+                while(left + 1 < right){
+                    int m = (left + right) / 2;
+                    if (list.get(m).time <= timestamp){
+                        left = m;
+                    }
+                    else{
+                        right = m;
+                    }
+                }
+                if (left == -1){
+                    return "";
+                }
+                else{
+                    return list.get(left).value;
+                }
+            }
+            return "";
+        }
+        class Pair{
+            int time = 0;
+            String value = "";
+            public Pair(int t, String v){
+                time = t;
+                value = v;
+            }
+        }
+    }
+
 
 /**
  * Your TimeMap object will be instantiated and called as such:
