@@ -46,4 +46,43 @@ public class Medium0362DesignHitCounter {
             }
         }
     }
+
+
+    class HitCounter1 {
+        Deque<int[]> deque; // 0th for timestamp,  1th for number of hits
+        int hitsSum = 0;
+        public HitCounter1() {
+            deque = new LinkedList<>();
+        }
+        public void hit(int timestamp) {
+            if (deque.size() == 0){
+                deque.addFirst( new int[]{timestamp, 1} );
+                hitsSum++;
+            }
+            else{
+                if (deque.peekFirst()[0] == timestamp){
+                    deque.peekFirst()[1]++;
+                    hitsSum++;
+                }
+                else{
+                    deque.addFirst( new int[]{timestamp, 1} );
+                    hitsSum++;
+                }
+                while(!deque.isEmpty() && deque.peekLast()[0] + 300 <= timestamp){
+                    hitsSum -= deque.peekLast()[1];
+                    deque.pollLast();
+                }
+            }
+        }
+        public int getHits(int timestamp) {
+            if (deque.size() == 0){
+                return 0;
+            }
+            while(!deque.isEmpty() && deque.peekLast()[0] + 300 <= timestamp){
+                hitsSum -= deque.peekLast()[1];
+                deque.pollLast();
+            }
+            return hitsSum;
+        }
+    }
 }
