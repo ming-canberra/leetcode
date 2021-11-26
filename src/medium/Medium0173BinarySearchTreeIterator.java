@@ -2,9 +2,9 @@ package medium;
 
 import java.util.*;
 
-public class BinarySearchTreeIterator173 {
+public class Medium0173BinarySearchTreeIterator {
     public static void main(String[] args) {
-        BinarySearchTreeIterator173 thisClass = new BinarySearchTreeIterator173();
+        Medium0173BinarySearchTreeIterator thisClass = new Medium0173BinarySearchTreeIterator();
     }
 
     class BSTIterator {
@@ -53,6 +53,32 @@ public class BinarySearchTreeIterator173 {
         }
         public boolean hasNext() {
             return q.size() > 0;
+        }
+    }
+
+    class BSTIterator1 {
+
+        Stack<TreeNode> stack = new Stack<>();
+        public BSTIterator1(TreeNode root) {
+            pushAll(root);
+        }
+
+        private void pushAll(TreeNode root){
+            while(root != null){
+                stack.push(root);
+                root = root.left;
+            }
+        }
+
+        public int next() {
+            TreeNode top = stack.pop();
+            int toReturn = top.val;
+            pushAll(top.right);
+            return toReturn;
+        }
+
+        public boolean hasNext() {
+            return !stack.isEmpty();
         }
     }
 }
