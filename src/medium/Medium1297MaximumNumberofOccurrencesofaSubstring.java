@@ -97,4 +97,50 @@ public class Medium1297MaximumNumberofOccurrencesofaSubstring {
             }
         }
     }
+
+    class Solution2 {
+        public int maxFreq(String input, int maxLetters, int minSize, int maxSize){
+            int left = 0;
+            int maxCount = 0;
+
+            Map<Character, Integer> charCount = new HashMap<>();
+
+            Map<String, Integer> substringOccurance = new HashMap<>();
+
+            int uniqueCharCount = 0;
+            for (int i = 0; i < input.length(); i++){
+                char curChar = input.charAt(i);
+
+                if (uniqueCharCount < maxLetters){
+                    charCount.putIfAbsent(curChar, 0);
+                    if (charCount.get(curChar) == 0){
+                        uniqueCharCount++;
+                    }
+                    charCount.put(curChar, charCount.get(curChar) + 1);
+                }
+                else{
+                    charCount.putIfAbsent(curChar, 0);
+                    if (charCount.get(curChar) == 0){
+                        //move left to free 1 unique char
+                        while(charCount.get(input.charAt(left) ) > 0  ){
+                            charCount.put(input.charAt(left), charCount.get(input.charAt(left)) - 1 );
+                            if ( charCount.get(input.charAt(left)) == 0 ){
+                                left++;
+                                break;
+                            }
+                            left++;
+                        }
+                    }
+                    charCount.put(curChar, charCount.get(curChar) + 1);
+                }
+
+                if (i - left + 1 >= minSize){
+                    String curSub = input.substring(i - minSize + 1, i - minSize + 1 + minSize);
+                    substringOccurance.put(curSub, substringOccurance.getOrDefault(curSub, 0) + 1);
+                    maxCount = Math.max(maxCount, substringOccurance.get(curSub));
+                }
+            }
+            return maxCount;
+        }
+    }
 }
