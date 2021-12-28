@@ -2,7 +2,7 @@ package medium;
 
 import java.util.*;
 
-public class RemoveDuplicateLetters316 {
+public class Medium0316RemoveDuplicateLetters {
 
     /**
      *  O(N)
@@ -40,6 +40,32 @@ public class RemoveDuplicateLetters316 {
                 sb.append(c);
             }
             return sb.toString();
+        }
+    }
+
+    class Solution1 {
+        public String removeDuplicateLetters(String s) {
+            Set<Character> inStack = new HashSet<>();
+            Stack<Character> stack = new Stack<>();
+            int[] map = new int[26];
+            for (char curChar : s.toCharArray()){
+                map[curChar - 'a']++;
+            }
+            for (char curChar : s.toCharArray()){
+                if (!inStack.contains(curChar)){
+                    while(!stack.isEmpty() && map[stack.peek() - 'a'] > 0 && curChar < stack.peek()){
+                        inStack.remove(stack.pop());
+                    }
+                    stack.push(curChar);
+                    inStack.add(curChar);
+                }
+                map[curChar - 'a']--;
+            }
+            StringBuilder sb = new StringBuilder();
+            while(!stack.isEmpty()){
+                sb.append(stack.pop());
+            }
+            return sb.reverse().toString();
         }
     }
 }
