@@ -2,7 +2,7 @@ package hard;
 
 import java.util.*;
 
-public class TrappingRainWater42 {
+public class Hard0042TrappingRainWater {
     /**
      * O(n)
      *
@@ -46,6 +46,27 @@ public class TrappingRainWater42 {
                 }
             }
             return result;
+        }
+    }
+
+    class Solution2 {
+        public int trap(int[] height) {
+            Stack<Integer> stack = new Stack<>();  // monotonic decreasing stack
+            int sum = 0;
+            for (int i = 0; i < height.length; i++){
+                while(!stack.isEmpty() && height[stack.peek()]  < height[i]){
+                    int bottomEdgeIdx = stack.pop();
+
+                    if (!stack.isEmpty()){
+                        sum += (Math.min(height[stack.peek()], height[i]) - height[bottomEdgeIdx] ) * (i - stack.peek() - 1);
+                    }
+
+                }
+
+                stack.push(i);
+
+            }
+            return sum;
         }
     }
 }
