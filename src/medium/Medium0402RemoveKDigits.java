@@ -2,7 +2,7 @@ package medium;
 
 import java.util.*;
 
-public class RemoveKDigits402 {
+public class Medium0402RemoveKDigits {
 
     /**
      * O(N)
@@ -110,6 +110,44 @@ public class RemoveKDigits402 {
                 sb.append(min);
                 recur(num.substring(minIndex + 1), k - minIndex);
             }
+        }
+    }
+
+    class Solution3 {
+        public String removeKdigits(String num, int k) {
+            int len = num.length();
+
+            Stack<Character> stack = new Stack<>();
+            stack.push(num.charAt(0));
+            for (int i = 0; i < len; i++){
+                char curChar = num.charAt(i);
+                while (!stack.isEmpty() && curChar < stack.peek() && k > 0){
+                    stack.pop();
+                    k--;
+                }
+                stack.push(curChar);
+            }
+
+            while(k > 0){
+                stack.pop();
+                k--;
+            }
+            StringBuilder sb = new StringBuilder();
+
+            List<Character> list = new ArrayList<>(stack);
+            boolean canAppend = false;
+            for (char cc : list){
+                if (cc != '0'){
+                    canAppend = true;
+                }
+
+                if (canAppend){
+                    sb.append(cc);
+                }
+
+            }
+
+            return sb.length() == 0 ? "0" : sb.toString();
         }
     }
 }
