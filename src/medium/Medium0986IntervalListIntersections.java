@@ -76,4 +76,32 @@ public class Medium0986IntervalListIntersections {
         }
     }
 
+    class Solution2 {
+        public int[][] intervalIntersection(int[][] firstList, int[][] secondList) {
+            List<int[]> result = new ArrayList<>();
+            int fIdx = 0;
+            int sIdx = 0;
+
+            while(fIdx < firstList.length && sIdx < secondList.length){
+                int lMax = Math.max(firstList[fIdx][0], secondList[sIdx][0]);
+                int rMin = Math.min(firstList[fIdx][1], secondList[sIdx][1]);
+
+                if (lMax <= rMin){
+                    result.add(new int[]{lMax, rMin});
+                }
+                //the smaller one needs to move forward
+                if (firstList[fIdx][1] < secondList[sIdx][1]){
+                    fIdx++;
+                }
+                else{
+                    sIdx++;
+                }
+            }
+            int[][] arr = new int[result.size()][2];
+            for (int i = 0; i < result.size(); i++){
+                arr[i] = result.get(i);
+            }
+            return arr;
+        }
+    }
 }
