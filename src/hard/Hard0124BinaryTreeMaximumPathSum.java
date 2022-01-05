@@ -1,11 +1,6 @@
 package hard;
 
-import java.util.*;
-
-public class BinaryTreeMaximumPathSum124 {
-    public static void main(String[] args) {
-        BinaryTreeMaximumPathSum124 thisClass = new BinaryTreeMaximumPathSum124();
-    }
+public class Hard0124BinaryTreeMaximumPathSum {
 
     private int result;
     public int maxPathSum(TreeNode root) {
@@ -78,6 +73,36 @@ public class BinaryTreeMaximumPathSum124 {
             }
 
 
+        }
+    }
+
+    class Solution2 {
+        int result = Integer.MIN_VALUE;
+        public int maxPathSum(TreeNode root) {
+            recurse(root);
+            return result;
+        }
+        // maxValue of path ending with root
+        private int recurse(TreeNode root){
+            int rootValue = root.val;
+            Integer lValue = null;
+            Integer rValue = null;
+            int toReturn = rootValue;
+            if (root.left != null){
+                lValue = recurse(root.left);
+                result = Math.max(result, lValue);
+                toReturn = Math.max(toReturn, rootValue + lValue);
+            }
+            if (root.right != null){
+                rValue = recurse(root.right);
+                result = Math.max(result, rValue);
+                toReturn = Math.max(toReturn, rootValue + rValue);
+            }
+            if (root.left != null && root.right != null){
+                result = Math.max(result, rValue + lValue + rootValue);
+            }
+            result = Math.max(result, toReturn);
+            return toReturn;
         }
     }
 }
