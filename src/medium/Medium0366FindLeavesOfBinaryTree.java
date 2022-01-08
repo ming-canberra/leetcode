@@ -1,9 +1,9 @@
 package medium;
 import java.util.*;
 
-public class FindLeavesOfBinaryTree366 {
+public class Medium0366FindLeavesOfBinaryTree {
     public static void main(String[] args) {
-        FindLeavesOfBinaryTree366 thisClass = new FindLeavesOfBinaryTree366();
+        Medium0366FindLeavesOfBinaryTree thisClass = new Medium0366FindLeavesOfBinaryTree();
     }
 
     /**
@@ -121,6 +121,76 @@ public class FindLeavesOfBinaryTree366 {
                     inDegrees.put(root, inDegrees.get(root) + 1);
                     traverse(root.right, childToParent, inDegrees);
                 }
+            }
+        }
+    }
+
+    class Solution2 {
+
+        List<List<Integer>> rlt = new ArrayList<>();
+
+        Map<TreeNode, TreeNode> parents = new HashMap<>();
+
+        public List<List<Integer>> findLeaves(TreeNode root) {
+            fillMap(root);
+
+            Queue<TreeNode> queue = new LinkedList<>();
+
+            getLeaves(queue, root);
+            HashSet<TreeNode> allLeavesPreviousLayers = new HashSet<>();
+
+            while(!queue.isEmpty()){
+                Set<TreeNode> curSet = new HashSet<>();
+                for (int size = queue.size(); size > 0; size--){
+                    TreeNode top = queue.poll();
+                    //if top is a leaf node, add her parent to the queue
+                    boolean topIsLeaf = true;
+                    if (top.left != null){
+                        if (!allLeavesPreviousLayers.contains(top.left)){
+                            topIsLeaf = false;
+                        }
+                    }
+                    if (top.right != null){
+                        if (!allLeavesPreviousLayers.contains(top.right)){
+                            topIsLeaf = false;
+                        }
+                    }
+                    if (topIsLeaf){
+                        curSet.add(top);
+                        if (parents.containsKey(top)){
+                            queue.add(parents.get(top));
+                        }
+                    }
+                }
+
+                allLeavesPreviousLayers.addAll(curSet);
+                List<Integer> list = new ArrayList<>();
+                for (TreeNode node : curSet){
+                    list.add(node.val);
+                }
+                rlt.add(list);
+            }
+
+            return rlt;
+        }
+        private void getLeaves(Queue<TreeNode> queue, TreeNode root){
+            if (root != null){
+                getLeaves(queue, root.left);
+                getLeaves(queue, root.right);
+                if (root.left == null && root.right == null){
+                    queue.add(root);
+                }
+            }
+        }
+
+        private void fillMap(TreeNode node){
+            if (node.left != null){
+                fillMap(node.left);
+                parents.put(node.left, node);
+            }
+            if (node.right != null){
+                fillMap(node.right);
+                parents.put(node.right, node);
             }
         }
     }
