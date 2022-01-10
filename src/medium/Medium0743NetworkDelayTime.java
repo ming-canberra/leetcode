@@ -53,4 +53,47 @@ public class Medium0743NetworkDelayTime {
             return max;
         }
     }
+
+    class Solution1 {
+        public int networkDelayTime(int[][] times, int n, int k) {
+            int[] mins = new int[n + 1];
+            Arrays.fill(mins, Integer.MAX_VALUE);
+
+            Map<Integer, List<int[]>> map = new HashMap<>();
+            for (int[] time : times){
+                map.putIfAbsent(time[0], new ArrayList<>());
+                map.get(time[0]).add(new int[]{time[1], time[2]});
+            }
+
+            Queue<Integer> queue = new LinkedList<>();
+            mins[k] = 0;
+            queue.add(k);
+
+            while(!queue.isEmpty()){
+                int top = queue.poll();
+                if (map.containsKey(top)){
+                    for (int[] item : map.get(top)){
+                        int destIdx = item[0];
+                        int destDis = item[1] + mins[top];
+                        if (destDis < mins[destIdx]){
+                            mins[destIdx] = destDis;
+                            queue.add(destIdx);
+                        }
+                    }
+                }
+            }
+
+            //get the max of all the mins
+            int rlt = 0;
+            for (int i = 1; i < n + 1; i++){
+                if (i != k){
+                    if (mins[i] == Integer.MAX_VALUE){
+                        return -1;
+                    }
+                    rlt = Math.max(rlt, mins[i]);
+                }
+            }
+            return rlt;
+        }
+    }
 }
