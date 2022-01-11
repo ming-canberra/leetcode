@@ -50,4 +50,76 @@ public class Medium0417PacificAtlanticWaterFlow {
             }
         }
     }
+
+    class Solution2 {
+        public List<List<Integer>> pacificAtlantic(int[][] heights) {
+            int rNum = heights.length;
+            int cNum = heights[0].length;
+
+            boolean[][] canGoToPacific = new boolean[rNum][cNum];
+            boolean[][] canGoToAtlantic = new boolean[rNum][cNum];
+
+            int[][] dirs = new int[][]{new int[]{-1, 0}, new int[]{1, 0}, new int[]{0, 1}, new int[]{0, -1}};
+
+            for (int i = 0; i < rNum; i++){
+                for (int j = 0; j < cNum; j++){
+                    if(!canGoToPacific[i][j] && (i == 0 || j == 0)){
+
+                        Queue<int[]> queue = new LinkedList<>();
+                        queue.add(new int[]{i, j});
+                        while(!queue.isEmpty()){
+                            int[] top = queue.poll();
+
+                            if (!canGoToPacific[top[0]][top[1]]){
+                                canGoToPacific[top[0]][top[1]] = true;
+                                for (int k = 0; k < 4; k++){
+                                    int newR = top[0] + dirs[k][0];
+                                    int newC = top[1] + dirs[k][1];
+                                    if (newR >= 0 && newR < rNum && newC >= 0 && newC < cNum){
+                                        if (heights[newR][newC] >= heights[top[0]][top[1]]){
+                                            queue.add(new int[]{newR, newC});
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    if(!canGoToAtlantic[i][j] && (i == rNum - 1 || j == cNum - 1)){
+
+                        Queue<int[]> queue = new LinkedList<>();
+                        queue.add(new int[]{i, j});
+                        while(!queue.isEmpty()){
+                            int[] top = queue.poll();
+
+                            if (!canGoToAtlantic[top[0]][top[1]]){
+                                canGoToAtlantic[top[0]][top[1]] = true;
+                                for (int k = 0; k < 4; k++){
+                                    int newR = top[0] + dirs[k][0];
+                                    int newC = top[1] + dirs[k][1];
+                                    if (newR >= 0 && newR < rNum && newC >= 0 && newC < cNum){
+                                        if (heights[newR][newC] >= heights[top[0]][top[1]]){
+                                            queue.add(new int[]{newR, newC});
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            List<List<Integer>> result = new ArrayList<>();
+
+            for (int i = 0; i < rNum; i++){
+                for (int j = 0; j < cNum; j++){
+                    if (canGoToPacific[i][j] && canGoToAtlantic[i][j]){
+                        result.add(Arrays.asList(new Integer[]{i, j}));
+                    }
+                }
+            }
+
+            return result;
+        }
+    }
 }
