@@ -91,4 +91,62 @@ public class Medium0399EvaluateDivision {
             }
         }
     }
+
+    class Solution1 {
+        public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) {
+            Map<String, List<Pair>> map = new HashMap<>();
+
+            for (int i = 0; i < equations.size(); i++){
+                List<Pair> edgeList = map.getOrDefault(equations.get(i).get(0), new ArrayList<>());
+                edgeList.add(new Pair(equations.get(i).get(1), values[i]));
+                map.put(equations.get(i).get(0), edgeList);
+
+                edgeList = map.getOrDefault(equations.get(i).get(1), new ArrayList<>());
+                edgeList.add(new Pair(equations.get(i).get(0), 1 / values[i]));
+                map.put(equations.get(i).get(1), edgeList);
+
+            }
+
+            double[] rlt = new double[queries.size()];
+            Arrays.fill(rlt, -1.0);
+
+            for (int i = 0; i < queries.size(); i++){
+                List<String> curQuery = queries.get(i);
+
+                String target = curQuery.get(1);
+
+                Queue<Pair> queue = new LinkedList<>();
+                queue.add( new Pair(curQuery.get(0), 1.0) );
+
+                Set<String> visited = new HashSet<>();
+
+                while(!queue.isEmpty()){
+                    Pair top = queue.poll();
+
+                    if (!visited.contains(top.stringValue)){
+                        visited.add(top.stringValue);
+                        if (map.containsKey(top.stringValue)){
+                            for (Pair pair : map.get(top.stringValue)){
+                                if (pair.stringValue.equals(target)){
+                                    rlt[i] = top.result * pair.result;
+                                    break;
+                                }
+                                queue.add(new Pair(pair.stringValue, top.result * pair.result ));
+                            }
+                        }
+                    }
+                }
+            }
+            return rlt;
+        }
+        class Pair{
+            String stringValue = "";
+            double result = 1.0;
+
+            public Pair(String stringValue, double result){
+                this.stringValue = stringValue;
+                this.result = result;
+            }
+        }
+    }
 }
