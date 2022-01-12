@@ -1,5 +1,7 @@
 package medium;
 
+import java.util.*;
+
 public class TheMaze490 {
     /**
      * seriously overtime, worked it out in 1.5 hours
@@ -96,6 +98,38 @@ public class TheMaze490 {
             rIndex -= direction[0];
             cIndex -= direction[1];
             return new int[]{rIndex, cIndex};
+        }
+    }
+
+    class Solution3 {
+        public boolean hasPath(int[][] maze, int[] start, int[] destination) {
+            int rNum = maze.length;
+            int cNum = maze[0].length;
+            boolean[][] visited = new boolean[rNum][cNum];
+            Queue<int[]> queue = new LinkedList<>();
+            queue.add(start);
+            int[][] dirs = new int[][]{new int[]{-1, 0}, new int[]{1, 0}, new int[]{0, 1}, new int[]{0, -1}};
+            while(!queue.isEmpty()){
+                int[] top = queue.poll();
+                if (!visited[top[0]][top[1]]){
+                    visited[top[0]][top[1]] = true;
+                    if (top[0] == destination[0] && top[1] == destination[1]){
+                        return true;
+                    }
+                    for (int k = 0; k < 4; k++){
+                        int rIdx = top[0];
+                        int cIdx = top[1];
+                        while(rIdx >= 0 && rIdx < rNum && cIdx >= 0 && cIdx < cNum && maze[rIdx][cIdx] != 1){
+                            rIdx += dirs[k][0];
+                            cIdx += dirs[k][1];
+                        }
+                        rIdx -= dirs[k][0];
+                        cIdx -= dirs[k][1];
+                        queue.add(new int[]{rIdx, cIdx});
+                    }
+                }
+            }
+            return false;
         }
     }
 }
