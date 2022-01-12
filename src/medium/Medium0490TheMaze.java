@@ -2,7 +2,7 @@ package medium;
 
 import java.util.*;
 
-public class TheMaze490 {
+public class Medium0490TheMaze {
     /**
      * seriously overtime, worked it out in 1.5 hours
      * */
