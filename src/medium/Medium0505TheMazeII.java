@@ -54,4 +54,46 @@ public class Medium0505TheMazeII {
             }
         }
     }
+
+    class Solution2 {
+        public int shortestDistance(int[][] maze, int[] start, int[] destination) {
+            int rNum = maze.length;
+            int cNum = maze[0].length;
+
+            PriorityQueue<int[]> heap = new PriorityQueue<>( (a, b) -> a[2] - b[2]);
+            heap.add(new int[]{start[0], start[1], 0});
+            boolean[][] visited = new boolean[rNum][cNum];
+
+            int[][] dirs = new int[][]{new int[]{-1, 0}, new int[]{1, 0}, new int[]{0, 1}, new int[]{0, -1}};
+
+            while(!heap.isEmpty()){
+                int[] top = heap.poll();
+                if (!visited[top[0]][top[1]]){
+                    visited[top[0]][top[1]] = true;
+                    if (top[0] == destination[0] && top[1] == destination[1]){
+                        return top[2];
+                    }
+
+                    for (int k = 0; k < 4; k++){
+                        int rIdx = top[0];
+                        int cIdx = top[1];
+                        int dis = 0;
+                        while(rIdx >= 0 && rIdx < rNum && cIdx >= 0 && cIdx < cNum && maze[rIdx][cIdx] == 0){
+                            rIdx += dirs[k][0];
+                            cIdx += dirs[k][1];
+                            dis++;
+                        }
+                        rIdx -= dirs[k][0];
+                        cIdx -= dirs[k][1];
+                        dis--;
+                        if (dis != 0){
+                            heap.add(new int[]{rIdx, cIdx, top[2] + dis});
+                        }
+                    }
+                }
+            }
+
+            return -1;
+        }
+    }
 }
