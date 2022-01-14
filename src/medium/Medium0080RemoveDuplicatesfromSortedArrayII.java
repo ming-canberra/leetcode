@@ -54,4 +54,34 @@ public class Medium0080RemoveDuplicatesfromSortedArrayII {
         }
 
     }
+
+    class Solution1 {
+        public int removeDuplicates(int[] nums) {
+            int ntIdx = -1;
+
+            int curValue = nums[0];
+            int curCount = 0;
+            for (int i = 0; i < nums.length; i++){
+                if (nums[i] == curValue){
+                    curCount++;
+                }
+                else{
+                    curValue = nums[i];
+                    curCount = 1;
+                }
+
+                if (curCount <= 2){
+                    ntIdx++;
+                    swap(nums, ntIdx, i);
+                }
+            }
+            return ntIdx + 1;
+        }
+
+        private void swap(int[] nums, int a, int b){
+            int tmp = nums[a];
+            nums[a] = nums[b];
+            nums[b] = tmp;
+        }
+    }
 }
