@@ -44,4 +44,44 @@ public class Medium0161OneEditDistance {
             }
         }
     }
+    class Solution1 {
+        public boolean isOneEditDistance(String s, String t) {
+            if (s.length() == t.length() ){
+                int diff = 0;
+                for (int i = 0; i < s.length(); i++){
+                    if (s.charAt(i) != t.charAt(i) ) {
+                        diff++;
+                    }
+                }
+                return diff == 1;
+            }
+            // make sure s the long one
+            else if (s.length() < t.length() ){
+                return isOneEditDistance(t, s);
+            }
+            if (s.length() != t.length() + 1){
+                return false;
+            }
+
+            boolean diffFound = false;
+            for (int i = 0; i < t.length(); i++){
+                if (!diffFound){
+                    if (s.charAt(i) != t.charAt(i)){
+                        diffFound = true;
+                        if (s.charAt(i + 1) != t.charAt(i)){
+                            return false;
+                        }
+                    }
+                }
+                else{
+                    if (s.charAt(i + 1) != t.charAt(i)){
+                        return false;
+                    }
+                }
+            }
+
+
+            return true;
+        }
+    }
 }
