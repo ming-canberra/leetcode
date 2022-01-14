@@ -36,4 +36,41 @@ public class Medium0071SimplifyPath {
             }
         }
     }
+
+    class Solution1 {
+        public String simplifyPath(String path) {
+
+            Stack<String> stack = new Stack<>();
+            String[] chunks = path.split("/");
+            for (String chunk : chunks){
+                if (".".equals(chunk)){
+                    continue;
+                }
+                else if ("..".equals(chunk)){
+                    if (!stack.isEmpty()){
+                        stack.pop();
+                    }
+                }
+                else if ("".equals(chunk)){
+                    continue;
+                }
+                else{
+                    stack.push(chunk);
+                }
+            }
+
+            List<String> list = new ArrayList<>(stack);
+
+            if (list.size() == 0){
+                return "/";
+            }
+            StringBuilder sb = new StringBuilder();
+
+            for (String s : list){
+                sb.append("/");
+                sb.append(s);
+            }
+            return sb.toString();
+        }
+    }
 }
