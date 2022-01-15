@@ -41,4 +41,50 @@ public class Medium0271EncodeandDecodeStrings {
 
 
     }
+
+    public class Codec1 {
+
+        // Encodes a list of strings to a single string.
+        public String encode(List<String> strs) {
+            StringBuilder sb = new StringBuilder();
+            for (String sValue : strs){
+                if (sValue.length() == 0){
+                    sb.append(",");
+                }
+                for (int i = 0; i < sValue.length(); i++){
+                    sb.append((int)sValue.charAt(i));
+                    sb.append(",");
+                }
+                sb.append("#");
+            }
+            return sb.toString();
+        }
+
+        // Decodes a single string to a list of strings.
+        public List<String> decode(String s) {
+            List<String> rlt = new ArrayList<>();
+            String[] words = s.split("#");
+
+            for (String sValue : words){
+                StringBuilder sb = new StringBuilder();
+                String[] chars = sValue.split(",");
+
+                for (String charIntValue : chars){
+                    if (charIntValue.equals("")){
+                        sb.append("");
+                    }
+                    else{
+                        Integer integerOb = Integer.valueOf(charIntValue);
+                        sb.append( (char)integerOb.intValue() );
+                    }
+                }
+
+                rlt.add(sb.toString());
+            }
+
+
+
+            return rlt;
+        }
+    }
 }
