@@ -87,4 +87,27 @@ public class Medium0271EncodeandDecodeStrings {
             return rlt;
         }
     }
+
+    public class Codec3 {
+        // Encodes a list of strings to a single string.
+        public String encode(List<String> strs) {
+            StringBuilder sb = new StringBuilder();
+            for (String s : strs){
+                int len = s.length();
+                sb.append(len).append("/").append(s);
+            }
+            return sb.toString();
+        }
+        // Decodes a single string to a list of strings.
+        public List<String> decode(String s) {
+            List<String> rlt = new ArrayList<>();
+            while(s.length() > 0){
+                int slashIdx = s.indexOf("/");
+                int len = Integer.valueOf(s.substring(0, slashIdx));
+                rlt.add(s.substring(slashIdx + 1, slashIdx + 1 + len));
+                s = s.substring(slashIdx + 1 + len);
+            }
+            return rlt;
+        }
+    }
 }
