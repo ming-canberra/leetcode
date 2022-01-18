@@ -1,5 +1,7 @@
 package medium;
 
+import java.util.Arrays;
+
 public class MaximumProductSubarray152 {
     public static void main(String[] args) {
         MaximumProductSubarray152 thisClass = new MaximumProductSubarray152();
@@ -149,6 +151,38 @@ public class MaximumProductSubarray152 {
                 result = Math.max(max, result);
             }
             return result;
+        }
+    }
+
+    class Solution3 {
+        public int maxProduct(int[] nums) {
+            int rlt = nums[0];
+            int len = nums.length;
+
+            int[] dpPos = new int[len + 1];
+            int[] dpNeg = new int[len + 1];
+
+            Arrays.fill(dpPos, 1);
+            Arrays.fill(dpNeg, 1);
+
+            for (int i = 1; i < len + 1; i++){
+                int min = Math.min(dpPos[i - 1] * nums[i - 1], nums[i - 1]);
+                min = Math.min(min, dpNeg[i - 1] * nums[i - 1]);
+
+                int max = Math.max(dpPos[i - 1] * nums[i - 1], nums[i - 1]);
+                max = Math.max(max, dpNeg[i - 1] * nums[i - 1]);
+
+                rlt = Math.max(rlt, max);
+
+                if (max > 0){
+                    dpPos[i] = max;
+                }
+
+                if (min < 0){
+                    dpNeg[i] = min;
+                }
+            }
+            return rlt;
         }
     }
 }
