@@ -88,4 +88,50 @@ public class FindKPairsWithSmallestSums373 {
             return result;
         }
     }
+
+    class Solution2 {
+        public List<List<Integer>> kSmallestPairs(int[] nums1, int[] nums2, int k) {
+            List<List<Integer>> rlt = new ArrayList<>();
+
+            PriorityQueue<int[]> heap = new PriorityQueue<>( (a, b)-> Integer.compare(nums1[a[0]] + nums2[a[1]], nums1[b[0]] + nums2[b[1]])   );
+
+            Set<String> visited = new HashSet<>();
+
+            heap.add(new int[]{0, 0});
+
+            visited.add(0 + "#" + 0);
+
+            while(!heap.isEmpty()){
+                int[] top = heap.poll();
+
+                rlt.add( Arrays.asList( new Integer[]{ nums1[top[0]], nums2[top[1]]}));
+
+                if (rlt.size() == k){
+                    break;
+                }
+
+                int nextIdx1 = top[0] + 1;
+                int nextIdx2 = top[1] + 1;
+                if (nextIdx1 < nums1.length){
+                    if (!visited.contains( nextIdx1 + "#"+ top[1] ) ){
+                        visited.add( nextIdx1 + "#"+ top[1] );
+                        heap.add(new int[]{nextIdx1, top[1]});
+                    }
+                }
+
+                if (nextIdx2 < nums2.length){
+                    if (!visited.contains( top[0] + "#" + nextIdx2 )){
+                        visited.add( top[0] + "#" + nextIdx2 );
+                        heap.add( new int[]{top[0], nextIdx2} );
+                    }
+                }
+
+
+            }
+
+
+            return rlt;
+
+        }
+    }
 }
