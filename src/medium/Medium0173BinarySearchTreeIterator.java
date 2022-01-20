@@ -81,4 +81,28 @@ public class Medium0173BinarySearchTreeIterator {
             return !stack.isEmpty();
         }
     }
+
+    class BSTIterator2 {
+
+        Stack<TreeNode> stack = new Stack<>();
+        public BSTIterator2(TreeNode root) {
+            stack.push(root);
+            while(stack.peek().left != null){
+                stack.push(stack.peek().left);
+            }
+        }
+        public int next() {
+            TreeNode top = stack.pop();
+            if (top.right != null){
+                stack.push(top.right);
+                while(stack.peek().left != null){
+                    stack.push(stack.peek().left);
+                }
+            }
+            return top.val;
+        }
+        public boolean hasNext() {
+            return !stack.isEmpty();
+        }
+    }
 }
