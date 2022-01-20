@@ -65,9 +65,21 @@ public class Medium0729MyCalendarI {
         }
     }
 
-/**
- * Your MyCalendar object will be instantiated and called as such:
- * MyCalendar obj = new MyCalendar();
- * boolean param_1 = obj.book(start,end);
- */
+    class MyCalendar1 {
+        List<int[]> eventsList = new ArrayList<>();
+        public MyCalendar1() {
+        }
+        public boolean book(int start, int end) {
+            for (int[] evt : eventsList){
+                int maxOfMins = Math.max(start, evt[0]);
+                int minOfMaxs = Math.min(end, evt[1]);
+                // overlapped
+                if (maxOfMins < minOfMaxs){
+                    return false;
+                }
+            }
+            eventsList.add(new int[]{start, end});
+            return true;
+        }
+    }
 }
