@@ -24,4 +24,39 @@ public class Medium1024VideoStitching {
             return count;
         }
     }
+
+    class Solution1 {
+        public int videoStitching(int[][] clips, int time) {
+            Arrays.sort(clips, (a, b)-> (Integer.compare(a[0], b[0])) );
+            int count = 0;
+            int curEnd = 0;
+            int nextEnd = 0;
+            for (int i = 0; i < clips.length; i++){
+                if (curEnd >= time){
+                    return count;
+                }
+                if (nextEnd >= time){
+                    return count + 1;
+                }
+                if (clips[i][0] <= curEnd){
+                    nextEnd = Math.max(nextEnd, clips[i][1]);
+                }
+                else{
+                    if (clips[i][0] > nextEnd){
+                        return -1;
+                    }
+                    count++;
+                    curEnd = nextEnd;
+                    nextEnd = Math.max(nextEnd, clips[i][1]);
+                }
+            }
+            if (curEnd >= time){
+                return count;
+            }
+            if (nextEnd >= time){
+                return count + 1;
+            }
+            return -1;
+        }
+    }
 }
