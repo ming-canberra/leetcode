@@ -32,4 +32,39 @@ public class Easy1576ReplaceAlltoAvoidConsecutiveRepeatingCharacters {
             return sb.toString();
         }
     }
+
+    class Solution1 {
+        public String modifyString(String s) {
+            char[] charArr = s.toCharArray();
+            for (int i = 0; i < s.length(); i++){
+                if (charArr[i] == '?'){
+                    if (neighborsHaveChar(charArr, i, 'a')){
+                        if (neighborsHaveChar(charArr, i, 'b')){
+                            charArr[i] = 'c';
+                        }
+                        else{
+                            charArr[i] = 'b';
+                        }
+                    }
+                    else{
+                        charArr[i] = 'a';
+                    }
+                }
+            }
+            return new String(charArr);
+        }
+        private boolean neighborsHaveChar(char[] charArr, int idx, char charValue){
+            if (idx - 1 >= 0){
+                if (charArr[idx - 1] == charValue){
+                    return true;
+                }
+            }
+            if (idx + 1 < charArr.length){
+                if (charArr[idx + 1] == charValue){
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
 }
