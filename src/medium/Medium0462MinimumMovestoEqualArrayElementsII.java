@@ -14,4 +14,16 @@ public class Medium0462MinimumMovestoEqualArrayElementsII {
             return sum;
         }
     }
+
+    class Solution1 {
+        public int minMoves2(int[] nums) {
+            Arrays.sort(nums);
+            int rlt = 0;
+            int median = nums[nums.length / 2];
+            for (int n : nums){
+                rlt += Math.abs(n - median);
+            }
+            return rlt;
+        }
+    }
 }
