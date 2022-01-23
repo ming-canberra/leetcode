@@ -34,4 +34,39 @@ public class Medium1151MinimumSwapstoGroupAll1sTogether {
             return result;
         }
     }
+
+    class Solution1 {
+        public int minSwaps(int[] data) {
+            int oneCount = 0;
+            for (int value : data){
+                if (value == 1){
+                    oneCount++;
+                }
+            }
+            if (oneCount <= 1 || oneCount == data.length){
+                return 0;
+            }
+            int rlt = oneCount;
+            int zeroCount = 0;
+            for (int i = 0; i < data.length; i++){
+                if (i < oneCount){
+                    if (data[i] == 0){
+                        zeroCount++;
+                    }
+                }
+                else if (i >= oneCount){
+                    if (data[i] == 0){
+                        zeroCount++;
+                    }
+                    if (data[i - oneCount] == 0){
+                        zeroCount--;
+                    }
+                }
+                if (i >= oneCount - 1){
+                    rlt = Math.min(rlt, zeroCount);
+                }
+            }
+            return rlt;
+        }
+    }
 }
