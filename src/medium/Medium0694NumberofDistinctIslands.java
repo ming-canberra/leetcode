@@ -47,4 +47,60 @@ public class Medium0694NumberofDistinctIslands {
             return uniqueIsland.size();
         }
     }
+
+    class Solution1 {
+        public int numDistinctIslands(int[][] grid) {
+
+            int[][] dirs = new int[][]{new int[]{-1, 0}, new int[]{1, 0}, new int[]{0, 1}, new int[]{0, -1} };
+
+            Set<String> allIslands = new HashSet<>();
+
+            int rLen = grid.length;
+            int cLen = grid[0].length;
+
+            boolean[][] visited = new boolean[rLen][cLen];
+
+            for (int i = 0; i < rLen; i++){
+                for (int j = 0; j < cLen; j++){
+                    if (!visited[i][j] && grid[i][j] == 1){
+                        Queue<int[]> queue = new LinkedList<>();
+
+                        queue.add(new int[]{i, j});
+                        List<int[]> curIslandPositionList = new ArrayList<>();
+                        while(!queue.isEmpty()){
+
+                            int[] top = queue.poll();
+
+                            if (top[0] >= 0 && top[0] < rLen && top[1] >= 0 && top[1] < cLen){
+                                if (!visited[top[0]][top[1]] && grid[top[0]][top[1]] == 1){
+                                    visited[top[0]][top[1]] = true;
+
+                                    curIslandPositionList.add(top);
+
+                                    for (int k = 0; k < 4; k++){
+                                        int newRIdx = top[0] + dirs[k][0];
+                                        int newCIdx = top[1] + dirs[k][1];
+
+                                        queue.add(new int[]{newRIdx, newCIdx});
+                                    }
+                                }
+                            }
+
+                        }
+
+
+                        // convert what is in curIslandPositionList, and add them to the set
+                        StringBuilder sb = new StringBuilder();
+                        for (int[] pos : curIslandPositionList){
+                            sb.append(pos[0] - i + "r");
+                            sb.append(pos[1] - j + "c");
+                        }
+                        allIslands.add(sb.toString());
+                    }
+                }
+            }
+
+            return allIslands.size();
+        }
+    }
 }
