@@ -2,9 +2,9 @@ package medium;
 
 import java.util.*;
 
-public class RottingOranges994 {
+public class Medium0994RottingOranges {
     public static void main(String[] args) {
-        RottingOranges994 thisClass = new RottingOranges994();
+        Medium0994RottingOranges thisClass = new Medium0994RottingOranges();
     }
     public int orangesRotting(int[][] grid) {
         int m = grid.length;
@@ -116,6 +116,63 @@ public class RottingOranges994 {
                     freshCount--;
                 }
             }
+        }
+    }
+
+    class Solution3 {
+        public int orangesRotting(int[][] grid) {
+            //0 empty
+            //1 fresh
+            //2 rotten
+            int m = grid.length;
+            int n = grid[0].length;
+
+            int res = 0;
+
+            Queue<int[]> queue = new LinkedList<>();
+            // init the queue with rotten orange positions
+            for (int i = 0; i < m; i++) {
+                for (int j = 0; j < n; j++){
+                    if (grid[i][j] == 2) {
+                        queue.add(new int[]{i, j});
+                    }
+                }
+            }
+
+            int[][] dirs = new int[][]{ new int[]{-1, 0},  new int[]{1, 0}, new int[]{0, -1}, new int[]{0, 1} };
+
+            while( !queue.isEmpty()) {
+                boolean hasFoundFresh = false;
+                for (int size = queue.size(); size > 0; size--) {
+                    int[] top = queue.poll();
+                    // check ther neighbors of current rotten orange
+                    for (int i = 0; i < 4; i++) {
+                        int newR = top[0] + dirs[i][0];
+                        int newC = top[1] + dirs[i][1];
+
+                        if (newR >= 0 && newR < m && newC >= 0 && newC < n) {
+                            if (grid[newR][newC] == 1) {
+                                grid[newR][newC] = 2;
+                                queue.add(new int[]{newR, newC});
+                                hasFoundFresh = true;
+                            }
+                        }
+                    }
+                }
+                if (hasFoundFresh) {
+                    res++;
+                }
+            }
+
+            for (int i = 0; i < m; i++) {
+                for (int j = 0; j < n; j++){
+                    if (grid[i][j] == 1) {
+                        return -1;
+                    }
+                }
+            }
+
+            return res;
         }
     }
 }
