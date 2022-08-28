@@ -2,7 +2,7 @@ package medium;
 
 import java.util.*;
 
-public class ValidSudoku36 {
+public class Medium0036ValidSudoku {
     class Solution {
         public boolean isValidSudoku(char[][] board) {
             List<Character> list = Arrays.asList(new Character[]{'1','2','3','4','5','6','7','8','9'});
@@ -134,6 +134,42 @@ public class ValidSudoku36 {
                     }
                 }
             }
+            return true;
+        }
+    }
+
+    class Solution2 {
+        public boolean isValidSudoku(char[][] board) {
+            boolean[][] rowValidator = new boolean[9][9];
+
+            boolean[][] colValidator = new boolean[9][9];
+
+            boolean[][] subValidator = new boolean[9][9];
+            for (int i = 0; i < 9; i++) {
+                for (int j = 0; j < 9; j++) {
+                    if (board[i][j] == '.') {
+                        continue;
+                    }
+
+                    int value = board[i][j] - '1';
+
+                    if (rowValidator[i][value]) {
+                        return false;
+                    }
+
+                    if (colValidator[j][value]) {
+                        return false;
+                    }
+
+                    if (subValidator[i / 3 * 3 + j / 3 ][value]) {
+                        return false;
+                    }
+                    rowValidator[i][value] = true;
+                    colValidator[j][value] = true;
+                    subValidator[i / 3 * 3 + j / 3][value] = true;
+                }
+            }
+
             return true;
         }
     }
