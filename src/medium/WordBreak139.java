@@ -132,7 +132,7 @@ public class WordBreak139 {
         }
     }
 
-    class Solution {
+    class Solution3 {
         Boolean[] m;
         public boolean wordBreak(String s, List<String> wordDict) {
             Set<String> set = new HashSet<>(wordDict);
