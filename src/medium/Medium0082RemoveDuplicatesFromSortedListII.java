@@ -1,8 +1,8 @@
 package medium;
 
-public class RemoveDuplicatesFromSortedListII82 {
+public class Medium0082RemoveDuplicatesFromSortedListII {
     public static void main(String[] args) {
-        RemoveDuplicatesFromSortedListII82 thisClass = new RemoveDuplicatesFromSortedListII82();
+        Medium0082RemoveDuplicatesFromSortedListII thisClass = new Medium0082RemoveDuplicatesFromSortedListII();
 
         System.out.println (thisClass.deleteDuplicates(null));
     }
