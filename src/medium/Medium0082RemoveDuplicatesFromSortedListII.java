@@ -51,4 +51,34 @@ public class Medium0082RemoveDuplicatesFromSortedListII {
         return hat.next;
     }
 
+    class Solution {
+        public ListNode deleteDuplicates(ListNode head) {
+            ListNode dummy = new ListNode();
+            dummy.next = head;
+            ListNode tail = dummy;
+            ListNode left = dummy.next;
+            ListNode right = dummy.next;
+            while(left != null) {
+                while(right != null && left.val == right.val) {
+                    right = right.next;
+                }
+                if (right == null) {
+                    if (left.next != null) {
+                        tail.next = null;
+                    }
+                    break;
+                }
+                else {
+                    if (left.next == right) {
+                        tail = tail.next;
+                    }
+                    else {
+                        tail.next = right;
+                    }
+                    left = right;
+                }
+            }
+            return dummy.next;
+        }
+    }
 }
