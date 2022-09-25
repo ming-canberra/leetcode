@@ -85,4 +85,44 @@ public class Medium0092ReverseLinkedListII {
             return newHead;
         }
     }
+
+    class Solution1 {
+        public ListNode reverseBetween(ListNode head, int left, int right) {
+            ListNode dummy = new ListNode();
+            dummy.next = head;
+
+            ListNode leftBefore = dummy;
+            for (int i = 1; i < left; i++) {
+                leftBefore = leftBefore.next;
+            }
+            ListNode leftNode = leftBefore.next;
+
+            ListNode rightNode = dummy;
+            for (int i = 0; i < right; i++) {
+                rightNode = rightNode.next;
+            }
+
+            ListNode rightAfter = rightNode.next;
+
+            leftBefore.next = null;
+            rightNode.next = null;
+            reverse(leftNode);
+
+
+            leftBefore.next = rightNode;
+            leftNode.next = rightAfter;
+
+            return dummy.next;
+        }
+        private void reverse(ListNode head) {
+            ListNode dummy = new ListNode();
+            while(head != null) {
+                ListNode dummyNext = dummy.next;
+                ListNode curNext = head.next;
+                dummy.next = head;
+                head.next = dummyNext;
+                head = curNext;
+            }
+        }
+    }
 }
