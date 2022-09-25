@@ -60,4 +60,36 @@ public class DecodeWays91 {
             return dp[len];
         }
     }
+
+    class Solution2 {
+
+        Map<String, Integer> map = new HashMap<>();
+
+        public int numDecodings(String s) {
+            if (map.containsKey(s)) {
+                return map.get(s);
+            }
+            Set<String> valid = new HashSet<>();
+            for (int i = 10; i < 27; i++) {
+                valid.add(new Integer(i).toString());
+            }
+            if (s.length() == 1) {
+                if (s.equals("0")){
+                    return 0;
+                }
+                return 1;
+            }
+            else if (s.length() == 0) {
+                return 1;
+            }
+            else {
+                int res = numDecodings(s.substring(0, 1)) * numDecodings(s.substring(1, s.length()))
+                        + (valid.contains( s.substring(0, 2) ) ? 1 : 0 ) * numDecodings(s.substring(2, s.length()));
+
+                map.put(s, res);
+
+                return res;
+            }
+        }
+    }
 }
