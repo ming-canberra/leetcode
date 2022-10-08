@@ -2,9 +2,9 @@ package medium;
 
 import java.util.Arrays;
 
-public class MaximumProductSubarray152 {
+public class Medium0152MaximumProductSubarray {
     public static void main(String[] args) {
-        MaximumProductSubarray152 thisClass = new MaximumProductSubarray152();
+        Medium0152MaximumProductSubarray thisClass = new Medium0152MaximumProductSubarray();
     }
 
     public int maxProduct(int[] nums) {
@@ -183,6 +183,23 @@ public class MaximumProductSubarray152 {
                 }
             }
             return rlt;
+        }
+    }
+
+    class Solution4 {
+        public int maxProduct(int[] nums) {
+            int res = nums[0];
+            int lastMax = nums[0];
+            int lastMin = nums[0];
+            for (int i = 1; i < nums.length; i++) {
+                int value = nums[i];
+                int curMax = Math.max(Math.max(value, lastMax * value), lastMin * value);
+                int curMin = Math.min(Math.min(value, lastMax * value), lastMin * value);
+                lastMax = curMax;
+                lastMin = curMin;
+                res = Math.max(res, curMax);
+            }
+            return res;
         }
     }
 }
