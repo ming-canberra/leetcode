@@ -105,4 +105,26 @@ public class Medium0173BinarySearchTreeIterator {
             return !stack.isEmpty();
         }
     }
+
+    class BSTIterator3 {
+        Deque<TreeNode> stack = new LinkedList<>();
+        public BSTIterator3(TreeNode root) {
+            traverseLeft(root);
+        }
+        private void traverseLeft(TreeNode node) {
+            if (node != null) {
+                stack.addLast(node);
+                traverseLeft(node.left);
+            }
+        }
+        public int next() {
+            TreeNode top = stack.removeLast();
+            traverseLeft(top.right);
+            return top.val;
+        }
+        public boolean hasNext() {
+            return stack.size() > 0;
+        }
+    }
+
 }
