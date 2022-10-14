@@ -107,4 +107,32 @@ public class Medium0179LargestNumber {
             }
         }
     }
+
+    class Solution3 {
+        public String largestNumber(int[] nums) {
+            List<String> list = new ArrayList<>();
+            for (int i = 0; i < nums.length; i++) {
+                list.add( String.valueOf(nums[i]) );
+            }
+
+            Collections.sort(
+                    list, (a, b) -> {return (b + a).compareTo(a + b);}
+            );
+
+            StringBuffer sb = new StringBuffer();
+            list.forEach(s -> sb.append(s));
+            return removeLeadingZero(sb.toString());
+        }
+        private String removeLeadingZero(String s) {
+            if (s.length() > 1 ) {
+                if (s.charAt(0) == '0') {
+                    return removeLeadingZero ( s.substring(1, s.length()));
+                }
+                else {
+                    return s;
+                }
+            }
+            return s;
+        }
+    }
 }
