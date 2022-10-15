@@ -44,4 +44,27 @@ public class Medium189RotateArray {
             }
         }
     }
+
+    class Solution2 {
+        public void rotate(int[] nums, int k) {
+            int curIdx = 0;
+            int lastNum = nums[curIdx];
+            int startIdx = 0;
+            for (int size = 0; size < nums.length; size++) {
+                int idx = (curIdx + k) % nums.length;
+                int tmp = nums[idx];
+                nums[idx] = lastNum;
+                if (startIdx == idx) {
+                    startIdx++;
+                    curIdx = startIdx;
+                    if (curIdx < nums.length)
+                        lastNum = nums[curIdx];
+                }
+                else {
+                    lastNum = tmp;
+                    curIdx = idx;
+                }
+            }
+        }
+    }
 }
