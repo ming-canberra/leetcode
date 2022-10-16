@@ -1,11 +1,8 @@
 package medium;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class MinimumSizeSubarraySum209 {
+public class Medium209MinimumSizeSubarraySum {
     public static void main(String[] args) {
-        MinimumSizeSubarraySum209 thisClass = new MinimumSizeSubarraySum209();
+        Medium209MinimumSizeSubarraySum thisClass = new Medium209MinimumSizeSubarraySum();
     }
     /**
      *O(NlogN)
@@ -84,6 +81,25 @@ public class MinimumSizeSubarraySum209 {
                 }
             }
             return result == Integer.MAX_VALUE ? 0 : result;
+        }
+    }
+
+    class Solution2 {
+        public int minSubArrayLen(int target, int[] nums) {
+            int res = Integer.MAX_VALUE;
+            int left = 0;
+            int right = - 1;
+            int sum = 0;
+            while(++right < nums.length) {
+                sum += nums[right];
+                // move left until sum < target
+                while(sum >= target) {
+                    res = Math.min(res, right - left + 1);
+                    sum -= nums[left];
+                    left++;
+                }
+            }
+            return res == Integer.MAX_VALUE ? 0 : res;
         }
     }
 }
