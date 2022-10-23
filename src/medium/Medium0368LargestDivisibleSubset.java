@@ -2,7 +2,7 @@ package medium;
 
 import java.util.*;
 
-public class Medium368LargestDivisibleSubset {
+public class Medium0368LargestDivisibleSubset {
     class Solution {
         public List<Integer> largestDivisibleSubset(int[] nums) {
             Arrays.sort(nums);
@@ -66,6 +66,34 @@ public class Medium368LargestDivisibleSubset {
             }
             result.add(nums[indexLargest]);
             return result;
+        }
+    }
+
+    class Solution2 {
+        public List<Integer> largestDivisibleSubset(int[] nums) {
+            Arrays.sort(nums);
+            Map<Integer, List<Integer>> map = new HashMap<>();
+            Integer resEndingInteger = nums[0];
+            for (int value : nums) {
+                List<Integer> list = new ArrayList<>();
+                list.add(value);
+                map.put(value, list);
+            }
+            for (int i = 1; i < nums.length; i++) {
+                for (int j = 0; j < i; j++) {
+                    if (nums[i] % nums[j] == 0) {
+                        if (map.get(nums[j]).size() + 1 >  map.get(nums[i]).size()) {
+                            List<Integer> list = new ArrayList<>(map.get(nums[j]));
+                            list.add(nums[i]);
+                            map.put(nums[i], list);
+                            if (list.size() > map.get(resEndingInteger).size()) {
+                                resEndingInteger = nums[i];
+                            }
+                        }
+                    }
+                }
+            }
+            return map.get(resEndingInteger);
         }
     }
 }
