@@ -2,7 +2,7 @@ package medium;
 
 import java.util.*;
 
-public class DecodeWays91 {
+public class Medium0091DecodeWays {
 
     class Solution {
         public int numDecodings(String s) {
@@ -90,6 +90,40 @@ public class DecodeWays91 {
 
                 return res;
             }
+        }
+    }
+
+    class Solution3 {
+        public int numDecodings(String s) {
+            int len  = s.length();
+
+            int[] dp = new int[len];
+
+            if (  s.charAt(0) == '0') {
+                dp[0] = 0;
+            }
+            else {
+                dp[0] = 1;
+            }
+
+            if (len == 1) {
+                return dp[0];
+            }
+
+            Set<String> valid2DigitsNumber = new HashSet<>();
+            for (int i = 10; i < 27; i++) {
+                valid2DigitsNumber.add(String.valueOf(i));
+            }
+
+            dp[1] = (valid2DigitsNumber.contains(s.substring(0, 2)) ? 1 : 0) + dp[0] * (s.charAt(1) == '0' ? 0 : 1);
+
+            for (int i = 2; i < len; i++) {
+                dp[i] = dp[i - 1] * (s.charAt(i) == '0' ? 0 : 1);
+
+                dp[i] += dp[i - 2] * (valid2DigitsNumber.contains(s.substring(i - 1, i + 1)) ? 1 : 0);
+            }
+
+            return dp[len - 1];
         }
     }
 }
