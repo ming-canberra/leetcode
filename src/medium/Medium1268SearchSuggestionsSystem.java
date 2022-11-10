@@ -60,4 +60,90 @@ public class Medium1268SearchSuggestionsSystem {
             }
         }
     }
+
+    class Solution1 {
+        Trie allProducts = new Trie("");
+
+        public List<List<String>> suggestedProducts(String[] products, String searchWord) {
+
+            for (String prd : products) {
+
+                addToTrie(prd);
+
+            }
+
+            List<List<String>> res = new ArrayList<>();
+
+            for (int i = 1; i <= searchWord.length(); i++) {
+                String curString = searchWord.substring(0, i);
+
+                res.add(getFirst3Words(curString));
+
+            }
+
+            return res;
+        }
+
+        private List<String> getFirst3Words(String prefix) {
+            List<String> res = new ArrayList<>();
+
+            Trie cur = allProducts;
+
+
+            for (char charV : prefix.toCharArray()) {
+                if (cur.children[charV - 'a'] == null) {
+                    return res;
+                }
+                cur = cur.children[charV - 'a'];
+            }
+
+
+            int counter = 3;
+            Stack<Trie> stack = new Stack<>();
+            stack.add(cur);
+            while(counter > 0 && !stack.isEmpty()) {
+                Trie top = stack.pop();
+                if (top.isWord) {
+                    counter--;
+                    res.add(top.word);
+                }
+                for (int i = 25; i>= 0; i--) {
+                    Trie child = top.children[i];
+                    if (child != null) {
+                        stack.push(child);
+                    }
+                }
+            }
+
+            return res;
+        }
+
+
+
+        private void addToTrie(String product) {
+            Trie cur = allProducts;
+
+            for (char charV : product.toCharArray()) {
+                if (cur.children[charV - 'a'] == null) {
+                    cur.children[charV - 'a'] = new Trie(cur.word + charV);
+                }
+                cur = cur.children[charV - 'a'];
+            }
+            cur.isWord = true;
+
+
+        }
+
+        private class Trie{
+            boolean isWord = false;
+            String word = "";
+            Trie[] children = new Trie[26];
+
+            Trie(String input) {
+                word = input;
+            }
+
+        }
+
+    }
 }
