@@ -1,10 +1,8 @@
 package medium;
 
-import java.util.*;
-
-public class SearchInRotatedSortedArray33 {
+public class Medium0033SearchInRotatedSortedArray {
     public static void main(String[] args) {
-        SearchInRotatedSortedArray33 thisClass = new SearchInRotatedSortedArray33();
+        Medium0033SearchInRotatedSortedArray thisClass = new Medium0033SearchInRotatedSortedArray();
     }
     public int search(int[] nums, int target) {
         return search (nums, target, 0, nums.length);
@@ -92,6 +90,48 @@ public class SearchInRotatedSortedArray33 {
                 else{
                     break;
                 }
+            }
+            return -1;
+        }
+    }
+
+    class Solution1 {
+        public int search(int[] nums, int target) {
+            int left = 0;
+            int right = nums.length - 1;
+
+            while(left + 1 < right) {
+                int mid = (left + right) / 2;
+
+                if (target == nums[left]) {
+                    return left;
+                }
+                if (target == nums[right]) {
+                    return right;
+                }
+                if (target == nums[mid]) {
+                    return mid;
+                }
+
+                if (target > nums[left] && target < nums[mid]) {
+                    right = mid - 1;
+                }
+                else if (target > nums[mid] && target < nums[right]) {
+                    left = mid + 1;
+                }
+                else if ( nums[mid] > nums[right] &&  (  target > nums[mid] || target < nums[right] )) {
+                    left = mid + 1;
+                }
+                else {
+                    right = mid - 1;
+                }
+            }
+
+            if (target == nums[left]) {
+                return left;
+            }
+            if (target == nums[right]) {
+                return right;
             }
             return -1;
         }
