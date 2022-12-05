@@ -1,12 +1,8 @@
 package medium;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-public class SortColors75 {
+public class Medium0075SortColors {
     public static void main(String[] args) {
-        SortColors75 thisClass = new SortColors75();
+        Medium0075SortColors thisClass = new Medium0075SortColors();
         thisClass.sortColors(new int[]{2,0,2,1,1,0});
     }
     public void sortColors(int[] nums) {
@@ -60,6 +56,33 @@ public class SortColors75 {
             int tmp = nums[a];
             nums[a] = nums[b];
             nums[b] = tmp;
+        }
+    }
+
+    class Solution1 {
+        public void sortColors(int[] nums) {
+            int redIdx = -1;
+            int blueIdx = nums.length;
+            int idx = 0;
+            while(idx < blueIdx) {
+                if (nums[idx] == 0) {
+                    redIdx++;
+                    swap(redIdx, idx, nums);
+                    idx++;
+                }
+                else if (nums[idx] == 2) {
+                    blueIdx--;
+                    swap(blueIdx, idx, nums);
+                }
+                else {
+                    idx++;
+                }
+            }
+        }
+        private void swap(int first, int second, int[] nums) {
+            int tmp = nums[first];
+            nums[first] = nums[second];
+            nums[second] = tmp;
         }
     }
 }
