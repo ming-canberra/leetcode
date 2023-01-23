@@ -1,18 +1,14 @@
 package medium;
 
 import java.util.HashMap;
+import java.util.Map;
 
-public class TaskScheduler621 {
-    public static void main(String[] args) {
-        TaskScheduler621 thisClass = new TaskScheduler621();
-
-        System.out.println (thisClass.leastInterval(new char[]{'A','B','C','D','A','B','V'}, 3));
-    }
+public class Medium0621TaskScheduler {
     public int leastInterval(char[] tasks, int n) {
         if (n == 0){
             return tasks.length;
         }
-        HashMap<Character, Integer> map = new HashMap<Character, Integer>();
+        Map<Character, Integer> map = new HashMap<>();
         for (char c : tasks){
             map.put(c, map.getOrDefault(c, 0) + 1);
         }
@@ -42,6 +38,28 @@ public class TaskScheduler621 {
         }
         else {
             return tasks.length;
+        }
+    }
+
+    class Solution {
+        public int leastInterval(char[] tasks, int n) {
+            Map<Character, Integer> charCounts = new HashMap<>();
+            int numMaxCount = 0;
+            int maxCount = 0;
+            for (char aChar : tasks) {
+                int count = charCounts.getOrDefault(aChar, 0) + 1;
+                charCounts.put(aChar, count);
+
+                if (count > maxCount) {
+                    maxCount = count;
+                    numMaxCount = 1;
+                }
+                else if (count == maxCount) {
+                    numMaxCount++;
+                }
+            }
+            int res = (maxCount - 1) * (n + 1) + numMaxCount;
+            return Math.max(res, tasks.length);
         }
     }
 }
