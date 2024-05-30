@@ -143,4 +143,51 @@ public class Medium0981TimeBasedKeyValueStore {
             return "";
         }
     }
+
+    class TimeMapBinarySearch {
+        Map<String, List<Pair>> map = new HashMap<>();
+        public TimeMapBinarySearch() {
+        }
+        public void set(String key, String value, int timestamp) {
+            map.putIfAbsent(key, new ArrayList<>());
+            map.get(key).add(new Pair(timestamp, value));
+        }
+        public String get(String key, int timestamp) {
+            if (map.containsKey(key)) {
+                List<Pair> list = map.get(key);
+                int left = -1;
+                int right = list.size();
+                while (left + 1 < right) {
+                    int mid = left + (right - left) / 2;
+                    if (list.get(mid).timestamp > timestamp) {
+                        right = mid;
+                    }
+                    else {
+                        left = mid;
+                    }
+                }
+                if (left == -1) {
+                    return "";
+                }
+                return list.get(left).value;
+            }
+            return "";
+        }
+        private class Pair{
+            Pair(int timestamp, String value)
+            {
+                this.value = value;
+                this.timestamp = timestamp;
+            }
+            int timestamp;
+            String value;
+        }
+    }
+
+/**
+ * Your TimeMap object will be instantiated and called as such:
+ * TimeMap obj = new TimeMap();
+ * obj.set(key,value,timestamp);
+ * String param_2 = obj.get(key,timestamp);
+ */
 }
