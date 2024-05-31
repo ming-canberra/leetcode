@@ -60,4 +60,41 @@ public class Medium1366RankTeamsbyVotes {
             }
         }
     }
+
+    class Solution1 {
+        public String rankTeams(String[] votes) {
+
+            Map<Character, int[]> map = new HashMap<>();
+
+            for (int i = 0; i < votes.length; i++) {
+                for (int j = 0; j < votes[i].length(); j++) {
+                    map.putIfAbsent(votes[i].charAt(j), new int[votes[i].length()]);
+                    map.get(votes[i].charAt(j))[j]++;
+                }
+            }
+
+            List<Character> allTeams = new ArrayList<>(map.keySet());
+
+            Collections.sort(allTeams, (a, b) -> {
+                for (int i = 0; i < allTeams.size(); i++) {
+                    int[] teamVotesA = map.get(a);
+                    int[] teamVotesB = map.get(b);
+                    if (teamVotesA[i] != teamVotesB[i]){
+                        return teamVotesA[i] > teamVotesB[i] ? -1 : 1;
+                    }
+                }
+
+                return a.compareTo(b);
+            } );
+
+            StringBuilder sb = new StringBuilder();
+
+            for (Character aChar : allTeams) {
+                sb.append(aChar);
+            }
+            return sb.toString();
+        }
+
+    }
+
 }
