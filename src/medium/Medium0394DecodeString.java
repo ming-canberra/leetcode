@@ -81,4 +81,41 @@ public class Medium0394DecodeString {
             return sb.toString();
         }
     }
+
+    class Solution2 {
+        public String decodeString(String s) {
+            StringBuilder sb = new StringBuilder();
+
+            Deque<String> stackString = new LinkedList<>();
+            Deque<Integer> stackMultiplier = new LinkedList<>();
+
+            int multiplier = 0;
+            for (int i = 0; i < s.length(); i++) {
+                char c = s.charAt(i);
+
+                if (c >= '0' && c <= '9') {
+                    multiplier = multiplier * 10 + (c - '0');
+                }
+                else if (c == '[') {
+                    stackString.addLast(sb.toString());
+                    stackMultiplier.addLast(multiplier);
+                    multiplier = 0;
+                    sb = new StringBuilder();
+                }
+                else if (c == ']') {
+                    StringBuilder tmp = new StringBuilder();
+                    int top = stackMultiplier.removeLast();
+                    for (int j = 0; j < top; j++) {
+                        tmp.append(sb.toString());
+                    }
+                    sb = new StringBuilder(stackString.removeLast() + tmp);
+                }
+                else {
+                    sb.append(c);
+                }
+            }
+
+            return sb.toString();
+        }
+    }
 }
