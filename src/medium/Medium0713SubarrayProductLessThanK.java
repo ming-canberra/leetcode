@@ -62,4 +62,21 @@ public class Medium0713SubarrayProductLessThanK {
             return result;
         }
     }
+
+    class Solution3 {
+        public int numSubarrayProductLessThanK(int[] nums, int k) {
+            int prod = 1;
+            int left = 0;
+            int count = 0;
+            for (int i = 0; i < nums.length; i++) {
+                prod = prod * nums[i];
+                while(prod >= k && left <= i) {
+                    prod = prod / nums[left];
+                    left++;
+                }
+                count += i - left + 1;
+            }
+            return count;
+        }
+    }
 }
