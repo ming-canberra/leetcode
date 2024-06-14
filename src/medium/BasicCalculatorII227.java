@@ -85,4 +85,48 @@ public class BasicCalculatorII227 {
             return result;
         }
     }
+
+    class Solution2 {
+        public int calculate(String s) {
+            Stack<Integer> stack = new Stack<>();
+            s = s.replace(" ", "");
+            int currentValue = 0;
+            char prevOperator = ' ';
+            for (int i = 0; i < s.length(); i++) {
+                char aChar = s.charAt(i);
+                if (aChar >= '0' && aChar <= '9') {
+                    currentValue = 10 * currentValue + aChar - '0';
+                }
+                if (i == s.length() - 1 || aChar < '0' || aChar > '9')
+                {
+                    if (prevOperator == '*') {
+                        currentValue = stack.pop() * currentValue;
+                        stack.push(currentValue);
+                    }
+                    else if (prevOperator == '/') {
+                        currentValue = stack.pop() / currentValue;
+                        stack.push(currentValue);
+                    }
+                    else if (prevOperator == '+') {
+                        stack.push(currentValue);
+                    }
+                    else if (prevOperator == '-') {
+                        stack.push(-1 * currentValue);
+                    }
+                    else {
+                        stack.push(currentValue);
+                    }
+
+                    currentValue = 0;
+
+                    prevOperator = aChar;
+                }
+
+            }
+            while(!stack.isEmpty()) {
+                currentValue += stack.pop();
+            }
+            return currentValue;
+        }
+    }
 }
